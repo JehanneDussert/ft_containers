@@ -17,8 +17,8 @@ class	Vector
 		typedef allocator_type::const_reference		const_reference;
 		typedef allocator_type::pointer				pointer;
 		typedef allocator_type::const_pointer		const_pointer;
-		// typedef a random access iterator to value_type	iterator;
-		// typedef a random access iterator to const value_type	const_iterator;
+		typedef value_type::iterator				iterator;
+		typedef value_type::const_iterator			const_iterator;
 		//typedef reverse_iterator<iterator>			reverse_iterator;
 		//typedef reverse_iterator<const_iterator>	const_reverse_iterator;
 		//typedef a signed integral type, identical to: iterator_traits<iterator>::difference_type	difference_type;

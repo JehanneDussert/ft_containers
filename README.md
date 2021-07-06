@@ -2,9 +2,6 @@
 
 ⭐️ The objective of ft_containers is to implement the various container types of the C++ standard template library (coded in C++98).
 
-## ✅ Completed containers and notions ⤵️
-/
-
 ## 📈 To be completed ⤵️
 - Containers : Vector, Map, Stack
 - iterator system

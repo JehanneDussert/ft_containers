@@ -11,7 +11,6 @@
 - iterators_traits, reverse_iterator, enable_if, is_integral, equal/lexicographical compare, std::pair, std::make_pair
 - member functions, non-member functions, overloads
 - one binary with my containers and one with the same testing with STL containers
-- 
 
 ## 💡 Usage
 - This project will have its own main.cpp which tests everything

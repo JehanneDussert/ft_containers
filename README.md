@@ -12,20 +12,24 @@
 ## 🔎 Vector ⤵️
 
 ```
-[std::vector is a sequence container that encapsulates dynamic size arrays](https://en.cppreference.com/w/cpp/container/vector)
+The std::vector is a sequence container that encapsulates dynamic size arrays.
 ```
+[Reference](https://en.cppreference.com/w/cpp/container/vector)
+
 
 ## 🔎 Map ⤵️
 
 ```
-[std::map is a sorted associative container that contains key-value pairs with unique keys.](https://en.cppreference.com/w/cpp/container/map)
+The std::map is a sorted associative container that contains key-value pairs with unique keys.
 ```
+[Reference](https://en.cppreference.com/w/cpp/container/map)
 
 ## 🔎 Stack ⤵️
 
 ```
-[The std::stack class is a container adapter that gives the programmer the functionality of a stack - specifically, a LIFO (last-in, first-out) data structure.](https://en.cppreference.com/w/cpp/container/stack)
+The std::stack class is a container adapter that gives the programmer the functionality of a stack - specifically, a LIFO (last-in, first-out) data structure.
 ```
+[Reference](https://en.cppreference.com/w/cpp/container/stack)
 
 ## 💡 Usage
 - This project will have its own main.cpp which tests everything

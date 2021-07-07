@@ -10,28 +10,37 @@ template < class T, class Alloc = std::allocator<T> >
 class	Vector
 {
 	private:
+		value_type											*_tab;
+		size_type											_size;
 	public:
-		typedef T									value_type;
-		typedef Alloc								allocator_type;
-		typedef allocator_type::reference			reference;
-		typedef allocator_type::const_reference		const_reference;
-		typedef allocator_type::pointer				pointer;
-		typedef allocator_type::const_pointer		const_pointer;
-		typedef value_type::iterator				iterator;
-		typedef value_type::const_iterator			const_iterator;
-		//typedef reverse_iterator<iterator>			reverse_iterator;
-		//typedef reverse_iterator<const_iterator>	const_reverse_iterator;
+		typedef T											value_type;
+		typedef Alloc										allocator_type;
+		typedef typename allocator_type::reference			reference;
+		typedef typename allocator_type::const_reference	const_reference;
+		typedef typename allocator_type::pointer			pointer;
+		typedef typename allocator_type::const_pointer		const_pointer;
+		typedef typename value_type::iterator				iterator;
+		typedef typename value_type::const_iterator			const_iterator;
+		typedef ft::reverse_iterator<iterator>				reverse_iterator;
+		typedef ft::reverse_iterator<const_iterator>		const_reverse_iterator;
 		//typedef a signed integral type, identical to: iterator_traits<iterator>::difference_type	difference_type;
-		//typedef an unsigned integral type that can represent any non-negative value of difference_type	size_type;
+		typedef size_t										size_type;
 
+		// DONE
 		explicit Vector (const allocator_type& alloc = allocator_type()); // empty container
 		explicit Vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()); //fill constructor
-		template <class InputIterator>
-        	Vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type()); //range constructor
+		virtual ~Vector(void);
+
+		reference operator[] (size_type n);
+		const_reference operator[] (size_type n) const;
+
+		// TO COMPLETE
 		Vector (const vector& x); // copy constructor
 		
-		~Vector(void);
-
+		// TO DO
+		template <class InputIterator>
+        	Vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type()); //range constructor
+		
 		Vector &operator= (const vector& x);
 
 		iterator begin();
@@ -49,8 +58,6 @@ class	Vector
 		bool empty() const;
 		void reserve (size_type n);
 
-		reference operator[] (size_type n);
-		const_reference operator[] (size_type n) const;
 		reference at (size_type n);
 		const_reference at (size_type n) const;
 		reference front();

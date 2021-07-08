@@ -8,7 +8,7 @@
 */
 
 template <typename T, typename Alloc>
-Vector<T, Alloc>::Vector (const allocator_type& alloc = allocator_type()) : allocator_type(alloc) { return ;};
+Vector<T, Alloc>::Vector (const allocator_type& alloc = allocator_type()) : _tab(NULL), _size(0), _alloc(alloc) { return ; };
 
 template <typename T, typename Alloc>
 Vector<T, Alloc>::Vector (size_type n, const value_type& val = value_type(),
@@ -26,7 +26,7 @@ Vector<T, Alloc>::Vector (const vector& x)
 }; 
 
 template <typename T, typename Alloc>		
-Vector<T, Alloc>::~Vector(void) { return ;};
+Vector<T, Alloc>::~Vector(void) { return ; };
 
 /*
 ** NON-MEMBER FUNCTION OVERLOADS
@@ -35,17 +35,13 @@ Vector<T, Alloc>::~Vector(void) { return ;};
 template <typename T, typename Alloc>
 reference Vector<T, Alloc>::operator[] (size_type n)
 {
-    if (n >= _size)
-        throw std::exception();
-    return _tab[n];
+	return _tab[n];
 }
 
 template <typename T, typename Alloc>
 const_reference Vector<T, Alloc>::operator[] (size_type n) const
 {
-    if (n >= _size)
-        throw std::exception();
-    return _tab[n];
+	return _tab[n];
 }
 
 template <class T, class Alloc>

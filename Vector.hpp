@@ -12,6 +12,7 @@ class	Vector
 	private:
 		value_type											*_tab;
 		size_type											_size;
+		allocator_type										_alloc;
 	public:
 		typedef T											value_type;
 		typedef Alloc										allocator_type;

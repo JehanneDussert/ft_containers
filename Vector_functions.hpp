@@ -67,7 +67,10 @@ Vector<T, Alloc>	&Vector::operator=(const vector& x);
 		_alloc.destroy(_tab[i]);
 	this->_size = x.size();
 	for (size_type i = 0; i < _size; i++)
+	{
+		_alloc.allocate(_capacity);
 		_alloc.construct(_tab[i], x[i]);
+	}
 	
 	return *this;
 }

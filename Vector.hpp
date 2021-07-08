@@ -15,6 +15,7 @@ class	Vector
 		size_type											_max_size;
 		allocator_type										_alloc;
 		size_type											_capacity;
+		void												_clear_tab(void);
 	public:
 		typedef T											value_type;
 		typedef Alloc										allocator_type;
@@ -32,6 +33,9 @@ class	Vector
 		/*
 		** 	DONE
 		*/
+		explicit Vector (const allocator_type& alloc = allocator_type()); // empty container
+		explicit Vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()); //fill constructor
+		Vector (const vector& x); // copy constructor
 		virtual ~Vector(void);
 		reference operator[] (size_type n);
 		const_reference operator[] (size_type n) const;
@@ -53,9 +57,6 @@ class	Vector
 		/*
 		** 	TO COMPLETE
 		*/
-		explicit Vector (const allocator_type& alloc = allocator_type()); // empty container
-		explicit Vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()); //fill constructor
-		Vector (const vector& x); // copy constructor
 		Vector &operator= (const vector& x);
 		iterator begin();
 		const_iterator begin() const;

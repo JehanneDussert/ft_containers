@@ -3,16 +3,42 @@
 
 # include "Vector.hpp"
 
+/***************************/
+/**	ADDITIONNAL FUNCTIONS **/
+/**************************/
+
+template <typename T, typename Alloc>
+Vector<T, Alloc>::_clear_tab(void)
+{
+	for (size_t j = 0; j < _capacity; j++)
+	{
+		for (size_t i = 0; i < _size; i++)
+			_alloc.destroy(_tab[i]);
+		_alloc.deallocate(_tab[j]);
+	}
+}
+
 /**********************/
 /**	MEMBER FUNCTIONS **/
 /**********************/
 
 template <typename T, typename Alloc>
-Vector<T, Alloc>::Vector (const allocator_type& alloc = allocator_type()) : _tab(NULL), _size(0), _max_size(0), _alloc(alloc), _capacity(0) { return ; };
+Vector<T, Alloc>::Vector (const allocator_type& alloc = allocator_type()) : _tab(NULL), _size(0),
+_max_size(alloc.max_size()), _alloc(alloc), _capacity(0) { return ; };
 
 template <typename T, typename Alloc>
 Vector<T, Alloc>::Vector (size_type n, const value_type& val = value_type(),
-const allocator_type& alloc = allocator_type()) : _size(n), _alloc(alloc) { return ; };
+const allocator_type& alloc = allocator_type()) : _size(n), _max_size(alloc.max_size()), 
+_alloc(alloc), _capacity(n)
+{
+	_tab = _alloc.allocate(n);
+	for (size_t i = 0; i < n; i++)
+		_alloc.construct(_tab[i], val);
+	return ;
+};
+
+// capacity = espace alloué -> peut etre > a size (nb d'elemts) ex si on a pop un element, la size reduit mais capacity reste la meme
+// allocate/desalloc -> change capacity ; construct etc -> change size
 
 // template <class InputIterator>
 //     Vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type()); //range constructor
@@ -20,23 +46,36 @@ const allocator_type& alloc = allocator_type()) : _size(n), _alloc(alloc) { retu
 template <typename T, typename Alloc>
 Vector<T, Alloc>::Vector (const vector& x)
 {
-    // copy constructor
-    *this = x;
+	if (_capacity < x.capacity())
+	{
+		_clear_tab();
+		_capacity = x.capacity();
+		_tab = _alloc.allocate(_capacity);
+	}
+	else
+		for (size_t i = 0; i < _size; i++)
+			_alloc.destroy(_tab[i]);
+	_size = x.size();
+	for (size_t i = 0; i < _size; i++)
+		_alloc.construct(_tab[i], x[i]);
 }; 
 
 template <typename T, typename Alloc>		
-Vector<T, Alloc>::~Vector(void) { return ; };
+Vector<T, Alloc>::~Vector(void)
+{
+	_clear_tab();
+
+	return ;
+};
 
 template <class T, class Alloc>
 Vector<T, Alloc>	&Vector::operator=(const vector& x);
 {
-	// TO COMPLETE
-	// The container preserves its current allocator, which is used to allocate storage in case of reallocation.
-	// Any elements held in the container before the call are either assigned to or destroyed.
-
+	for (size_t i = 0; i < _size; i++)
+		_alloc.destroy(_tab[i]);
 	this->_size = x.size();
 	for (size_type i = 0; i < _size; i++)
-		this->_tab[i] = x[i];
+		_alloc.construct(_tab[i], x[i]);
 	
 	return *this;
 }

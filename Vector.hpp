@@ -7,15 +7,8 @@
 namespace ft
 {
 template < class T, class Alloc = std::allocator<T> >
-class	Vector
+class	vector
 {
-	private:
-		value_type											*_tab;
-		size_type											_size;
-		size_type											_max_size;
-		allocator_type										_alloc;
-		size_type											_capacity;
-		void												_clear_tab(Vector<T, Alloc>);
 	public:
 		typedef T											value_type;
 		typedef Alloc										allocator_type;
@@ -25,18 +18,18 @@ class	Vector
 		typedef typename allocator_type::const_pointer		const_pointer;
 		typedef typename value_type::iterator				iterator;
 		typedef typename value_type::const_iterator			const_iterator;
-		typedef ft::reverse_iterator<iterator>				reverse_iterator;
-		typedef ft::reverse_iterator<const_iterator>		const_reverse_iterator;
+		// typedef ft::reverse_iterator<iterator>				reverse_iterator;
+		// typedef ft::reverse_iterator<const_iterator>		const_reverse_iterator;
 		//typedef a signed integral type, identical to: iterator_traits<iterator>::difference_type	difference_type;
 		typedef size_t										size_type;
 
 		/*
 		** 	DONE
 		*/
-		explicit Vector (const allocator_type& alloc = allocator_type()); // empty container
-		explicit Vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()); //fill constructor
-		Vector (const vector& x); // copy constructor
-		virtual ~Vector(void);
+		explicit vector (const allocator_type& alloc = allocator_type()); // empty container
+		explicit vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()); //fill constructor
+		vector (const vector& x); // copy constructor
+		virtual ~vector(void);
 		reference operator[] (size_type n);
 		const_reference operator[] (size_type n) const;
 		size_type size() const;
@@ -50,6 +43,10 @@ class	Vector
 		void clear();
 		void push_back (const value_type& val);
 		void pop_back();
+		reference front();
+		const_reference front() const;
+		reference back();
+		const_reference back() const;
 		class	OutOfRangeException : public std::exception
 		{
 			public:
@@ -57,32 +54,26 @@ class	Vector
 				{
 					return "Terminating with uncaught exception of type std::out_of_range: vector.";
 				}
-		}
+		};
 
 		/*
 		** 	TO COMPLETE
 		*/
-		Vector &operator= (const vector& x);
+		vector &operator= (const vector& x);
 		iterator begin();
 		const_iterator begin() const;
 		iterator end();
-		const_iterator end() const;
-		reverse_iterator rbegin();
-		const_reverse_iterator rbegin() const;
-		reverse_iterator rend();
-		const_reverse_iterator rend() const;
+		// const_iterator end() const;
+		// reverse_iterator rbegin();
+		// const_reverse_iterator rbegin() const;
+		// reverse_iterator rend();
+		// const_reverse_iterator rend() const;
 		
 		/*
 		** 	TO DO
 		*/
 		template <class InputIterator>
-        Vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type()); //range constructor
-
-
-		reference front();
-		const_reference front() const;
-		reference back();
-		const_reference back() const;
+        vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type()); //range constructor
 
 		template <class InputIterator>
   		void assign (InputIterator first, InputIterator last);
@@ -95,6 +86,14 @@ class	Vector
 		iterator erase (iterator first, iterator last);
 		void swap (vector& x);
 		allocator_type get_allocator() const;
+	private:
+		value_type											*_tab;
+		size_type											_size;
+		size_type											_max_size;
+		allocator_type										_alloc;
+		size_type											_capacity;
+		void												_clear_tab(vector<T, Alloc>);
+	
 
 };
 	/*
@@ -119,8 +118,8 @@ class	Vector
 	/*
 	**	TO DO
 	*/
-	template < class T, class Alloc = allocator<T> > class vector; // generic template
-	template <class Alloc> class vector<bool,Alloc>;               // bool specialization
+	// template < class T, class Alloc = allocator<T> > class vector; // generic template
+	// template <class Alloc> class vector<bool,Alloc>;               // bool specialization
 }
 
 #endif

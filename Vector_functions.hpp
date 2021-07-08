@@ -1,14 +1,14 @@
-#ifndef VECTOR_FUNCTIONS_HPP
-# define VECTOR_FUNCTIONS_HPP
+#ifndef vector_FUNCTIONS_HPP
+# define vector_FUNCTIONS_HPP
 
-# include "Vector.hpp"
+# include "vector.hpp"
 
 /***************************/
 /**	ADDITIONNAL FUNCTIONS **/
 /**************************/
 
 template <typename T, typename Alloc>
-Vector<T, Alloc>::_clear_tab(Vector<T, Alloc> tab)
+vector<T, Alloc>::_clear_tab(vector<T, Alloc> tab)
 {
 	for (size_t j = tab.capacity(); j > 0; j--)
 	{
@@ -23,11 +23,11 @@ Vector<T, Alloc>::_clear_tab(Vector<T, Alloc> tab)
 /**********************/
 
 template <typename T, typename Alloc>
-Vector<T, Alloc>::Vector (const allocator_type& alloc = allocator_type()) : _tab(NULL), _size(0),
+vector<T, Alloc>::vector (const allocator_type& alloc = allocator_type()) : _tab(NULL), _size(0),
 _max_size(alloc.max_size()), _alloc(alloc), _capacity(0) { return ; };
 
 template <typename T, typename Alloc>
-Vector<T, Alloc>::Vector (size_type n, const value_type& val = value_type(),
+vector<T, Alloc>::vector (size_type n, const value_type& val = value_type(),
 const allocator_type& alloc = allocator_type()) : _size(n), _max_size(alloc.max_size()), 
 _alloc(alloc), _capacity(n)
 {
@@ -41,10 +41,10 @@ _alloc(alloc), _capacity(n)
 // allocate/desalloc -> change capacity ; construct etc -> change size
 
 // template <class InputIterator>
-//     Vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type()); //range constructor
+//     vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type()); //range constructor
 
 template <typename T, typename Alloc>
-Vector<T, Alloc>::Vector (const vector& x)
+vector<T, Alloc>::vector (const vector& x)
 {
 	_size = x.size();
 	_capacity = x.capacity();
@@ -56,7 +56,7 @@ Vector<T, Alloc>::Vector (const vector& x)
 }; 
 
 template <typename T, typename Alloc>		
-Vector<T, Alloc>::~Vector(void)
+vector<T, Alloc>::~vector(void)
 {
 	_clear_tab();
 
@@ -64,7 +64,7 @@ Vector<T, Alloc>::~Vector(void)
 };
 
 template <class T, class Alloc>
-Vector<T, Alloc>	&Vector::operator=(const vector& x);
+vector<T, Alloc>	&vector::operator=(const vector& x);
 {
 	for (size_t i = 0; i < _size; i++)
 		_alloc.destroy(_tab[i]);
@@ -80,49 +80,49 @@ Vector<T, Alloc>	&Vector::operator=(const vector& x);
 */
 
 template <typename T, typename Alloc>
-Vector<T, Alloc>::iterator<T, Alloc>::begin()
+vector<T, Alloc>::iterator<T, Alloc>::begin()
 {
 	return iterator(_tab);
 }
 
 template <typename T, typename Alloc>
-Vector<T, Alloc>::const_iterator<T, Alloc>::begin() const
+vector<T, Alloc>::const_iterator<T, Alloc>::begin() const
 {
 	return const_iterator(_tab);
 }
 
 template <typename T, typename Alloc>
-Vector<T, Alloc>::iterator<T, Alloc>::end()
+vector<T, Alloc>::iterator<T, Alloc>::end()
 {
 	return iterator(_tab[_size]);
 }
 
 template <typename T, typename Alloc>
-Vector<T, Alloc>::const_iterator<T, Alloc>::end() const
+vector<T, Alloc>::const_iterator<T, Alloc>::end() const
 {
 	return const_iterator(_tab[_size]);
 }
 
 template <typename T, typename Alloc>
-Vector<T, Alloc>::reverse_iterator<T, Alloc>::rbegin()
+vector<T, Alloc>::reverse_iterator<T, Alloc>::rbegin()
 {
 	return reverse_iterator(_tab);
 }
 
 template <typename T, typename Alloc>
-Vector<T, Alloc>::rconst_reverse_iterator<T, Alloc>::rbegin() const;
+vector<T, Alloc>::rconst_reverse_iterator<T, Alloc>::rbegin() const;
 {
 	return const_reverse_iterator(_tab);
 }
 
 template <typename T, typename Alloc>
-Vector<T, Alloc>::reverse_iterator<T, Alloc>::rend()
+vector<T, Alloc>::reverse_iterator<T, Alloc>::rend()
 {
 	return reverse_iterator(_tab[_size]);
 }
 
 template <typename T, typename Alloc>
-Vector<T, Alloc>::rconst_reverse_iterator<T, Alloc>::rend() const;
+vector<T, Alloc>::rconst_reverse_iterator<T, Alloc>::rend() const;
 {
 	return const_reverse_iterator(_tab[_size]);
 }
@@ -132,33 +132,33 @@ Vector<T, Alloc>::rconst_reverse_iterator<T, Alloc>::rend() const;
 */
 
 template <class T, class Alloc>
-size_type Vector<T, Alloc>::size() const
+size_type vector<T, Alloc>::size() const
 {
 	return this->_size;
 }
 
 template <class T, class Alloc>
-size_type Vector<T, Alloc>::max_size() const
+size_type vector<T, Alloc>::max_size() const
 {
 	return this->_max_size;
 }
 
 template <class T, class Alloc>
-size_type Vector<T, Alloc>::capacity() const
+size_type vector<T, Alloc>::capacity() const
 {
 	return this->_capacity;
 }
 
 template <class T, class Alloc>
-bool Vector<T, Alloc>::empty() const
+bool vector<T, Alloc>::empty() const
 {
 	!(_size) ? return true : return false;
 }
 
 template <class T, class Alloc>
-void Vector<T, Alloc>::reserve(size_type n)
+void vector<T, Alloc>::reserve(size_type n)
 {
-	Vector<T, Alloc>	tmp(this);
+	vector<T, Alloc>	tmp(this);
 
 	_clear_tab(this);
 	_alloc.allocate(n);
@@ -169,7 +169,7 @@ void Vector<T, Alloc>::reserve(size_type n)
 }
 
 template <class T, class Alloc>
-void Vector<T, Alloc>::resize(size_type n, value_type val = value_type())
+void vector<T, Alloc>::resize(size_type n, value_type val = value_type())
 {
 	//Notice that this function changes the actual content of the container by inserting or erasing elements from it.
 	if (n < _size)
@@ -189,19 +189,19 @@ void Vector<T, Alloc>::resize(size_type n, value_type val = value_type())
 */
 
 template <typename T, typename Alloc>
-reference Vector<T, Alloc>::operator[] (size_type n)
+reference vector<T, Alloc>::operator[] (size_type n)
 {
 	return _tab[n];
 }
 
 template <typename T, typename Alloc>
-const_reference Vector<T, Alloc>::operator[] (size_type n) const
+const_reference vector<T, Alloc>::operator[] (size_type n) const
 {
 	return _tab[n];
 }
 
 template <typename T, typename Alloc>
-reference Vector<T, Alloc>::at(size_type n)
+reference vector<T, Alloc>::at(size_type n)
 {
 	if (_n >= _size - 1)
 		throw OutOfRangeException();
@@ -209,7 +209,7 @@ reference Vector<T, Alloc>::at(size_type n)
 }
 
 template <typename T, typename Alloc>
-const_reference Vector<T, Alloc>::at(size_type n) const
+const_reference vector<T, Alloc>::at(size_type n) const
 {
 	if (_n >= _size - 1)
 		throw OutOfRangeException();
@@ -217,25 +217,25 @@ const_reference Vector<T, Alloc>::at(size_type n) const
 }
 
 template <typename T, typename Alloc>
-reference Vector<T, Alloc>::front()
+reference vector<T, Alloc>::front()
 {
 	return (*this)[0];
 }
 
 template <typename T, typename Alloc>
-const_reference Vector<T, Alloc>::front() const
+const_reference vector<T, Alloc>::front() const
 {
 	return (*this)[0];
 }
 
 template <typename T, typename Alloc>
-reference Vector<T, Alloc>::back()
+reference vector<T, Alloc>::back()
 {
 	return (*this)[_size - 1];
 }
 
 template <typename T, typename Alloc>
-const_reference Vector<T, Alloc>::back() const
+const_reference vector<T, Alloc>::back() const
 {
 	return (*this)[_size - 1];
 }
@@ -245,14 +245,14 @@ const_reference Vector<T, Alloc>::back() const
 */
 
 template <typename T, typename Alloc>
-void Vector<T, Alloc>::clear()
+void vector<T, Alloc>::clear()
 {
 	for (; _size > 0; _size--)
 		_alloc.destroy(_tab[i]);
 }
 
 template <typename T, typename Alloc>
-void  Vector<T, Alloc>::push_back(const value_type& val)
+void  vector<T, Alloc>::push_back(const value_type& val)
 {
 	if (_size + 1 >= _capacity)
 		reserve(_size + 1);
@@ -261,7 +261,7 @@ void  Vector<T, Alloc>::push_back(const value_type& val)
 }
 
 template <typename T, typename Alloc>
-void Vector<T, Alloc>::pop_back()
+void vector<T, Alloc>::pop_back()
 {
 	_alloc.destroy(_tab[_size]);
 	--_size;
@@ -270,13 +270,13 @@ void Vector<T, Alloc>::pop_back()
 //Removes from the vector either a single element (position) or a range of elements ([first,last)).
 
 template <typename T, typename Alloc>
-iterator  Vector<T, Alloc>::erase(iterator position)
+iterator  vector<T, Alloc>::erase(iterator position)
 {
 	;
 }
 
 template <typename T, typename Alloc>
-iterator  Vector<T, Alloc>::erase(iterator first, iterator last)
+iterator  vector<T, Alloc>::erase(iterator first, iterator last)
 {
 	;
 }
@@ -347,7 +347,7 @@ bool operator>=(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
 template <class T, class Alloc>
 void swap (vector<T,Alloc>& x, vector<T,Alloc>& y)
 {
-    Vector<T, Alloc>    tmp(x);
+    vector<T, Alloc>    tmp(x);
     x = y;
     y = tmp;
 

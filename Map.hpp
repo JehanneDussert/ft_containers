@@ -10,7 +10,7 @@ template < class Key,                                     // map::key_type
            class Compare = less<Key>,                     // map::key_compare
            class Alloc = allocator<pair<const Key,T> >    // map::allocator_type
            >
-class	Map
+class	map
 {
 	private:
 	public:

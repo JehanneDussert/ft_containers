@@ -201,17 +201,43 @@ const_reference Vector<T, Alloc>::operator[] (size_type n) const
 }
 
 template <typename T, typename Alloc>
-reference Vector<T, Alloc>::at (size_type n)
+reference Vector<T, Alloc>::at(size_type n)
 {
 	if (_n >= _size - 1)
 		throw OutOfRangeException();
-	return _tab[n];
+	return (*this)[n];
 }
 
 template <typename T, typename Alloc>
-const_reference Vector<T, Alloc>::at (size_type n) const
+const_reference Vector<T, Alloc>::at(size_type n) const
 {
+	if (_n >= _size - 1)
+		throw OutOfRangeException();
+	return (*this)[n];
+}
 
+template <typename T, typename Alloc>
+reference Vector<T, Alloc>::front()
+{
+	return (*this)[0];
+}
+
+template <typename T, typename Alloc>
+const_reference Vector<T, Alloc>::front() const
+{
+	return (*this)[0];
+}
+
+template <typename T, typename Alloc>
+reference Vector<T, Alloc>::back()
+{
+	return (*this)[_size - 1];
+}
+
+template <typename T, typename Alloc>
+const_reference Vector<T, Alloc>::back() const
+{
+	return (*this)[_size - 1];
 }
 
 /*
@@ -226,7 +252,7 @@ void Vector<T, Alloc>::clear()
 }
 
 template <typename T, typename Alloc>
-void push_back (const value_type& val)
+void  Vector<T, Alloc>::push_back(const value_type& val)
 {
 	if (_size + 1 >= _capacity)
 		reserve(_size + 1);
@@ -235,10 +261,30 @@ void push_back (const value_type& val)
 }
 
 template <typename T, typename Alloc>
-void pop_back()
+void Vector<T, Alloc>::pop_back()
 {
 	_alloc.destroy(_tab[_size]);
 	--_size;
+}
+
+//Removes from the vector either a single element (position) or a range of elements ([first,last)).
+
+template <typename T, typename Alloc>
+iterator  Vector<T, Alloc>::erase(iterator position)
+{
+	;
+}
+
+template <typename T, typename Alloc>
+iterator  Vector<T, Alloc>::erase(iterator first, iterator last)
+{
+	;
+}
+
+template <typename T, typename Alloc>
+void swap (vector& x)
+{
+	swap(this, x);
 }
 
 /*
@@ -301,7 +347,7 @@ bool operator>=(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
 template <class T, class Alloc>
 void swap (vector<T,Alloc>& x, vector<T,Alloc>& y)
 {
-    vector<T, Alloc>    tmp = x;
+    Vector<T, Alloc>    tmp(x);
     x = y;
     y = tmp;
 

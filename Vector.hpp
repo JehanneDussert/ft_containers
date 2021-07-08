@@ -15,7 +15,7 @@ class	Vector
 		size_type											_max_size;
 		allocator_type										_alloc;
 		size_type											_capacity;
-		void												_clear_tab(void);
+		void												_clear_tab(Vector<T, Alloc>);
 	public:
 		typedef T											value_type;
 		typedef Alloc										allocator_type;
@@ -47,6 +47,9 @@ class	Vector
 		const_reference at (size_type n) const;
 		void resize (size_type n, value_type val = value_type());
 		void reserve (size_type n);
+		void clear();
+		void push_back (const value_type& val);
+		void pop_back();
 		class	OutOfRangeException : public std::exception
 		{
 			public:
@@ -84,8 +87,6 @@ class	Vector
 		template <class InputIterator>
   		void assign (InputIterator first, InputIterator last);
 		void assign (size_type n, const value_type& val);
-		void push_back (const value_type& val);
-		void pop_back();
 		iterator insert (iterator position, const value_type& val);
 		void insert (iterator position, size_type n, const value_type& val);
 		template <class InputIterator>
@@ -93,7 +94,6 @@ class	Vector
 		iterator erase (iterator position);
 		iterator erase (iterator first, iterator last);
 		void swap (vector& x);
-		void clear();
 		allocator_type get_allocator() const;
 
 };

@@ -8,13 +8,13 @@
 /**************************/
 
 template <typename T, typename Alloc>
-Vector<T, Alloc>::_clear_tab(void)
+Vector<T, Alloc>::_clear_tab(Vector<T, Alloc> tab)
 {
-	for (size_t j = 0; j < _capacity; j++)
+	for (size_t j = tab.capacity(); j > 0; j--)
 	{
-		for (size_t i = 0; i < _size; i++)
-			_alloc.destroy(_tab[i]);
-		_alloc.deallocate(_tab[j]);
+		for (; tab.size() > 0; tab.size()--)
+			_alloc.destroy(tab[i]);
+		_alloc.deallocate(tab[j]);
 	}
 }
 
@@ -49,7 +49,10 @@ Vector<T, Alloc>::Vector (const vector& x)
 	_size = x.size();
 	_capacity = x.capacity();
 	for (size_t i = 0; i < _size; i++)
+	{
+		_alloc.allocate(_capacity);
 		_alloc.construct(_tab[i], x[i]);
+	}
 }; 
 
 template <typename T, typename Alloc>		
@@ -67,10 +70,7 @@ Vector<T, Alloc>	&Vector::operator=(const vector& x);
 		_alloc.destroy(_tab[i]);
 	this->_size = x.size();
 	for (size_type i = 0; i < _size; i++)
-	{
-		_alloc.allocate(_capacity);
 		_alloc.construct(_tab[i], x[i]);
-	}
 	
 	return *this;
 }
@@ -156,15 +156,32 @@ bool Vector<T, Alloc>::empty() const
 }
 
 template <class T, class Alloc>
-void Vector<T, Alloc>::resize(size_type n, value_type val = value_type())
+void Vector<T, Alloc>::reserve(size_type n)
 {
+	Vector<T, Alloc>	tmp(this);
 
+	_clear_tab(this);
+	_alloc.allocate(n);
+	_capacity = n;
+	for (size_t i = 0; i < _size; i++)
+		_alloc.construct(_tab[i], tmp[i]);
+	_clear_tab(tmp);
 }
 
 template <class T, class Alloc>
-void Vector<T, Alloc>::reserve(size_type n)
+void Vector<T, Alloc>::resize(size_type n, value_type val = value_type())
 {
-
+	//Notice that this function changes the actual content of the container by inserting or erasing elements from it.
+	if (n < _size)
+		for (size_t i = n; i < _size; i++)
+			_alloc.destroy(_tab[i]);
+	else
+	{
+		if (n > _capacity)
+			reserve(n);
+		for (size_t i = _size; i < n; i++)
+			_alloc.construct(_tab[i], val);
+	}
 }
 
 /*
@@ -201,6 +218,28 @@ const_reference Vector<T, Alloc>::at (size_type n) const
 ** MODIFIERS
 */
 
+template <typename T, typename Alloc>
+void Vector<T, Alloc>::clear()
+{
+	for (; _size > 0; _size--)
+		_alloc.destroy(_tab[i]);
+}
+
+template <typename T, typename Alloc>
+void push_back (const value_type& val)
+{
+	if (_size + 1 >= _capacity)
+		reserve(_size + 1);
+	++_size;
+	_alloc.construct(_tab[_size], val);
+}
+
+template <typename T, typename Alloc>
+void pop_back()
+{
+	_alloc.destroy(_tab[_size]);
+	--_size;
+}
 
 /*
 ** ALLOCATOR

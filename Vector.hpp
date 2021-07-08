@@ -12,7 +12,9 @@ class	Vector
 	private:
 		value_type											*_tab;
 		size_type											_size;
+		size_type											_max_size;
 		allocator_type										_alloc;
+		size_type											_capacity;
 	public:
 		typedef T											value_type;
 		typedef Alloc										allocator_type;
@@ -30,26 +32,31 @@ class	Vector
 		/*
 		** 	DONE
 		*/
-		explicit Vector (const allocator_type& alloc = allocator_type()); // empty container
-		explicit Vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()); //fill constructor
 		virtual ~Vector(void);
-
 		reference operator[] (size_type n);
 		const_reference operator[] (size_type n) const;
+		size_type size() const;
+		size_type max_size() const;
+		size_type capacity() const;
+		bool empty() const;
+		reference at (size_type n);
+		const_reference at (size_type n) const;
+		class	OutOfRangeException : public std::exception
+		{
+			public:
+				virtual const char * what() const throw()
+				{
+					return "Terminating with uncaught exception of type std::out_of_range: vector.";
+				}
+		}
 
 		/*
 		** 	TO COMPLETE
 		*/
+		explicit Vector (const allocator_type& alloc = allocator_type()); // empty container
+		explicit Vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()); //fill constructor
 		Vector (const vector& x); // copy constructor
-		
-		/*
-		** 	TO DO
-		*/
-		template <class InputIterator>
-        Vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type()); //range constructor
-		
 		Vector &operator= (const vector& x);
-
 		iterator begin();
 		const_iterator begin() const;
 		iterator end();
@@ -58,15 +65,16 @@ class	Vector
 		const_reverse_iterator rbegin() const;
 		reverse_iterator rend();
 		const_reverse_iterator rend() const;
-		size_type size() const;
-		size_type max_size() const;
+		
+		/*
+		** 	TO DO
+		*/
+		template <class InputIterator>
+        Vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type()); //range constructor
+
 		void resize (size_type n, value_type val = value_type());
-		size_type capacity() const;
-		bool empty() const;
 		void reserve (size_type n);
 
-		reference at (size_type n);
-		const_reference at (size_type n) const;
 		reference front();
 		const_reference front() const;
 		reference back();

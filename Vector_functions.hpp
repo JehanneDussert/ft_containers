@@ -51,9 +51,12 @@ const_reference Vector<T, Alloc>::operator[] (size_type n) const
 template <class T, class Alloc>
 bool operator== (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
 {
-    if (lhs.size() == rhs.size()) // check if lsh.tab == rhs.tab etc ? or juste size ?
-        return true;
-    return false;
+    if (lhs.size() != rhs.size())
+        return false;
+	for (size_type i = 0; i < lhs.size(); i++)
+		if (lhs[i] != rhs[i])
+			return false;
+	return true;
 }
 
 template <class T, class Alloc>
@@ -65,29 +68,25 @@ bool operator!= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
 template <class T, class Alloc>
 bool operator<(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
 {
-    if (lhs.size() < rhs.size())
-        return true;
-    return false;
+	return std::lexicograpphical_comppare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
 }
 
 template <class T, class Alloc>
 bool operator<=(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
 {
-    if (lhs < rhs || lhs == rhs)
-        return true;
-    return false;
+	rhs < lhs ? return false : return true;
 }
 
 template <class T, class Alloc>
 bool operator>(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
 {
-    lhs <= rhs ? return false : return true;
+	rhs < lhs ? return true : return false;
 }
 
 template <class T, class Alloc>
 bool operator>=(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
 {
-    lhs < rhs ? return false : return true;
+	lhs < rhs ? return false : return true;
 }
 
 template <class T, class Alloc>

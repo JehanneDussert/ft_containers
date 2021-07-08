@@ -45,6 +45,8 @@ class	Vector
 		bool empty() const;
 		reference at (size_type n);
 		const_reference at (size_type n) const;
+		void resize (size_type n, value_type val = value_type());
+		void reserve (size_type n);
 		class	OutOfRangeException : public std::exception
 		{
 			public:
@@ -73,8 +75,6 @@ class	Vector
 		template <class InputIterator>
         Vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type()); //range constructor
 
-		void resize (size_type n, value_type val = value_type());
-		void reserve (size_type n);
 
 		reference front();
 		const_reference front() const;

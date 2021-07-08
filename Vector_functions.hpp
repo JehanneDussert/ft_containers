@@ -46,16 +46,8 @@ _alloc(alloc), _capacity(n)
 template <typename T, typename Alloc>
 Vector<T, Alloc>::Vector (const vector& x)
 {
-	if (_capacity < x.capacity())
-	{
-		_clear_tab();
-		_capacity = x.capacity();
-		_tab = _alloc.allocate(_capacity);
-	}
-	else
-		for (size_t i = 0; i < _size; i++)
-			_alloc.destroy(_tab[i]);
 	_size = x.size();
+	_capacity = x.capacity();
 	for (size_t i = 0; i < _size; i++)
 		_alloc.construct(_tab[i], x[i]);
 }; 
@@ -158,6 +150,18 @@ template <class T, class Alloc>
 bool Vector<T, Alloc>::empty() const
 {
 	!(_size) ? return true : return false;
+}
+
+template <class T, class Alloc>
+void Vector<T, Alloc>::resize(size_type n, value_type val = value_type())
+{
+
+}
+
+template <class T, class Alloc>
+void Vector<T, Alloc>::reserve(size_type n)
+{
+
 }
 
 /*

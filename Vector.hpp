@@ -6,7 +6,7 @@
 
 namespace ft
 {
-template < class T, class Alloc = std::allocator<T> >
+template< typename T, typename Alloc = std::allocator<T> >
 class	vector
 {
 	public:
@@ -16,8 +16,8 @@ class	vector
 		typedef typename allocator_type::const_reference	const_reference;
 		typedef typename allocator_type::pointer			pointer;
 		typedef typename allocator_type::const_pointer		const_pointer;
-		typedef typename value_type::iterator				iterator;
-		typedef typename value_type::const_iterator			const_iterator;
+		//typedef typename value_type::iterator				iterator;
+		//typedef typename value_type::const_iterator			const_iterator;
 		// typedef ft::reverse_iterator<iterator>				reverse_iterator;
 		// typedef ft::reverse_iterator<const_iterator>		const_reverse_iterator;
 		//typedef a signed integral type, identical to: iterator_traits<iterator>::difference_type	difference_type;
@@ -59,10 +59,10 @@ class	vector
 		/*
 		** 	TO COMPLETE
 		*/
-		vector &operator= (const vector& x);
-		iterator begin();
-		const_iterator begin() const;
-		iterator end();
+		vector &operator=(const vector& x);
+		// iterator begin();
+		// const_iterator begin() const;
+		// iterator end();
 		// const_iterator end() const;
 		// reverse_iterator rbegin();
 		// const_reverse_iterator rbegin() const;
@@ -78,12 +78,12 @@ class	vector
 		template <class InputIterator>
   		void assign (InputIterator first, InputIterator last);
 		void assign (size_type n, const value_type& val);
-		iterator insert (iterator position, const value_type& val);
-		void insert (iterator position, size_type n, const value_type& val);
+		//iterator insert (iterator position, const value_type& val);
+		//void insert (iterator position, size_type n, const value_type& val);
 		template <class InputIterator>
-    	void insert (iterator position, InputIterator first, InputIterator last);
-		iterator erase (iterator position);
-		iterator erase (iterator first, iterator last);
+    	//void insert (iterator position, InputIterator first, InputIterator last);
+		// iterator erase (iterator position);
+		// iterator erase (iterator first, iterator last);
 		void swap (vector& x);
 		allocator_type get_allocator() const;
 	private:

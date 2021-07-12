@@ -77,7 +77,7 @@ vector<T, Alloc>	&vector<T, Alloc>::operator=(const vector &x)
 **	ITERATORS
 */
 
-/* -- Operator overloads -- */
+/* -- Operator overloads iterator -- */
 
 template <typename T, typename Alloc>
 typename vector<T, Alloc>::iterator::reference	vector<T, Alloc>::iterator::operator*(void) const
@@ -91,15 +91,297 @@ typename vector<T, Alloc>::iterator::pointer	vector<T, Alloc>::iterator::operato
 	return (this->_value);
 }
 
+template <typename T, typename Alloc>
+typename vector<T, Alloc>::iterator&			vector<T, Alloc>::iterator::operator=(const iterator& x)
+{
+	if (this == &x)
+		return *this;
+	this->_value = x._value;
+	return *this;
+}
+
+template <typename T, typename Alloc>
+bool	vector<T, Alloc>::iterator::operator==(const iterator& x) const
+{
+	return (this->_value == x._value ? true : false);
+}
+
+template <typename T, typename Alloc>
+bool	vector<T, Alloc>::iterator::operator!=(const iterator& x) const
+{
+	return (this == x ? false : true);
+}
+
+template <typename T, typename Alloc>
+typename vector<T, Alloc>::iterator&			vector<T, Alloc>::iterator::operator++(void)
+{
+	this->_value++;
+
+	return *this;
+}
+
+template <typename T, typename Alloc>
+typename vector<T, Alloc>::iterator				vector<T, Alloc>::iterator::operator++(int)
+{
+	ft::vector<int>::iterator	tmp(*this);
+
+	this->operator++();
+	return tmp;
+}
+
+template <typename T, typename Alloc>
+typename vector<T, Alloc>::iterator&			vector<T, Alloc>::iterator::operator--(void)
+{
+	this->_value--;
+
+	return *this;
+}
+
+template <typename T, typename Alloc>
+typename vector<T, Alloc>::iterator				vector<T, Alloc>::iterator::operator--(int)
+{
+	ft::vector<int>::iterator	tmp(*this);
+
+	this->operator--();
+	return tmp;
+}
+
+template <typename T, typename Alloc>
+typename vector<T, Alloc>::iterator			vector<T, Alloc>::iterator::operator+(ptrdiff_t n)
+{
+	return iterator(this->_value + n);
+}
+
+template <typename T, typename Alloc>
+typename vector<T, Alloc>::iterator			vector<T, Alloc>::iterator::operator-(ptrdiff_t n)
+{
+	return iterator(this->_value - n);
+}
+
+template <typename T, typename Alloc>
+typename vector<T, Alloc>::iterator			vector<T, Alloc>::iterator::operator+(const iterator& x)
+{
+	return iterator(this->_value + x._value);
+}
+
+template <typename T, typename Alloc>
+typename vector<T, Alloc>::iterator			vector<T, Alloc>::iterator::operator-(const iterator& x)
+{
+	return iterator(this->_value - x._value);
+}
+
+template <typename T, typename Alloc>
+bool	vector<T, Alloc>::iterator::operator<(const iterator& x) const
+{
+	return (this->_value < x._value ? true : false);
+}
+
+template <typename T, typename Alloc>
+bool	vector<T, Alloc>::iterator::operator>(const iterator& x) const
+{
+	return (this < x ? false : true);
+}
+
+template <typename T, typename Alloc>
+bool	vector<T, Alloc>::iterator::operator<=(const iterator& x) const
+{
+	return (this->_value <= x._value ? true : false);
+}
+
+template <typename T, typename Alloc>
+bool	vector<T, Alloc>::iterator::operator>=(const iterator& x) const
+{
+	return (this <= x ? false : true);
+}
+
+template <typename T, typename Alloc>
+typename vector<T, Alloc>::iterator&			vector<T, Alloc>::iterator::operator+=(ptrdiff_t n)
+{
+	this->_value += n;
+
+	return *this;
+}
+
+template <typename T, typename Alloc>
+typename vector<T, Alloc>::iterator&			vector<T, Alloc>::iterator::operator-=(ptrdiff_t n)
+{
+	this->_value -= n;
+
+	return *this;
+}
+
 // template <typename T, typename Alloc>
-// typename vector<T, Alloc>::iterator&			vector<T, Alloc>::iterator::operator=(const iterator& x)
+// typename vector<T, Alloc>::iterator::reference			vector<T, Alloc>::iterator::operator[](size_type n)
 // {
-// 	if (this == &rhs)
-// 		return *this;
-// 	const_iterator first = rhs.begin();
-// 	const_iterator	last = rhs.end();
-// 	return ;
+// 	return this->_value[n];
 // }
+
+// template <typename T, typename Alloc>
+// typename vector<T, Alloc>::iterator::const_reference			vector<T, Alloc>::iterator::operator[](size_type n) const
+// {
+// 	return this->_value[n];
+// }
+
+// template <typename T, typename Alloc>
+// typename vector<T, Alloc>::const_iterator::difference_type			vector<T, Alloc>::iterator::operator[](const iterator& x) const
+// {
+// 	return this->_value - x._value;
+// }
+
+/* -- Operator overloads const_iterator -- */
+
+template <typename T, typename Alloc>
+typename vector<T, Alloc>::const_iterator::reference	vector<T, Alloc>::const_iterator::operator*(void) const
+{
+	return (*this->_value);
+}
+
+template <typename T, typename Alloc>
+typename vector<T, Alloc>::const_iterator::pointer	vector<T, Alloc>::const_iterator::operator->(void) const
+{
+	return (this->_value);
+}
+
+template <typename T, typename Alloc>
+typename vector<T, Alloc>::const_iterator&			vector<T, Alloc>::const_iterator::operator=(const const_iterator& x)
+{
+	if (this == &x)
+		return *this;
+	this->_value = x._value;
+	return *this;
+}
+
+template <typename T, typename Alloc>
+bool	vector<T, Alloc>::const_iterator::operator==(const const_iterator& x) const
+{
+	return (this->_value == x._value ? true : false);
+}
+
+template <typename T, typename Alloc>
+bool	vector<T, Alloc>::const_iterator::operator!=(const const_iterator& x) const
+{
+	return (this == x ? false : true);
+}
+
+template <typename T, typename Alloc>
+typename vector<T, Alloc>::const_iterator&			vector<T, Alloc>::const_iterator::operator++(void)
+{
+	this->_value++;
+
+	return *this;
+}
+
+template <typename T, typename Alloc>
+typename vector<T, Alloc>::const_iterator				vector<T, Alloc>::const_iterator::operator++(int)
+{
+	ft::vector<int>::const_iterator	tmp(*this);
+
+	this->operator++();
+	return tmp;
+}
+
+template <typename T, typename Alloc>
+typename vector<T, Alloc>::const_iterator&			vector<T, Alloc>::const_iterator::operator--(void)
+{
+	this->_value--;
+
+	return *this;
+}
+
+template <typename T, typename Alloc>
+typename vector<T, Alloc>::const_iterator				vector<T, Alloc>::const_iterator::operator--(int)
+{
+	ft::vector<int>::const_iterator	tmp(*this);
+
+	this->operator--();
+	return tmp;
+}
+
+template <typename T, typename Alloc>
+typename vector<T, Alloc>::const_iterator			vector<T, Alloc>::const_iterator::operator+(ptrdiff_t n)
+{
+	return const_iterator(this->_value + n);
+}
+
+template <typename T, typename Alloc>
+typename vector<T, Alloc>::const_iterator			vector<T, Alloc>::const_iterator::operator-(ptrdiff_t n)
+{
+	return const_iterator(this->_value - n);
+}
+
+template <typename T, typename Alloc>
+typename vector<T, Alloc>::const_iterator			vector<T, Alloc>::const_iterator::operator+(const const_iterator& x)
+{
+	return const_iterator(this->_value + x._value);
+}
+
+template <typename T, typename Alloc>
+typename vector<T, Alloc>::const_iterator			vector<T, Alloc>::const_iterator::operator-(const const_iterator& x)
+{
+	return const_iterator(this->_value - x._value);
+}
+
+template <typename T, typename Alloc>
+bool	vector<T, Alloc>::const_iterator::operator<(const const_iterator& x) const
+{
+	return (this->_value < x._value ? true : false);
+}
+
+template <typename T, typename Alloc>
+bool	vector<T, Alloc>::const_iterator::operator>(const const_iterator& x) const
+{
+	return (this < x ? false : true);
+}
+
+template <typename T, typename Alloc>
+bool	vector<T, Alloc>::const_iterator::operator<=(const const_iterator& x) const
+{
+	return (this->_value <= x._value ? true : false);
+}
+
+template <typename T, typename Alloc>
+bool	vector<T, Alloc>::const_iterator::operator>=(const const_iterator& x) const
+{
+	return (this <= x ? false : true);
+}
+
+template <typename T, typename Alloc>
+typename vector<T, Alloc>::const_iterator&			vector<T, Alloc>::const_iterator::operator+=(ptrdiff_t n)
+{
+	this->_value += n;
+
+	return *this;
+}
+
+template <typename T, typename Alloc>
+typename vector<T, Alloc>::const_iterator&			vector<T, Alloc>::const_iterator::operator-=(ptrdiff_t n)
+{
+	this->_value -= n;
+
+	return *this;
+}
+
+// template <typename T, typename Alloc>
+// typename vector<T, Alloc>::const_iterator::reference			vector<T, Alloc>::const_iterator::operator[](size_type n)
+// {
+// 	return this->_value[n];
+// }
+
+// template <typename T, typename Alloc>
+// typename vector<T, Alloc>::const_iterator::const_reference			vector<T, Alloc>::const_iterator::operator[](size_type n) const
+// {
+// 	return this->_value[n];
+// }
+
+// template <typename T, typename Alloc>
+// typename vector<T, Alloc>::const_iterator::difference_type			vector<T, Alloc>::const_iterator::operator[](const const_iterator& x) const
+// {
+// 	return this->_value - x._value;
+// }
+
+/*
+** Iterator functions
+*/
 
 template <typename T, typename Alloc>
 typename vector<T, Alloc>::iterator vector<T, Alloc>::begin()

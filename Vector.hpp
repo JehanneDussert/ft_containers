@@ -20,7 +20,7 @@ class	vector
 		//typedef typename value_type::const_iterator			const_iterator;
 		// typedef ft::reverse_iterator<iterator>				reverse_iterator;
 		// typedef ft::reverse_iterator<const_iterator>		const_reverse_iterator;
-		//typedef a signed integral type, identical to: iterator_traits<iterator>::difference_type	difference_type;
+		typedef ptrdiff_t									difference_type;
 		typedef size_t										size_type;
 
 		/*
@@ -64,39 +64,40 @@ class	vector
 				*/
 				typedef	value_type&	reference;
 				typedef	value_type*	pointer;
+				typedef ptrdiff_t	difference_type;
 				iterator(void) { return; };
 				~iterator(void) { return; };
 				reference	operator*(void) const;
 				pointer		operator->(void)const;
-
-				/*
-				**	TO DO
-				*/
-				iterator(const iterator& x);
 				iterator	&operator=(const iterator& x);
 				bool		operator==(const iterator& x) const;
 				bool		operator!=(const iterator& x) const;
-				//*a = t; ?
 				iterator	&operator++(void);
 				iterator	operator++(int);
 				iterator	&operator--(void);
 				iterator	operator--(int);
-				//*a++;
-				//*a--;
 				iterator	operator+(const iterator& x);
 				iterator	operator-(const iterator& x);
-				iterator	operator+(const int x);
-				iterator	operator-(const int x);
+				iterator	operator+(difference_type);
+				iterator	operator-(difference_type);
 				bool		operator<(const iterator& x) const;
 				bool		operator>(const iterator& x) const;
 				bool		operator<=(const iterator& x) const;
 				bool		operator>=(const iterator& x) const;
-				iterator	&operator+=(const int x);
-				iterator	&operator-=(const int x);
+				iterator	&operator+=(difference_type);
+				iterator	&operator-=(difference_type);
 				reference	operator[](size_type n);
 				const_reference operator[](size_type n) const;
+				difference_type	operator-(const iterator& x) const;
+
+				/*
+				**	TO DO
+				*/
+				iterator(const iterator& x);//*a = t; ?
 			private:
 				typedef value_type*	_value;
+				typedef	iterator	first;
+				typedef	iterator	last;
 				
 				//friend class vector;
 		};
@@ -112,36 +113,33 @@ class	vector
 				~const_iterator(void) { return; };
 				reference	operator*(void) const;
 				pointer		operator->(void)const;
-
-				/*
-				**	TO DO
-				*/
-				const_iterator(const const_iterator& x);
 				const_iterator	&operator=(const const_iterator& x);
 				bool		operator==(const const_iterator& x) const;
 				bool		operator!=(const const_iterator& x) const;
-				//*a = t; ?
 				const_iterator	&operator++(void);
 				const_iterator	operator++(int);
 				const_iterator	&operator--(void);
 				const_iterator	operator--(int);
-				//*a++;
-				//*a--;
 				const_iterator	operator+(const const_iterator& x);
 				const_iterator	operator-(const const_iterator& x);
-				const_iterator	operator+(const int x);
-				const_iterator	operator-(const int x);
-				bool		operator<(const const_iterator& x) const;
-				bool		operator>(const const_iterator& x) const;
-				bool		operator<=(const const_iterator& x) const;
-				bool		operator>=(const const_iterator& x) const;
-				const_iterator	&operator+=(const int x);
-				const_iterator	&operator-=(const int x);
-				reference	operator[](size_type n);
+				const_iterator	operator+(difference_type);
+				const_iterator	operator-(difference_type);
+				bool			operator<(const const_iterator& x) const;
+				bool			operator>(const const_iterator& x) const;
+				bool			operator<=(const const_iterator& x) const;
+				bool			operator>=(const const_iterator& x) const;
+				const_iterator	&operator+=(difference_type);
+				const_iterator	&operator-=(difference_type);
+				reference		operator[](size_type n);
 				const_reference operator[](size_type n) const;
+				difference_type	operator-(const const_iterator& x) const;
+
+				/*
+				**	TO DO
+				*/
+				const_iterator(const const_iterator& x);//*a = t; ?
 			private:
 				typedef value_type*	_value;
-				
 				//friend class vector;
 		};
 

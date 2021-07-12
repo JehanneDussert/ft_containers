@@ -30,8 +30,8 @@ class	vector
 		explicit vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()); //fill constructor
 		vector (const vector& x); // copy constructor
 		virtual ~vector(void);
-		reference operator[] (size_type n);
-		const_reference operator[] (size_type n) const;
+		reference		operator[](size_type n);
+		const_reference	operator[](size_type n) const;
 		size_type size() const;
 		size_type max_size() const;
 		size_type capacity() const;
@@ -47,6 +47,7 @@ class	vector
 		const_reference front() const;
 		reference back();
 		const_reference back() const;
+		//?
 		class	OutOfRangeException : public std::exception
 		{
 			public:
@@ -55,15 +56,103 @@ class	vector
 					return "Terminating with uncaught exception of type std::out_of_range: vector.";
 				}
 		};
+		class iterator
+		{
+			public:
+				/*
+				**	DONE
+				*/
+				typedef	value_type&	reference;
+				typedef	value_type*	pointer;
+				iterator(void) { return; };
+				~iterator(void) { return; };
+				reference	operator*(void) const;
+				pointer		operator->(void)const;
+
+				/*
+				**	TO DO
+				*/
+				iterator(const iterator& x);
+				iterator	&operator=(const iterator& x);
+				bool		operator==(const iterator& x) const;
+				bool		operator!=(const iterator& x) const;
+				//*a = t; ?
+				iterator	&operator++(void);
+				iterator	operator++(int);
+				iterator	&operator--(void);
+				iterator	operator--(int);
+				//*a++;
+				//*a--;
+				iterator	operator+(const iterator& x);
+				iterator	operator-(const iterator& x);
+				iterator	operator+(const int x);
+				iterator	operator-(const int x);
+				bool		operator<(const iterator& x) const;
+				bool		operator>(const iterator& x) const;
+				bool		operator<=(const iterator& x) const;
+				bool		operator>=(const iterator& x) const;
+				iterator	&operator+=(const int x);
+				iterator	&operator-=(const int x);
+				reference	operator[](size_type n);
+				const_reference operator[](size_type n) const;
+			private:
+				typedef value_type*	_value;
+				
+				//friend class vector;
+		};
+		class const_iterator
+		{
+			public:
+				/*
+				**	DONE
+				*/
+				typedef	const value_type&	reference;
+				typedef	const value_type*	pointer;
+				const_iterator(void) { return; };
+				~const_iterator(void) { return; };
+				reference	operator*(void) const;
+				pointer		operator->(void)const;
+
+				/*
+				**	TO DO
+				*/
+				const_iterator(const const_iterator& x);
+				const_iterator	&operator=(const const_iterator& x);
+				bool		operator==(const const_iterator& x) const;
+				bool		operator!=(const const_iterator& x) const;
+				//*a = t; ?
+				const_iterator	&operator++(void);
+				const_iterator	operator++(int);
+				const_iterator	&operator--(void);
+				const_iterator	operator--(int);
+				//*a++;
+				//*a--;
+				const_iterator	operator+(const const_iterator& x);
+				const_iterator	operator-(const const_iterator& x);
+				const_iterator	operator+(const int x);
+				const_iterator	operator-(const int x);
+				bool		operator<(const const_iterator& x) const;
+				bool		operator>(const const_iterator& x) const;
+				bool		operator<=(const const_iterator& x) const;
+				bool		operator>=(const const_iterator& x) const;
+				const_iterator	&operator+=(const int x);
+				const_iterator	&operator-=(const int x);
+				reference	operator[](size_type n);
+				const_reference operator[](size_type n) const;
+			private:
+				typedef value_type*	_value;
+				
+				//friend class vector;
+		};
 
 		/*
 		** 	TO COMPLETE
 		*/
 		vector &operator=(const vector& x);
-		// iterator begin();
-		// const_iterator begin() const;
-		// iterator end();
-		// const_iterator end() const;
+		iterator begin();
+		const_iterator begin() const;
+		iterator end();
+		const_iterator end() const;
 		// reverse_iterator rbegin();
 		// const_reverse_iterator rbegin() const;
 		// reverse_iterator rend();
@@ -78,12 +167,12 @@ class	vector
 		template <class InputIterator>
   		void assign (InputIterator first, InputIterator last);
 		void assign (size_type n, const value_type& val);
-		//iterator insert (iterator position, const value_type& val);
-		//void insert (iterator position, size_type n, const value_type& val);
+		iterator insert (iterator position, const value_type& val);
+		void insert (iterator position, size_type n, const value_type& val);
 		template <class InputIterator>
-    	//void insert (iterator position, InputIterator first, InputIterator last);
-		// iterator erase (iterator position);
-		// iterator erase (iterator first, iterator last);
+    	void insert (iterator position, InputIterator first, InputIterator last);
+		iterator erase (iterator position);
+		iterator erase (iterator first, iterator last);
 		void swap (vector& x);
 		allocator_type get_allocator() const;
 	private:
@@ -92,9 +181,7 @@ class	vector
 		size_type											_max_size;
 		allocator_type										_alloc;
 		size_type											_capacity;
-		void												_clear_tab(vector<T, Alloc>);
-	
-
+		void												_clear_tab(void);	
 };
 	/*
 	** 	DONE

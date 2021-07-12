@@ -10,14 +10,10 @@ namespace ft {
 /**************************/
 
 template <typename T, typename Alloc>
-void	vector<T, Alloc>::_clear_tab(vector<T, Alloc> tab)
+void	vector<T, Alloc>::_clear_tab(void)
 {
-	for (size_t j = tab.capacity(); j > 0; j--)
-	{
-		for (; tab.size() > 0; tab.size()--)
-			_alloc.destroy(tab[tab.size()]);
-		_alloc.deallocate(tab[j]);
-	}
+		_alloc.destroy(this->_tab);
+		_alloc.deallocate(this->_tab, this->_capacity);
 }
 
 /**********************/
@@ -34,7 +30,7 @@ const allocator_type& alloc) : _size(n), _max_size(alloc.max_size()),
 _alloc(alloc), _capacity(n)
 {
 	_tab = _alloc.allocate(n);
-	for (size_t i = 0; i < n; i++)
+	for (size_type i = 0; i < n; i++)
 		_alloc.construct(_tab[i], val);
 	return ;
 };
@@ -50,7 +46,7 @@ vector<T, Alloc>::vector (const vector& x)
 {
 	_size = x.size();
 	_capacity = x.capacity();
-	for (size_t i = 0; i < _size; i++)
+	for (size_type i = 0; i < _size; i++)
 	{
 		_alloc.allocate(_capacity);
 		_alloc.construct(_tab[i], x[i]);
@@ -60,7 +56,7 @@ vector<T, Alloc>::vector (const vector& x)
 template <typename T, typename Alloc>		
 vector<T, Alloc>::~vector(void)
 {
-	//_clear_tab(*this);
+	_clear_tab();
 
 	return ;
 };
@@ -68,10 +64,10 @@ vector<T, Alloc>::~vector(void)
 template <class T, class Alloc>
 vector<T, Alloc>	&vector<T, Alloc>::operator=(const vector &x)
 {
-	for (size_t i = 0; i < _size; i++)
+	for (size_type i = 0; i < _size; i++)
 		_alloc.destroy(_tab[i]);
 	this->_size = x.size();
-	for (size_t i = 0; i < _size; i++)
+	for (size_type i = 0; i < _size; i++)
 		_alloc.construct(_tab[i], x[i]);
 	
 	return *this;
@@ -81,29 +77,53 @@ vector<T, Alloc>	&vector<T, Alloc>::operator=(const vector &x)
 **	ITERATORS
 */
 
-// template <typename T, typename Alloc>
-// vector<T, Alloc>::iterator<T, Alloc>::begin()
-// {
-// 	return iterator(_tab);
-// }
+/* -- Operator overloads -- */
+
+template <typename T, typename Alloc>
+typename vector<T, Alloc>::iterator::reference	vector<T, Alloc>::iterator::operator*(void) const
+{
+	return (*this->_value);
+}
+
+template <typename T, typename Alloc>
+typename vector<T, Alloc>::iterator::pointer	vector<T, Alloc>::iterator::operator->(void) const
+{
+	return (this->_value);
+}
 
 // template <typename T, typename Alloc>
-// vector<T, Alloc>::const_iterator<T, Alloc>::begin() const
+// typename vector<T, Alloc>::iterator&			vector<T, Alloc>::iterator::operator=(const iterator& x)
 // {
-// 	return const_iterator(_tab);
+// 	if (this == &rhs)
+// 		return *this;
+// 	const_iterator first = rhs.begin();
+// 	const_iterator	last = rhs.end();
+// 	return ;
 // }
 
-// template <typename T, typename Alloc>
-// vector<T, Alloc>::iterator<T, Alloc>::end()
-// {
-// 	return iterator(_tab[_size]);
-// }
+template <typename T, typename Alloc>
+typename vector<T, Alloc>::iterator vector<T, Alloc>::begin()
+{
+	return iterator(_tab);
+}
 
-// template <typename T, typename Alloc>
-// vector<T, Alloc>::const_iterator<T, Alloc>::end() const
-// {
-// 	return const_iterator(_tab[_size]);
-// }
+template <typename T, typename Alloc>
+typename vector<T, Alloc>::const_iterator vector<T, Alloc>::begin() const
+{
+	return const_iterator(_tab);
+}
+
+template <typename T, typename Alloc>
+typename vector<T, Alloc>::iterator vector<T, Alloc>::end()
+{
+	return iterator(&_tab[_size]);
+}
+
+template <typename T, typename Alloc>
+typename vector<T, Alloc>::const_iterator vector<T, Alloc>::end() const
+{
+	return const_iterator(&_tab[_size]);
+}
 
 // template <typename T, typename Alloc>
 // vector<T, Alloc>::reverse_iterator<T, Alloc>::rbegin()
@@ -162,12 +182,12 @@ void vector<T, Alloc>::reserve(size_type n)
 {
 	vector<T, Alloc>	tmp(this);
 
-	_clear_tab(this);
+	_clear_tab();
 	_alloc.allocate(n);
 	_capacity = n;
-	for (size_t i = 0; i < _size; i++)
+	for (size_type i = 0; i < _size; i++)
 		_alloc.construct(_tab[i], tmp[i]);
-	_clear_tab(tmp);
+	//_clear_tab(tmp);
 }
 
 template <class T, class Alloc>
@@ -175,13 +195,13 @@ void vector<T, Alloc>::resize(size_type n, value_type val)
 {
 	//Notice that this function changes the actual content of the container by inserting or erasing elements from it.
 	if (n < _size)
-		for (size_t i = n; i < _size; i++)
+		for (size_type i = n; i < _size; i++)
 			_alloc.destroy(_tab[i]);
 	else
 	{
 		if (n > _capacity)
 			reserve(n);
-		for (size_t i = _size; i < n; i++)
+		for (size_type i = _size; i < n; i++)
 			_alloc.construct(_tab[i], val);
 	}
 }

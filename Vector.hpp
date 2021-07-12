@@ -108,7 +108,7 @@ class	vector
 				typedef	value_type&	reference;
 				typedef	value_type*	pointer;
 				typedef ptrdiff_t	difference_type;
-				const_iterator(void) : _value(NULL) { return; };
+				const_iterator(void) { return; };
 				const_iterator(const const_iterator& x) { this->_value = x._value; return ;};//*a = t; ?
 				~const_iterator(void) { return; };
 				reference	operator*(void) const;

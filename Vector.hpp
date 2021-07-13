@@ -23,30 +23,78 @@ class	vector
 		typedef ptrdiff_t									difference_type;
 		typedef size_t										size_type;
 
-		/*
-		** 	DONE
-		*/
-		explicit vector (const allocator_type& alloc = allocator_type()); // empty container
-		explicit vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()); //fill constructor
-		vector (const vector& x); // copy constructor
+		/**********************/
+		/**	MEMBER FUNCTIONS **/
+		/**********************/
+
+		explicit vector (const allocator_type& alloc = allocator_type());
+		explicit vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type());
+		vector (const vector& x);
+		template <class InputIterator>
+		vector(InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type());
 		virtual ~vector(void);
-		reference		operator[](size_type n);
-		const_reference	operator[](size_type n) const;
+
+		/*
+		**	Iterators
+		*/
+		iterator begin();
+		const_iterator begin() const;
+		iterator end();
+		const_iterator end() const;
+		// reverse_iterator rbegin();
+		// const_reverse_iterator rbegin() const;
+		// reverse_iterator rend();
+		// const_reverse_iterator rend() const;
+
+		/*
+		**	Capacity
+		*/
 		size_type size() const;
 		size_type max_size() const;
+		void resize (size_type n, value_type val = value_type());
 		size_type capacity() const;
 		bool empty() const;
+		void reserve (size_type n);
+
+		/*
+		**	Element access
+		*/
+		reference		operator[](size_type n);
+		const_reference	operator[](size_type n) const;
 		reference at (size_type n);
 		const_reference at (size_type n) const;
-		void resize (size_type n, value_type val = value_type());
-		void reserve (size_type n);
-		void clear();
-		void push_back (const value_type& val);
-		void pop_back();
 		reference front();
 		const_reference front() const;
 		reference back();
 		const_reference back() const;
+
+		/*
+		**	Modifiers
+		*/
+		// template <class InputIterator>
+  		// void assign (InputIterator first, InputIterator last);
+		// void assign (size_type n, const value_type& val);
+		void push_back (const value_type& val);
+		void pop_back();
+		// iterator insert (iterator position, const value_type& val);
+		// void insert (iterator position, size_type n, const value_type& val);
+		// template <class InputIterator>
+		// void insert (iterator position, InputIterator first, InputIterator last);
+		// iterator erase (iterator position);
+		// iterator erase (iterator first, iterator last);
+		// void swap (vector& x);
+		void clear();
+
+		/*
+		**	Allocator
+		*/
+		allocator_type get_allocator() const;
+
+		/*
+		** 	TO COMPLETE
+		*/
+		vector &operator=(const vector& x);
+
 		//?
 		class	OutOfRangeException : public std::exception
 		{
@@ -56,12 +104,14 @@ class	vector
 					return "Terminating with uncaught exception of type std::out_of_range: vector.";
 				}
 		};
+
+		/*****************/
+		/*** ITERATORS ***/
+		/*****************/
+
 		class iterator
 		{
 			public:
-				/*
-				**	DONE
-				*/
 				typedef	value_type&	reference;
 				typedef	value_type*	pointer;
 				typedef ptrdiff_t	difference_type;
@@ -91,20 +141,14 @@ class	vector
 				const_reference operator[](size_type n) const;
 				difference_type	operator[](const iterator&) const;
 				difference_type	operator-(const iterator& x) const;
-				//*a = t; ?
+				//to do : *a = t; ?
 			private:
 				typedef value_type*	_value;
-				typedef	iterator	first;
-				typedef	iterator	last;
-				
 				//friend class vector;
 		};
 		class const_iterator
 		{
 			public:
-				/*
-				**	DONE
-				*/
 				typedef	value_type&	reference;
 				typedef	value_type*	pointer;
 				typedef ptrdiff_t	difference_type;
@@ -134,41 +178,11 @@ class	vector
 				const_reference operator[](size_type n) const;
 				difference_type	operator[](const const_iterator&) const;
 				difference_type	operator-(const const_iterator& x) const;
+				//to do : *a = t; ?
 			private:
 				typedef value_type*	_value;
 				//friend class vector;
 		};
-
-		/*
-		** 	TO COMPLETE
-		*/
-		vector &operator=(const vector& x);
-		iterator begin();
-		const_iterator begin() const;
-		iterator end();
-		const_iterator end() const;
-		// reverse_iterator rbegin();
-		// const_reverse_iterator rbegin() const;
-		// reverse_iterator rend();
-		// const_reverse_iterator rend() const;
-		
-		/*
-		** 	TO DO
-		*/
-		template <class InputIterator>
-        vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type()); //range constructor
-
-		template <class InputIterator>
-  		void assign (InputIterator first, InputIterator last);
-		void assign (size_type n, const value_type& val);
-		iterator insert (iterator position, const value_type& val);
-		void insert (iterator position, size_type n, const value_type& val);
-		template <class InputIterator>
-    	void insert (iterator position, InputIterator first, InputIterator last);
-		iterator erase (iterator position);
-		iterator erase (iterator first, iterator last);
-		void swap (vector& x);
-		allocator_type get_allocator() const;
 	private:
 		value_type											*_tab;
 		size_type											_size;
@@ -177,9 +191,11 @@ class	vector
 		size_type											_capacity;
 		void												_clear_tab(void);	
 };
-	/*
-	** 	DONE
-	*/
+
+	/**************************************/
+	/*** NON MEMBER FUNCTIONS OVERLOADS ***/
+	/**************************************/
+
 	template <class T, class Alloc>
 	bool operator== (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs);
 	template <class T, class Alloc>
@@ -193,6 +209,9 @@ class	vector
 	template <class T, class Alloc>
 	bool operator>= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs);
 
+	/*
+	**	TO COMPLETE
+	*/
 	template <class T, class Alloc>
 	void swap (vector<T,Alloc>& x, vector<T,Alloc>& y);
 

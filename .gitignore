@@ -32,3 +32,5 @@
 *.app
 
 ft_containers
+test
+.vscode

@@ -3,6 +3,10 @@
 
 # include "Vector.hpp"
 
+
+// capacity = espace alloué -> peut etre > a size (nb d'elemts) ex si on a pop un element, la size reduit mais capacity reste la meme
+// allocate/desalloc -> change capacity ; construct etc -> change size
+
 namespace ft {
 
 /***************************/
@@ -12,20 +16,29 @@ namespace ft {
 template <typename T, typename Alloc>
 void	vector<T, Alloc>::_clear_tab(void)
 {
-		_alloc.destroy(this->_tab);
-		_alloc.deallocate(this->_tab, this->_capacity);
+	while (_size--)
+		_alloc.destroy(&this->_tab[_size]);
+	_alloc.deallocate(this->_tab, this->_capacity);
 }
 
 /**********************/
 /**	MEMBER FUNCTIONS **/
 /**********************/
 
-template <typename T, typename Alloc>
-vector<T, Alloc>::vector (const allocator_type& alloc) : _tab(NULL), _size(0),
-_max_size(alloc.max_size()), _alloc(alloc), _capacity(0) { return ; };
+/*
+** Default constructor
+*/
 
 template <typename T, typename Alloc>
-vector<T, Alloc>::vector (size_type n, const value_type& val,
+vector<T, Alloc>::vector(const allocator_type& alloc) : _tab(NULL), _size(0),
+_max_size(alloc.max_size()), _alloc(alloc), _capacity(0) { return ; };
+
+/*
+** Fill constructor
+*/
+
+template <typename T, typename Alloc>
+vector<T, Alloc>::vector(size_type n, const value_type& val,
 const allocator_type& alloc) : _size(n), _max_size(alloc.max_size()), 
 _alloc(alloc), _capacity(n)
 {
@@ -35,14 +48,31 @@ _alloc(alloc), _capacity(n)
 	return ;
 };
 
-// capacity = espace alloué -> peut etre > a size (nb d'elemts) ex si on a pop un element, la size reduit mais capacity reste la meme
-// allocate/desalloc -> change capacity ; construct etc -> change size
-
-// template <class InputIterator>
-//     vector (InputIterator first, InputIterator last, const allocator_type& alloc); //range constructor
+/*
+** Range constructor
+*/
 
 template <typename T, typename Alloc>
-vector<T, Alloc>::vector (const vector& x)
+template <class InputIterator>
+vector<T, Alloc>::vector(InputIterator first, InputIterator last, const allocator_type& alloc) : _max_size(alloc.max_size()), _alloc(alloc), _capacity(0)
+{
+	while (first != last)
+	{
+		first++;
+		_capacity++;
+	}
+	_tab = _alloc.allocate(_capacity);
+	for (size_type i = 0; i < _capacity; i++)
+		_alloc.construct(_tab[i], last);
+	_size = _capacity;
+}
+
+/*
+** Copy constructor
+*/
+
+template <typename T, typename Alloc>
+vector<T, Alloc>::vector(const vector& x)
 {
 	_size = x.size();
 	_capacity = x.capacity();
@@ -51,9 +81,9 @@ vector<T, Alloc>::vector (const vector& x)
 		_alloc.allocate(_capacity);
 		_alloc.construct(_tab[i], x[i]);
 	}
-}; 
+};
 
-template <typename T, typename Alloc>		
+template <typename T, typename Alloc>
 vector<T, Alloc>::~vector(void)
 {
 	_clear_tab();

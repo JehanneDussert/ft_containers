@@ -35,6 +35,7 @@ class	vector
 				typedef	value_type*	pointer;
 				typedef ptrdiff_t	difference_type;
 				iterator(void) { return; };
+				iterator(value_type *x);
 				iterator(const iterator& x) { this->_value = x._value; return ;};
 				~iterator(void) { return; };
 				reference	operator*(void) const;
@@ -62,7 +63,7 @@ class	vector
 				difference_type	operator-(const iterator& x) const;
 				//to do : *a = t; ?
 			private:
-				typedef value_type*	_value;
+				value_type	*_value;
 				//friend class vector;
 		};
 		class const_iterator

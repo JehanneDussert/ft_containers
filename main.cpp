@@ -1,21 +1,35 @@
 #include "Vector_functions.hpp"
-
+#include <vector>
 int main(void)
 {
-    //ft::vector<int> test(1, 2);
-	ft::vector<int>				v;
-	ft::vector<int>				v2(10);
-	ft::vector<int>::iterator	it;
+    std::vector<int> first;                                // empty vector of ints
+	std::cout << "The contents of 1 are:";
+  	for (std::vector<int>::iterator it = first.begin(); it != first.end(); ++it)
+    	std::cout << ' ' << *it;
+  	std::cout << '\n';
 
-	std::cout << v.size() << std::endl;
-	std::cout << v.capacity() << std::endl;
+	std::vector<int> second (4,100);                       // four ints with value 100
+	std::cout << "The contents of 2 are:";
+  	for (std::vector<int>::iterator itsec = second.begin(); itsec != second.end(); ++itsec)
+    	std::cout << ' ' << *itsec;
+  	std::cout << '\n';
+	// std::vector<int> third (second.begin(),second.end());  // iterating through second
+	// std::vector<int> fourth (third);                       // a copy of third
 
+	ft::vector<int> v1;                                // empty vector of ints
+	std::cout << "The contents of 1 are:";
+	ft::vector<int>::iterator it2;
+  	for (ft::vector<int>::iterator it2 = v1.begin(); it2 != v1.end(); ++it2)
+    	std::cout << ' ' << *it2;
+  	std::cout << "\n\n";
 
-	std::cout << v2.size() << std::endl;
-	std::cout << v2.capacity() << std::endl;
-	v2.push_back(5);
-	std::cout << v2.size() << std::endl;
-	std::cout << v2.capacity() << std::endl;
+	ft::vector<int> v2(4,100);                       // four ints with value 100
+	std::cout << "The contents of 2 are:";
+  	for (ft::vector<int>::iterator itsec2 = v2.begin(); itsec2 != v2.end(); ++itsec2)
+    	std::cout << ' ' << *itsec2;
+  	std::cout << "\n\n";
+	// ft::vector<int> v3(v2.begin(),v2.end());  // iterating through second
+	// ft::vector<int> v4(v3);                       // a copy of third
 
 
     return 0;

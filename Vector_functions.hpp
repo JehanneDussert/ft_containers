@@ -75,10 +75,13 @@ vector<T, Alloc>::vector(const vector& x)
 {
 	_size = x.size();
 	_capacity = x.capacity();
+	_alloc.allocate(_capacity);
+	std::cout << "cap :" << _capacity << std::endl;
+	std::cout << "size :" << _size << std::endl;
 	for (size_type i = 0; i < _size; i++)
 	{
-		_alloc.allocate(_capacity);
-		_alloc.construct(_tab[i], x[i]);
+		_alloc.construct(&_tab[i], x[i]);
+	std::cout << "size\n";
 	}
 };
 
@@ -105,6 +108,13 @@ vector<T, Alloc>	&vector<T, Alloc>::operator=(const vector &x)
 /*
 **	ITERATORS
 */
+
+
+template <typename T, typename Alloc>
+vector<T, Alloc>::iterator::iterator(value_type *x) : _value(x)
+{
+	return ;
+}
 
 /* -- Operator overloads iterator -- */
 
@@ -138,7 +148,7 @@ bool	vector<T, Alloc>::iterator::operator==(const iterator& x) const
 template <typename T, typename Alloc>
 bool	vector<T, Alloc>::iterator::operator!=(const iterator& x) const
 {
-	return (this == x ? false : true);
+	return (this->_value != x._value ? true : false);
 }
 
 template <typename T, typename Alloc>
@@ -493,7 +503,11 @@ void vector<T, Alloc>::reserve(size_type n)
 {
 	vector<T, Alloc>	tmp;
 
-	tmp = *this;
+	tmp._alloc.allocate(n);
+	for (size_type i = 0; i < _size; i++)
+	{
+		_alloc.construct(&tmp._tab[i], _tab[i]);
+	}
 	_clear_tab();
 	_alloc.allocate(n);
 	_capacity = n;
@@ -588,7 +602,6 @@ void vector<T, Alloc>::assign(InputIterator first, InputIterator last)
 		first++;
 		n++;
 	}
-	std::cout << "here\n";
 	if (n > _capacity)
 	{
 		_clear_tab();

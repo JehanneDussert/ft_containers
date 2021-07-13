@@ -94,6 +94,7 @@ vector<T, Alloc>::~vector(void)
 template <class T, class Alloc>
 vector<T, Alloc>	&vector<T, Alloc>::operator=(const vector &x)
 {
+	this-
 	for (size_type i = 0; i < _size; i++)
 		_alloc.destroy(_tab[i]);
 	this->_size = x.size();

@@ -36,6 +36,9 @@ _max_size(alloc.max_size()), _alloc(alloc), _capacity(0) { return ; };
 ** Fill constructor
 */
 
+// Prbl : my vector should call fill constructor and not range
+// Should look at enable_if
+
 template <typename T, typename Alloc>
 vector<T, Alloc>::vector(size_type n, const value_type& val,
 const allocator_type& alloc) : _size(n), _max_size(alloc.max_size()), 
@@ -45,7 +48,7 @@ _alloc(alloc), _capacity(n)
 	for (size_type i = 0; i < n; i++)
 		_alloc.construct(&_tab[i], val);
 	return ;
-};
+}
 
 /*
 ** Range constructor
@@ -76,12 +79,9 @@ vector<T, Alloc>::vector(const vector& x)
 	_size = x.size();
 	_capacity = x.capacity();
 	_alloc.allocate(_capacity);
-	std::cout << "cap :" << _capacity << std::endl;
-	std::cout << "size :" << _size << std::endl;
 	for (size_type i = 0; i < _size; i++)
 	{
 		_alloc.construct(&_tab[i], x[i]);
-	std::cout << "size\n";
 	}
 };
 

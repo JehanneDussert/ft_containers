@@ -35,7 +35,7 @@ class	vector
 				typedef	value_type*	pointer;
 				typedef ptrdiff_t	difference_type;
 				iterator(void) { return; };
-				iterator(value_type *x);
+				iterator(value_type *x) : _value(x) { return ; };
 				iterator(const iterator& x) { this->_value = x._value; return ;};
 				~iterator(void) { return; };
 				reference	operator*(void) const;
@@ -73,6 +73,7 @@ class	vector
 				typedef	value_type*	pointer;
 				typedef ptrdiff_t	difference_type;
 				const_iterator(void) { return; };
+				const_iterator(value_type *x) : _value(x) { return ; };
 				const_iterator(const const_iterator& x) { this->_value = x._value; return ;};//*a = t; ?
 				~const_iterator(void) { return; };
 				reference	operator*(void) const;
@@ -100,7 +101,7 @@ class	vector
 				difference_type	operator-(const const_iterator& x) const;
 				//to do : *a = t; ?
 			private:
-				typedef value_type*	_value;
+				value_type*	_value;
 				//friend class vector;
 		};
 		/**********************/
@@ -110,8 +111,8 @@ class	vector
 		explicit vector (const allocator_type& alloc = allocator_type());
 		explicit vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type());
 		vector (const vector& x);
-		template <class InputIterator>
-		vector(InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type());
+		// template <class InputIterator>
+		// vector(InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type());
 		virtual ~vector(void);
 
 		/*

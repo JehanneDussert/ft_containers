@@ -54,20 +54,20 @@ _alloc(alloc), _capacity(n)
 ** Range constructor
 */
 
-template <typename T, typename Alloc>
-template <class InputIterator>
-vector<T, Alloc>::vector(InputIterator first, InputIterator last, const allocator_type& alloc) : _max_size(alloc.max_size()), _alloc(alloc), _capacity(0)
-{
-	while (first != last)
-	{
-		first++;
-		_capacity++;
-	}
-	_tab = _alloc.allocate(_capacity);
-	for (size_type i = 0; i < _capacity; i++)
-		_alloc.construct(&_tab[i], last);
-	_size = _capacity;
-}
+// template <typename T, typename Alloc>
+// template <class InputIterator>
+// vector<T, Alloc>::vector(InputIterator first, InputIterator last, const allocator_type& alloc) : _max_size(alloc.max_size()), _alloc(alloc), _capacity(0)
+// {
+// 	while (first != last)
+// 	{
+// 		first++;
+// 		_capacity++;
+// 	}
+// 	_tab = _alloc.allocate(_capacity);
+// 	for (size_type i = 0; i < _capacity; i++)
+// 		_alloc.construct(&_tab[i], last);
+// 	_size = _capacity;
+// }
 
 /*
 ** Copy constructor
@@ -96,11 +96,24 @@ vector<T, Alloc>::~vector(void)
 template <class T, class Alloc>
 vector<T, Alloc>	&vector<T, Alloc>::operator=(const vector &x)
 {
+	if (this == &x)
+		return *this;
 	for (size_type i = 0; i < _size; i++)
 		_alloc.destroy(&_tab[i]);
-	this->_size = x.size();
-	for (size_type i = 0; i < _size; i++)
-		_alloc.construct(&_tab[i], x[i]);
+	if (!_capacity)
+	{
+		_capacity = x.capacity();
+		_alloc.allocate(_capacity);
+	}
+	const_iterator first = x.begin(); const_iterator last = x.end();
+	// std::cout << _tab[0] << " " << x[_size] << "\n";
+	for (size_type i = 0; first != last; ++first)
+	{
+		std::cout << "ici\n";
+		_alloc.construct(&_tab[i++], *first);
+		std::cout << "lo\n";
+		std::cout << "there\n";
+	}
 	
 	return *this;
 }
@@ -108,13 +121,6 @@ vector<T, Alloc>	&vector<T, Alloc>::operator=(const vector &x)
 /*
 **	ITERATORS
 */
-
-
-template <typename T, typename Alloc>
-vector<T, Alloc>::iterator::iterator(value_type *x) : _value(x)
-{
-	return ;
-}
 
 /* -- Operator overloads iterator -- */
 
@@ -299,7 +305,7 @@ bool	vector<T, Alloc>::const_iterator::operator==(const const_iterator& x) const
 template <typename T, typename Alloc>
 bool	vector<T, Alloc>::const_iterator::operator!=(const const_iterator& x) const
 {
-	return (this == x ? false : true);
+	return (this->_value == x._value ? false : true);
 }
 
 template <typename T, typename Alloc>

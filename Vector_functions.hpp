@@ -16,9 +16,8 @@ namespace ft {
 template <typename T, typename Alloc>
 void	vector<T, Alloc>::_clear_tab(void)
 {
-	while (_size--)
-		_alloc.destroy(&this->_tab[_size]);
-	_alloc.deallocate(this->_tab, this->_capacity);
+	clear();
+	_alloc.deallocate(_tab, _capacity);
 }
 
 /**********************/
@@ -44,7 +43,7 @@ _alloc(alloc), _capacity(n)
 {
 	_tab = _alloc.allocate(n);
 	for (size_type i = 0; i < n; i++)
-		_alloc.construct(_tab[i], val);
+		_alloc.construct(&_tab[i], val);
 	return ;
 };
 
@@ -63,7 +62,7 @@ vector<T, Alloc>::vector(InputIterator first, InputIterator last, const allocato
 	}
 	_tab = _alloc.allocate(_capacity);
 	for (size_type i = 0; i < _capacity; i++)
-		_alloc.construct(_tab[i], last);
+		_alloc.construct(&_tab[i], last);
 	_size = _capacity;
 }
 
@@ -94,12 +93,11 @@ vector<T, Alloc>::~vector(void)
 template <class T, class Alloc>
 vector<T, Alloc>	&vector<T, Alloc>::operator=(const vector &x)
 {
-	this-
 	for (size_type i = 0; i < _size; i++)
-		_alloc.destroy(_tab[i]);
+		_alloc.destroy(&_tab[i]);
 	this->_size = x.size();
 	for (size_type i = 0; i < _size; i++)
-		_alloc.construct(_tab[i], x[i]);
+		_alloc.construct(&_tab[i], x[i]);
 	
 	return *this;
 }
@@ -493,14 +491,15 @@ bool vector<T, Alloc>::empty() const
 template <class T, class Alloc>
 void vector<T, Alloc>::reserve(size_type n)
 {
-	vector<T, Alloc>	tmp(this);
+	vector<T, Alloc>	tmp;
 
+	tmp = *this;
 	_clear_tab();
 	_alloc.allocate(n);
 	_capacity = n;
 	for (size_type i = 0; i < _size; i++)
-		_alloc.construct(_tab[i], tmp[i]);
-	//_clear_tab(tmp);
+		_alloc.construct(&_tab[i], tmp[i]);
+	tmp._clear_tab();
 }
 
 template <class T, class Alloc>
@@ -509,13 +508,13 @@ void vector<T, Alloc>::resize(size_type n, value_type val)
 	//Notice that this function changes the actual content of the container by inserting or erasing elements from it.
 	if (n < _size)
 		for (size_type i = n; i < _size; i++)
-			_alloc.destroy(_tab[i]);
+			_alloc.destroy(&_tab[i]);
 	else
 	{
 		if (n > _capacity)
 			reserve(n);
 		for (size_type i = _size; i < n; i++)
-			_alloc.construct(_tab[i], val);
+			_alloc.construct(&_tab[i], val);
 	}
 }
 
@@ -580,11 +579,50 @@ typename vector<T, Alloc>::const_reference vector<T, Alloc>::back() const
 */
 
 template <typename T, typename Alloc>
-void vector<T, Alloc>::clear()
+template <class InputIterator>
+void vector<T, Alloc>::assign(InputIterator first, InputIterator last)
 {
-	for (; _size > 0; _size--)
-		_alloc.destroy(_tab[_size]);
+	size_type	n = 0;
+	while (first != last)
+	{
+		first++;
+		n++;
+	}
+	std::cout << "here\n";
+	if (n > _capacity)
+	{
+		_clear_tab();
+		_alloc.allocate(n);
+		_capacity = n; _size = n;
+		for (size_type i = 0; i < n; i++)
+			_alloc.construct(&_tab[i], last);
+	}
+	else
+	{
+		clear();
+		for (size_type i = 0; i < n; i++)
+			_alloc.construct(&_tab[i], last);
+	}
 }
+
+template <typename T, typename Alloc>
+void  vector<T, Alloc>::assign(size_type n, const value_type& val)
+{
+	if (n > _capacity)
+	{
+		_clear_tab();
+		_alloc.allocate(n);
+		_capacity = n; _size = n;
+		for (size_type i = 0; i < n; i++)
+			_alloc.construct(&_tab[i], val);
+	}
+	else
+	{
+		clear();
+		for (size_type i = 0; i < n; i++)
+			_alloc.construct(&_tab[i], val);
+	}
+}	
 
 template <typename T, typename Alloc>
 void  vector<T, Alloc>::push_back(const value_type& val)
@@ -592,14 +630,49 @@ void  vector<T, Alloc>::push_back(const value_type& val)
 	if (_size + 1 >= _capacity)
 		reserve(_size + 1);
 	++_size;
-	_alloc.construct(_tab[_size], val);
+	_alloc.construct(&_tab[_size], val);
 }
 
 template <typename T, typename Alloc>
 void vector<T, Alloc>::pop_back()
 {
-	_alloc.destroy(_tab[_size]);
+	_alloc.destroy(&_tab[_size]);
 	--_size;
+}
+
+//typename vector<T, Alloc>::iterator::reference	vector<T, Alloc>::iterator::operator*(void) const
+
+// template <typename T, typename Alloc>
+// typename vector<T, Alloc>::iterator vector<T, Alloc>::insert(iterator position, const value_type& val)
+// {
+
+// }
+
+// template <class T, class Alloc>
+// void vector<T, Alloc>::reserve(size_type n)
+// {
+// 	vector<T, Alloc>	tmp(this);
+
+// 	_clear_tab();
+// 	_alloc.allocate(n);
+// 	_capacity = n;
+// 	for (size_type i = 0; i < _size; i++)
+// 		_alloc.construct(_tab[i], tmp[i]);
+// 	tmp._clear_tab();
+// }
+
+// void insert (iterator position, size_type n, const value_type& val);
+// template <class InputIterator>
+// void insert (iterator position, InputIterator first, InputIterator last);
+// iterator erase (iterator position);
+// iterator erase (iterator first, iterator last);
+// void swap (vector& x);
+
+template <typename T, typename Alloc>
+void vector<T, Alloc>::clear()
+{
+	while (_size > 0)
+		_alloc.destroy(&_tab[--_size]);
 }
 
 //Removes from the vector either a single element (position) or a range of elements ([first,last)).

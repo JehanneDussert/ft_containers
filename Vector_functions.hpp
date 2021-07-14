@@ -103,17 +103,11 @@ vector<T, Alloc>	&vector<T, Alloc>::operator=(const vector &x)
 	if (!_capacity)
 	{
 		_capacity = x.capacity();
-		_alloc.allocate(_capacity);
+		_tab = _alloc.allocate(_capacity);
 	}
 	const_iterator first = x.begin(); const_iterator last = x.end();
-	// std::cout << _tab[0] << " " << x[_size] << "\n";
 	for (size_type i = 0; first != last; ++first)
-	{
-		std::cout << "ici\n";
 		_alloc.construct(&_tab[i++], *first);
-		std::cout << "lo\n";
-		std::cout << "there\n";
-	}
 	
 	return *this;
 }

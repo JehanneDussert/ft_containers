@@ -30,9 +30,9 @@ int main(void)
   	for (ft::vector<int>::iterator itsec2 = v2.begin(); itsec2 != v2.end(); ++itsec2)
     	std::cout << ' ' << *itsec2;
   	std::cout << "\n";
+	v1 = v2;
 	// ft::vector<int> v3(v2.begin(),v2.end());  // iterating through second
 	// ft::vector<int> v4(v3);                       // a copy of third
-
 
     return 0;
 }

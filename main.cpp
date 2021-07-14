@@ -33,6 +33,11 @@ int main(void)
 	v1 = v2;
 	// ft::vector<int> v3(v2.begin(),v2.end());  // iterating through second
 	// ft::vector<int> v4(v3);                       // a copy of third
+                   // four ints with value 100
+	std::cout << "The contents of 1 are:";
+  	for (ft::vector<int>::iterator itv1 = v1.begin(); itv1 != v1.end(); ++itv1)
+    	std::cout << ' ' << *itv1;
+  	std::cout << "\n";
 
     return 0;
 }

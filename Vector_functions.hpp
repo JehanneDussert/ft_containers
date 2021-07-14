@@ -88,7 +88,7 @@ vector<T, Alloc>::vector(const vector& x)
 template <typename T, typename Alloc>
 vector<T, Alloc>::~vector(void)
 {
-	_clear_tab();
+	clear();
 
 	return ;
 };
@@ -96,19 +96,21 @@ vector<T, Alloc>::~vector(void)
 template <class T, class Alloc>
 vector<T, Alloc>	&vector<T, Alloc>::operator=(const vector &x)
 {
+	vector<T, Alloc>	tmp;
 	if (this == &x)
 		return *this;
 	for (size_type i = 0; i < _size; i++)
 		_alloc.destroy(&_tab[i]);
 	if (!_capacity)
 	{
-		_capacity = x.capacity();
-		_tab = _alloc.allocate(_capacity);
+		tmp._capacity = x.capacity();
+		tmp._tab = _alloc.allocate(tmp._capacity);
 	}
 	const_iterator first = x.begin(); const_iterator last = x.end();
 	for (size_type i = 0; first != last; ++first)
-		_alloc.construct(&_tab[i++], *first);
-	
+		tmp._alloc.construct(&tmp._tab[i++], *first);
+	this->_tab = tmp._tab; this->_size = x.size();
+
 	return *this;
 }
 

@@ -26,7 +26,7 @@ int main(void)
   	std::cout << "\n";
 
 	ft::vector<int> v2(4,100);                       // four ints with value 100
-	std::cout << "The contents of 2 are:";
+	std::cout << "\nThe contents of 2 are:";
   	for (ft::vector<int>::iterator itsec2 = v2.begin(); itsec2 != v2.end(); ++itsec2)
     	std::cout << ' ' << *itsec2;
   	std::cout << "\n";
@@ -34,7 +34,7 @@ int main(void)
 	// ft::vector<int> v3(v2.begin(),v2.end());  // iterating through second
 	// ft::vector<int> v4(v3);                       // a copy of third
                    // four ints with value 100
-	std::cout << "The contents of 1 are:";
+	std::cout << "\nThe contents of 1 are:";
   	for (ft::vector<int>::iterator itv1 = v1.begin(); itv1 != v1.end(); ++itv1)
     	std::cout << ' ' << *itv1;
   	std::cout << "\n";

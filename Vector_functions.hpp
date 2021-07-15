@@ -54,20 +54,20 @@ _alloc(alloc), _capacity(n)
 ** Range constructor
 */
 
-// template <typename T, typename Alloc>
-// template <class InputIterator>
-// vector<T, Alloc>::vector(InputIterator first, InputIterator last, const allocator_type& alloc) : _max_size(alloc.max_size()), _alloc(alloc), _capacity(0)
-// {
-// 	while (first != last)
-// 	{
-// 		first++;
-// 		_capacity++;
-// 	}
-// 	_tab = _alloc.allocate(_capacity);
-// 	for (size_type i = 0; i < _capacity; i++)
-// 		_alloc.construct(&_tab[i], last);
-// 	_size = _capacity;
-// }
+template <typename T, typename Alloc>
+template <class InputIterator>
+vector<T, Alloc>::vector(InputIterator first, InputIterator last, const allocator_type& alloc) : _max_size(alloc.max_size()), _alloc(alloc), _capacity(0)
+{
+	while (first != last)
+	{
+		first++;
+		_capacity++;
+	}
+	_tab = _alloc.allocate(_capacity);
+	for (size_type i = 0; i < _capacity; i++)
+		_alloc.construct(&_tab[i], last);
+	_size = _capacity;
+}
 
 /*
 ** Copy constructor

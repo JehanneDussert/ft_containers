@@ -660,6 +660,8 @@ typename vector<T, Alloc>::iterator vector<T, Alloc>::insert(iterator position, 
 	}
 	// for (size_type i = 0; first != last; ++first)
 	// 	_alloc.construct(&tmp._tab[i++], *first);
+	// for (size_type i = 0; first != last; ++first)
+	// 	_alloc.construct(&tmp._tab[i++], *first);
 	// // _clear_tab();
 	// _tab = _alloc.allocate(n);
 	// _capacity = n;

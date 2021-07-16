@@ -22,6 +22,11 @@ class	vector
 		typedef ptrdiff_t									difference_type;
 		typedef size_t										size_type;
 
+		// class out_of_range : public std::logic_error
+		// {
+		// 	public:
+		// 		explicit out_of_range (const std::string& what_arg);
+		// };
 		
 		/*****************/
 		/*** ITERATORS ***/
@@ -30,6 +35,7 @@ class	vector
 		class iterator
 		{
 			public:
+
 				typedef	value_type&	reference;
 				typedef	value_type*	pointer;
 				typedef ptrdiff_t	difference_type;
@@ -142,8 +148,8 @@ class	vector
 		*/
 		reference		operator[](size_type n);
 		const_reference	operator[](size_type n) const;
-		reference at (size_type n);
-		const_reference at (size_type n) const;
+		reference at(size_type n);
+		const_reference at(size_type n) const;
 		reference front();
 		const_reference front() const;
 		reference back();
@@ -153,9 +159,9 @@ class	vector
 		**	Modifiers
 		*/
 		template <class InputIterator>
-  		void assign (InputIterator first, InputIterator last);
-		void assign (size_type n, const value_type& val);
-		void push_back (const value_type& val);
+  		void assign(typename ft::enable_if<!std::numeric_limits<InputIterator>::is_integer, InputIterator>::type first, InputIterator last);
+		void assign(size_type n, const value_type& val);
+		void push_back(const value_type& val);
 		void pop_back();
 		iterator insert (iterator position, const value_type& val);
 		void insert (iterator position, size_type n, const value_type& val);
@@ -192,6 +198,7 @@ class	vector
 		allocator_type										_alloc;
 		size_type											_capacity;
 		void												_clear_tab(void);	
+		void												_reallocate(size_type n);
 };
 
 	/**************************************/

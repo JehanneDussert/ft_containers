@@ -3,6 +3,7 @@
 
 # include "Vector.hpp"
 
+// reverse iterator for rbegin rend
 
 // iterators_traits, reverse_iterator, enable_if (done), is_integral, equal/lexicographical compare,
 // std::pair, std::make_pair, must be reimplemented.
@@ -80,11 +81,9 @@ vector<T, Alloc>::vector(const vector& x)
 {
 	_size = x.size();
 	_capacity = x.capacity();
-	_alloc.allocate(_capacity);
+	_tab = _alloc.allocate(_capacity);
 	for (size_type i = 0; i < _size; i++)
-	{
 		_alloc.construct(&_tab[i], x[i]);
-	}
 };
 
 template <typename T, typename Alloc>
@@ -104,11 +103,8 @@ vector<T, Alloc>	&vector<T, Alloc>::operator=(const vector &x)
 		return *this;
 	for (size_type i = 0; i < _size; i++)
 		_alloc.destroy(&_tab[i]);
-	if (!_capacity)
-	{
-		tmp._capacity = x.capacity();
-		tmp._tab = _alloc.allocate(tmp._capacity);
-	}
+	tmp._capacity = x.capacity();
+	tmp._tab = _alloc.allocate(tmp._capacity);
 	const_iterator first = x.begin(); const_iterator last = x.end();
 	for (size_type i = 0; first != last; ++first)
 		tmp._alloc.construct(&tmp._tab[i++], *first);
@@ -508,16 +504,12 @@ void vector<T, Alloc>::reserve(size_type n)
 {
 	vector<T, Alloc>	tmp;
 
-	tmp._alloc.allocate(n);
+	tmp._tab = _alloc.allocate(n);
 	iterator first = begin(); iterator last = end();
 	for (size_type i = 0; first != last; ++first)
-	{
-		// std::cout << _tab[i] << std::endl;
-		// segv
 		_alloc.construct(&tmp._tab[i++], *first);
-	}
-	_clear_tab();
-	_alloc.allocate(n);
+	// _clear_tab();
+	_tab = _alloc.allocate(n);
 	_capacity = n;
 	for (size_type i = 0; i < _size; i++)
 		_alloc.construct(&_tab[i], tmp[i]);
@@ -527,7 +519,6 @@ void vector<T, Alloc>::reserve(size_type n)
 template <class T, class Alloc>
 void vector<T, Alloc>::resize(size_type n, value_type val)
 {
-	//Notice that this function changes the actual content of the container by inserting or erasing elements from it.
 	if (n < _size)
 		for (size_type i = n; i < _size; i++)
 			_alloc.destroy(&_tab[i]);
@@ -535,8 +526,8 @@ void vector<T, Alloc>::resize(size_type n, value_type val)
 	{
 		if (n > _capacity)
 			reserve(n);
-		for (size_type i = _size; i < n; i++)
-			_alloc.construct(&_tab[i], val);
+		for (; _size < n; _size++)
+			_alloc.construct(&_tab[_size], val);
 	}
 }
 
@@ -559,16 +550,20 @@ typename vector<T, Alloc>::const_reference vector<T, Alloc>::operator[] (size_ty
 template <typename T, typename Alloc>
 typename vector<T, Alloc>::reference vector<T, Alloc>::at(size_type n)
 {
+	std::ostringstream ostr; ostr << "Vector.";
+
 	if (n >= _size - 1)
-		throw OutOfRangeException();
+		throw std::out_of_range(ostr.str());
 	return (*this)[n];
 }
 
 template <typename T, typename Alloc>
 typename vector<T, Alloc>::const_reference vector<T, Alloc>::at(size_type n) const
 {
+	std::ostringstream ostr; ostr << "Vector.";
+
 	if (n >= _size - 1)
-		throw OutOfRangeException();
+		throw std::out_of_range(ostr.str());
 	return (*this)[n];
 }
 
@@ -602,28 +597,21 @@ typename vector<T, Alloc>::const_reference vector<T, Alloc>::back() const
 
 template <typename T, typename Alloc>
 template <class InputIterator>
-void vector<T, Alloc>::assign(InputIterator first, InputIterator last)
+void vector<T, Alloc>::assign(typename ft::enable_if<!std::numeric_limits<InputIterator>::is_integer, InputIterator>::type first, InputIterator last)
 {
 	size_type	n = 0;
-	while (first != last)
-	{
-		first++;
+	while (first + n != last)
 		n++;
-	}
 	if (n > _capacity)
 	{
 		_clear_tab();
-		_alloc.allocate(n);
-		_capacity = n; _size = n;
-		for (size_type i = 0; i < n; i++)
-			_alloc.construct(&_tab[i], last);
+		_tab = _alloc.allocate(n);
 	}
 	else
-	{
 		clear();
-		for (size_type i = 0; i < n; i++)
-			_alloc.construct(&_tab[i], last);
-	}
+	_capacity = n; _size = n;
+	for (size_type i = 0; first != last; ++first)
+		_alloc.construct(&_tab[i++], *first);
 }
 
 template <typename T, typename Alloc>
@@ -632,26 +620,22 @@ void  vector<T, Alloc>::assign(size_type n, const value_type& val)
 	if (n > _capacity)
 	{
 		_clear_tab();
-		_alloc.allocate(n);
-		_capacity = n; _size = n;
-		for (size_type i = 0; i < n; i++)
-			_alloc.construct(&_tab[i], val);
+		_tab = _alloc.allocate(n);
 	}
 	else
-	{
 		clear();
-		for (size_type i = 0; i < n; i++)
-			_alloc.construct(&_tab[i], val);
-	}
+	_capacity = n; _size = n;
+	for (size_type i = 0; i < n; i++)
+		_alloc.construct(&_tab[i], val);
 }	
 
 template <typename T, typename Alloc>
 void  vector<T, Alloc>::push_back(const value_type& val)
 {
 	if (_size + 1 >= _capacity)
-		reserve(_size + 1);
-	++_size;
-	_alloc.construct(&_tab[_size], val);
+		resize(_size + 1, val);
+	else
+		_alloc.construct(&_tab[_size], val);
 }
 
 template <typename T, typename Alloc>
@@ -667,19 +651,6 @@ void vector<T, Alloc>::pop_back()
 // typename vector<T, Alloc>::iterator vector<T, Alloc>::insert(iterator position, const value_type& val)
 // {
 
-// }
-
-// template <class T, class Alloc>
-// void vector<T, Alloc>::reserve(size_type n)
-// {
-// 	vector<T, Alloc>	tmp(this);
-
-// 	_clear_tab();
-// 	_alloc.allocate(n);
-// 	_capacity = n;
-// 	for (size_type i = 0; i < _size; i++)
-// 		_alloc.construct(_tab[i], tmp[i]);
-// 	tmp._clear_tab();
 // }
 
 // void insert (iterator position, size_type n, const value_type& val);
@@ -710,11 +681,14 @@ void vector<T, Alloc>::clear()
 // 	;
 // }
 
-// template <typename T, typename Alloc>
-// void	vector<T, Alloc>::swap(vector &x)
-// {
-// 	swap(this, x);
-// }
+template <typename T, typename Alloc>
+void	vector<T, Alloc>::swap(vector &x)
+{
+	vector<T, Alloc>	tmp(x);
+
+	x = *this;
+	*this = tmp;
+}
 
 /*
 ** ALLOCATOR

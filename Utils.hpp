@@ -3,6 +3,7 @@
 
 # include <iostream>
 # include <iterator>
+# include <sstream>
 
 namespace ft
 {

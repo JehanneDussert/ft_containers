@@ -31,7 +31,16 @@ int main(void)
   	for (ft::vector<int>::iterator itsec2 = v2.begin(); itsec2 != v2.end(); ++itsec2)
     	std::cout << ' ' << *itsec2;
   	std::cout << "\n";
+	if (v1.empty())
+		std::cout << "v1 is empty\n";
+	else
+		std::cout << "v1 is not empty\n";
+	std::cout << "Copy v2 in v1\n";
 	v1 = v2;
+	if (v1.empty())
+		std::cout << "v1 is empty\n";
+	else
+		std::cout << "v1 is not empty\n";
 	ft::vector<int> v3(v2.begin(),v2.end());  // iterating through second
 	// ft::vector<int> v4(v3);                       // a copy of third
                    // four ints with value 100
@@ -50,7 +59,60 @@ int main(void)
 	std::cout << "Capacity:\t" << v1.capacity() << "\t\t\t" << v2.capacity() << std::endl;
 	std::cout << "Max size:\t" << v1.max_size() << "\t" << v2.max_size() << std::endl;
 	v1.resize(10, 20);
-	// std::cout << "New size v1:\t\t" << v1.size() << std::endl;
+	std::cout << "New size v1:\t\t" << v1.size() << std::endl;
+	for (size_t i = 0; i < v1.size(); i++)
+		std::cout << "v1 [" << i << "] | " << v1[i] << std::endl;
+	try 
+	{
+		v1.at(20)=100;      // vector::at throws an out-of-range
+	}
+	catch (const std::out_of_range& oor) {
+    	std::cerr << "Out of Range error: " << oor.what() << '\n';
+  	}
+
+	std::cout << "Front: " << v1.front() << std::endl;
+	std::cout << "Back: " << v1.back() << std::endl;
+
+	v1.assign(v3.begin(), v3.end());
+	std::cout << "Size:\t\t" << v1.size() << "\t\t\t" << v2.size() << std::endl;
+	std::cout << "Cont.:\n";
+	for (size_t i = 0; i < v1.size(); i++)
+		std::cout << "v1 [" << i << "] | " << v1[i] << std::endl;
+
+	v1.assign(15, 8);
+	std::cout << "Size:\t\t" << v1.size() << "\t\t\t" << v2.size() << std::endl;
+	std::cout << "Cont.:\n";
+	for (size_t i = 0; i < v1.size(); i++)
+		std::cout << "v1 [" << i << "] | " << v1[i] << std::endl;
+	
+	v1.push_back(9);
+	std::cout << "v1 back: " << v1.back() << std::endl;
+	v1.pop_back();
+	std::cout << "v1 pop: " << v1.back() << std::endl;
+
+	std::cout << "\nBef swap:\n";
+	for (size_t i = 0; i < v1.size(); i++)
+		std::cout << v1[i] << ' ';
+	std::cout <<  std::endl;
+	for (size_t i = 0; i < v2.size(); i++)
+		std::cout << v2[i] << ' ';
+	std::cout <<  std::endl;
+	v1.swap(v2);
+	std::cout << "Af swap:\n";
+	for (size_t i = 0; i < v1.size(); i++)
+		std::cout << v1[i] << ' ';
+	std::cout <<  std::endl;
+	for (size_t i = 0; i < v2.size(); i++)
+		std::cout << v2[i] << ' ';
+	std::cout <<  std::endl;
+	swap(v1, v2);
+	std::cout << "Af swap:\n";
+	for (size_t i = 0; i < v1.size(); i++)
+		std::cout << v1[i] << ' ';
+	std::cout <<  std::endl;
+	for (size_t i = 0; i < v2.size(); i++)
+		std::cout << v2[i] << ' ';
+	std::cout <<  std::endl;
 
     return 0;
 }

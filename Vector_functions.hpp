@@ -645,13 +645,28 @@ void vector<T, Alloc>::pop_back()
 	--_size;
 }
 
-//typename vector<T, Alloc>::iterator::reference	vector<T, Alloc>::iterator::operator*(void) const
-
-// template <typename T, typename Alloc>
-// typename vector<T, Alloc>::iterator vector<T, Alloc>::insert(iterator position, const value_type& val)
-// {
-
-// }
+template <typename T, typename Alloc>
+typename vector<T, Alloc>::iterator vector<T, Alloc>::insert(iterator position, const value_type& val)
+{
+	vector<T, Alloc>	tmp;
+	size_type n = 0;
+	iterator first = begin(); iterator last = end();
+	while (first + n != position)
+		n++;
+	if (n + _size > _capacity)
+	{
+		_capacity += n;
+		tmp._tab = _alloc.allocate(_capacity);
+	}
+	// for (size_type i = 0; first != last; ++first)
+	// 	_alloc.construct(&tmp._tab[i++], *first);
+	// // _clear_tab();
+	// _tab = _alloc.allocate(n);
+	// _capacity = n;
+	// for (size_type i = 0; i < _size; i++)
+	// 	_alloc.construct(&_tab[i], tmp[i]);
+	// tmp._clear_tab();
+}
 
 // void insert (iterator position, size_type n, const value_type& val);
 // template <class InputIterator>

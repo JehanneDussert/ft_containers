@@ -4,6 +4,9 @@
 # include "Vector.hpp"
 
 
+// iterators_traits, reverse_iterator, enable_if (done), is_integral, equal/lexicographical compare,
+// std::pair, std::make_pair, must be reimplemented.
+
 // capacity = espace alloué -> peut etre > a size (nb d'elemts) ex si on a pop un element, la size reduit mais capacity reste la meme
 // allocate/desalloc -> change capacity ; construct etc -> change size
 
@@ -36,9 +39,6 @@ _max_size(alloc.max_size()), _alloc(alloc), _capacity(0) { return ; };
 ** Fill constructor
 */
 
-// Prbl : my vector should call fill constructor and not range
-// Should look at enable_if
-
 template <typename T, typename Alloc>
 vector<T, Alloc>::vector(size_type n, const value_type& val,
 const allocator_type& alloc) : _size(n), _max_size(alloc.max_size()), 
@@ -56,16 +56,18 @@ _alloc(alloc), _capacity(n)
 
 template <typename T, typename Alloc>
 template <class InputIterator>
-vector<T, Alloc>::vector(InputIterator first, InputIterator last, const allocator_type& alloc) : _max_size(alloc.max_size()), _alloc(alloc), _capacity(0)
+vector<T, Alloc>::vector(typename ft::enable_if<!std::numeric_limits<InputIterator>::is_integer, InputIterator>::type first,
+InputIterator last, const allocator_type& alloc) : _max_size(alloc.max_size()), _alloc(alloc), _capacity(0)
 {
-	while (first != last)
+	size_type	n = 0;
+	while (first + n != last)
 	{
-		first++;
+		n++;
 		_capacity++;
 	}
 	_tab = _alloc.allocate(_capacity);
-	for (size_type i = 0; i < _capacity; i++)
-		_alloc.construct(&_tab[i], last);
+	for (size_type i = 0; first != last; ++first)
+		_alloc.construct(&_tab[i++], *first);
 	_size = _capacity;
 }
 

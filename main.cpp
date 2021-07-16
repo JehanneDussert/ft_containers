@@ -31,7 +31,7 @@ int main(void)
     	std::cout << ' ' << *itsec2;
   	std::cout << "\n";
 	v1 = v2;
-	// ft::vector<int> v3(v2.begin(),v2.end());  // iterating through second
+	ft::vector<int> v3(v2.begin(),v2.end());  // iterating through second
 	// ft::vector<int> v4(v3);                       // a copy of third
                    // four ints with value 100
 	std::cout << "\nThe contents of 1 are:";

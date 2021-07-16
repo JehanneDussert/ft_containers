@@ -1,8 +1,7 @@
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
 
-# include <iostream>
-# include <iterator>
+# include "Utils.hpp"
 
 namespace ft
 {
@@ -112,7 +111,8 @@ class	vector
 		explicit vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type());
 		vector (const vector& x);
 		template <class InputIterator>
-		vector(InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type());
+		vector(typename ft::enable_if<!std::numeric_limits<InputIterator>::is_integer, InputIterator>::type first,
+		InputIterator last, const allocator_type& alloc = allocator_type());
 		virtual ~vector(void);
 
 		/*

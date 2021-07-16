@@ -99,6 +99,7 @@ template <class T, class Alloc>
 vector<T, Alloc>	&vector<T, Alloc>::operator=(const vector &x)
 {
 	vector<T, Alloc>	tmp;
+
 	if (this == &x)
 		return *this;
 	for (size_type i = 0; i < _size; i++)
@@ -111,7 +112,7 @@ vector<T, Alloc>	&vector<T, Alloc>::operator=(const vector &x)
 	const_iterator first = x.begin(); const_iterator last = x.end();
 	for (size_type i = 0; first != last; ++first)
 		tmp._alloc.construct(&tmp._tab[i++], *first);
-	this->_tab = tmp._tab; this->_size = x.size();
+	_tab = tmp._tab; _size = x.size(); _capacity = tmp.capacity();
 
 	return *this;
 }
@@ -508,9 +509,12 @@ void vector<T, Alloc>::reserve(size_type n)
 	vector<T, Alloc>	tmp;
 
 	tmp._alloc.allocate(n);
-	for (size_type i = 0; i < _size; i++)
+	iterator first = begin(); iterator last = end();
+	for (size_type i = 0; first != last; ++first)
 	{
-		_alloc.construct(&tmp._tab[i], _tab[i]);
+		// std::cout << _tab[i] << std::endl;
+		// segv
+		_alloc.construct(&tmp._tab[i++], *first);
 	}
 	_clear_tab();
 	_alloc.allocate(n);

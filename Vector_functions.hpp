@@ -649,24 +649,28 @@ template <typename T, typename Alloc>
 typename vector<T, Alloc>::iterator vector<T, Alloc>::insert(iterator position, const value_type& val)
 {
 	vector<T, Alloc>	tmp;
-	size_type n = 0;
 	iterator first = begin(); iterator last = end();
-	while (first + n != position)
-		n++;
-	if (n + _size > _capacity)
-	{
-		_capacity += n;
-		tmp._tab = _alloc.allocate(_capacity);
-	}
-	// for (size_type i = 0; first != last; ++first)
-	// 	_alloc.construct(&tmp._tab[i++], *first);
-	// for (size_type i = 0; first != last; ++first)
-	// 	_alloc.construct(&tmp._tab[i++], *first);
-	// // _clear_tab();
-	// _tab = _alloc.allocate(n);
-	// _capacity = n;
-	// for (size_type i = 0; i < _size; i++)
-	// 	_alloc.construct(&_tab[i], tmp[i]);
+
+	std::cout << "cap: " << _capacity << " size: " << _size << " pos: " << *position << std::endl;
+	// if (_size + 1 > _capacity)
+	// {
+	// 	std::cout << "enter\n";
+	// 	_capacity++;
+	// 	tmp._tab = _alloc.allocate(_capacity);
+	// 	std::cout << _capacity << std::endl;
+	// }
+	this->resize(_size + 1);
+	first = begin(); last = end();
+	for (size_type i = 0; first != position; ++first)
+		_alloc.construct(&tmp._tab[i++], *first);
+	std::cout << "1\n";
+	_alloc.construct(&tmp._tab[*position], val);
+	std::cout << "2\n";
+	for (size_type i = 0; first != last; ++first)
+		_alloc.construct(&tmp._tab[i++], *first);
+	std::cout << "3\n";
+	*this = tmp;
+	return iterator(this->begin() + (_size));
 	// tmp._clear_tab();
 }
 

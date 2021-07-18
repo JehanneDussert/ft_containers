@@ -114,5 +114,7 @@ int main(void)
 		std::cout << v2[i] << ' ';
 	std::cout <<  std::endl;
 
+	v1.insert(v1.begin(), 2);
+
     return 0;
 }

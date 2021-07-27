@@ -220,7 +220,7 @@ class	vector
 		iterator	insert(iterator position, const value_type& val);
 		void		insert(iterator position, size_type n, const value_type &val);
 		template <class InputIterator>
-			void insert (iterator position, InputIterator first, InputIterator last);
+			void insert(iterator position, InputIterator first, typename ft::enable_if<!std::numeric_limits<InputIterator>::is_integer, InputIterator>::type last);
 		iterator erase (iterator position);
 		iterator erase (iterator first, iterator last);
 		void swap (vector& x);

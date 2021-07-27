@@ -114,21 +114,26 @@ int main(void)
 		std::cout << v2[i] << ' ';
 	std::cout <<  std::endl;
 
-	std::cout << "\nBefore copy: ";
+	std::cout << "\nBefore insert:\n";
 	for (size_t i = 0; i < v1.size(); i++)
 		std::cout << "\n" << i << " | " << v1[i];
 	std::cout << std::endl;
 	v1.insert(v1.begin(), 2);
-	std::cout << "\nAf insert 1 value:";
+	std::cout << "\nSINGLE ELEMENT | Inserting one value:\n";
 	for (size_t i = 0; i < v1.size(); i++)
 		std::cout << "\n" << i << " | " << v1[i];
 	std::cout << std::endl;
 
-	const int lol = 4;
-	size_t mdr = 3;
-	std::cout << "Inserting multiple values:\n";
-	v1.insert(v1.begin(), mdr, lol);
-	std::cout << "\nAf insert some values:";
+	const int val = 4;
+	size_t n = 3;
+	std::cout << "\nFILL | Inserting multiple values:\n";
+	v1.insert(v1.begin(), n, val);
+	for (size_t i = 0; i < v1.size(); i++)
+		std::cout << "\n" << i << " | " << v1[i];
+	std::cout << std::endl;
+
+	std::cout << "\nRANGE | Inserting multiple values:\n";
+	v1.insert(v1.begin() + 3, v2.begin(), v2.begin() + 2);
 	for (size_t i = 0; i < v1.size(); i++)
 		std::cout << "\n" << i << " | " << v1[i];
 	std::cout << std::endl;

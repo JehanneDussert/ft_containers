@@ -690,8 +690,34 @@ void	vector<T, Alloc>::insert(iterator position, size_type n, const value_type &
 	*this = tmp;
 }
 
-// template <class InputIterator>
-// void insert (iterator position, InputIterator first, InputIterator last);
+template<typename T, typename Alloc>
+template <class InputIterator>
+void	vector<T, Alloc>::insert(iterator position, InputIterator first,
+typename ft::enable_if<!std::numeric_limits<InputIterator>::is_integer, InputIterator>::type last)
+{
+	vector<T, Alloc>	tmp;
+	iterator	first_it = begin(); iterator	last_it = end();
+	size_type	index = 0;
+	size_type	len = 0;
+
+	while (first + len != last)
+		len++;
+	if (!len)
+		return ;
+	tmp = *this;
+	_size += len;
+	if (_size > _capacity)
+		_capacity = _size;
+	tmp._tab = _alloc.allocate(_capacity);
+	for (; first_it != position; ++first_it)
+		_alloc.construct(&tmp._tab[index++], *first_it);
+	for (; first != last; ++first)
+		_alloc.construct(&tmp._tab[index++], *first);
+	for (; first_it != last_it; ++first_it)
+		_alloc.construct(&tmp._tab[index++], *first_it);
+	*this = tmp;
+}
+
 // iterator erase (iterator position);
 // iterator erase (iterator first, iterator last);
 // void swap (vector& x);

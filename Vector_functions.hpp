@@ -650,28 +650,21 @@ typename vector<T, Alloc>::iterator vector<T, Alloc>::insert(iterator position, 
 {
 	vector<T, Alloc>	tmp;
 	iterator first = begin(); iterator last = end();
+	size_type	index = 0;
 
-	std::cout << "cap: " << _capacity << " size: " << _size << " pos: " << *position << std::endl;
-	// if (_size + 1 > _capacity)
-	// {
-	// 	std::cout << "enter\n";
-	// 	_capacity++;
-	// 	tmp._tab = _alloc.allocate(_capacity);
-	// 	std::cout << _capacity << std::endl;
-	// }
-	this->resize(_size + 1);
-	first = begin(); last = end();
-	for (size_type i = 0; first != position; ++first)
-		_alloc.construct(&tmp._tab[i++], *first);
-	std::cout << "1\n";
-	_alloc.construct(&tmp._tab[*position], val);
-	std::cout << "2\n";
-	for (size_type i = 0; first != last; ++first)
-		_alloc.construct(&tmp._tab[i++], *first);
-	std::cout << "3\n";
+	_size++;
+	tmp = *this;
+	if (_size > _capacity)
+		_capacity++;
+	tmp._tab = _alloc.allocate(_capacity);
+	for (; first != position; ++first)
+		_alloc.construct(&tmp._tab[index++], *first);
+	tmp._tab[index] = val;
+	for (; first != last; ++first)
+		_alloc.construct(&tmp._tab[++index], *first);
 	*this = tmp;
+
 	return iterator(this->begin() + (_size));
-	// tmp._clear_tab();
 }
 
 // void insert (iterator position, size_type n, const value_type& val);

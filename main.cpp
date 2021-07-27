@@ -114,7 +114,15 @@ int main(void)
 		std::cout << v2[i] << ' ';
 	std::cout <<  std::endl;
 
+	std::cout << "\nBefore copy: ";
+	for (size_t i = 0; i < v1.size(); i++)
+		std::cout << "\n" << i << " | " << v1[i];
+	std::cout << std::endl;
 	v1.insert(v1.begin(), 2);
+	std::cout << "\nAf insert:";
+	for (size_t i = 0; i < v1.size(); i++)
+		std::cout << "\n" << i << " | " << v1[i];
+	std::cout << std::endl;
 
     return 0;
 }

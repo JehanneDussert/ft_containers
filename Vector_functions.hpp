@@ -676,17 +676,17 @@ void	vector<T, Alloc>::insert(iterator position, size_type n, const value_type &
 
 	if (!n)
 		return ;
-	_size += n;
 	tmp = *this;
+	_size += n;
 	if (_size > _capacity)
-		_capacity++;
+		_capacity = _size;
 	tmp._tab = _alloc.allocate(_capacity);
 	for (; first != position; ++first)
 		_alloc.construct(&tmp._tab[index++], *first);
 	for (size_type i = index + n; index < i; ++first)
 		_alloc.construct(&tmp._tab[index++], val);
 	for (; first != last; ++first)
-		_alloc.construct(&tmp._tab[++index], *first);
+		_alloc.construct(&tmp._tab[index++], *first);
 	*this = tmp;
 }
 

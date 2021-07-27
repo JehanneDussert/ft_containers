@@ -1,6 +1,12 @@
 #include "Vector_functions.hpp"
 #include <vector>
 
+// DONE : enable_if, is_integral, lexicographical_compare
+
+// TO DO : reverse iterator for rbegin rend
+// iterators_traits, reverse_iterator, equal/lexicographical compare,
+// std::pair, std::make_pair, must be reimplemented.
+
 int main(void)
 {
 	std::cout << "** STD ONE **\n\n";
@@ -53,6 +59,16 @@ int main(void)
     	std::cout << ' ' << *itv3;
   	std::cout << "\n";
 
+
+	std::cout << "\nLexicographical_compare:\n";	
+	std::vector<int> foo (3,100);   // three ints with a value of 100
+  	std::vector<int> bar (2,200);   // two ints with a value of 200
+	ft::vector<int> foo1(3, 100);
+	ft::vector<int> bar1(2, 200);
+	if (foo< bar) std::cout << "[REAL] foo is less than bar\n";
+	if (foo1< bar1) std::cout << "[MINE] foo is less than bar\n";
+	if (foo> bar) std::cout << "[REAL] foo is less than bar\n";
+	if (foo1> bar1) std::cout << "[MINE] foo is less than bar\n";
 
 	std::cout << std::endl;
 	std::cout << "Size:\t\t" << v1.size() << "\t\t\t" << v2.size() << std::endl;

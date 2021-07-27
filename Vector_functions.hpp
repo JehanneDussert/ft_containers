@@ -3,14 +3,6 @@
 
 # include "Vector.hpp"
 
-// reverse iterator for rbegin rend
-
-// iterators_traits, reverse_iterator, enable_if (done), is_integral, equal/lexicographical compare,
-// std::pair, std::make_pair, must be reimplemented.
-
-// capacity = espace alloué -> peut etre > a size (nb d'elemts) ex si on a pop un element, la size reduit mais capacity reste la meme
-// allocate/desalloc -> change capacity ; construct etc -> change size
-
 namespace ft {
 
 /***************************/
@@ -256,11 +248,11 @@ typename vector<T, Alloc>::iterator::reference			vector<T, Alloc>::iterator::ope
 	return this->_value[n];
 }
 
-// template <typename T, typename Alloc>
-// typename vector<T, Alloc>::iterator::const_reference			vector<T, Alloc>::iterator::operator[](size_type n) const
-// {
-// 	return this->_value[n];
-// }
+template <typename T, typename Alloc>
+typename vector<T, Alloc>::iterator::const_reference			vector<T, Alloc>::iterator::operator[](size_type n) const
+{
+	return this->_value[n];
+}
 
 template <typename T, typename Alloc>
 typename vector<T, Alloc>::iterator::difference_type			vector<T, Alloc>::iterator::operator[](const iterator& x) const
@@ -810,7 +802,7 @@ template <class T, class Alloc>
 bool operator<(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
 {
 	// to change
-	return std::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
+	return lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
 }
 
 template <class T, class Alloc>

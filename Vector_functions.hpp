@@ -718,9 +718,34 @@ typename ft::enable_if<!std::numeric_limits<InputIterator>::is_integer, InputIte
 	*this = tmp;
 }
 
-// iterator erase (iterator position);
-// iterator erase (iterator first, iterator last);
-// void swap (vector& x);
+template<typename T, typename Alloc>
+typename vector<T, Alloc>::iterator vector<T, Alloc>::erase (iterator first, iterator last)
+{
+	vector<T, Alloc>	tmp;
+	iterator	first_it = begin(); iterator	last_it = end(); iterator	tmp_it = first;
+	size_type	index = 0;
+
+	tmp = *this;
+	tmp._tab = _alloc.allocate(_capacity);
+	for (; first_it != first; ++first_it)
+		_alloc.construct(&tmp._tab[index++], *first_it);
+	while (first_it != last)
+	{
+		first_it++;
+		tmp._size--;
+	}
+	for (; first_it != last_it; ++first_it)
+		_alloc.construct(&tmp._tab[index++], *first_it);
+	*this = tmp;
+
+	return tmp_it;
+}
+
+template<typename T, typename Alloc>
+typename vector<T, Alloc>::iterator	vector<T, Alloc>::erase(iterator position)
+{
+	return erase(position, position + 1);
+}
 
 template <typename T, typename Alloc>
 void vector<T, Alloc>::clear()

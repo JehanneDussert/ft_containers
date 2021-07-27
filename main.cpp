@@ -138,5 +138,17 @@ int main(void)
 		std::cout << "\n" << i << " | " << v1[i];
 	std::cout << std::endl;
 
+	std::cout << "\nSINGLE ELEMENT | Erasing one value:\n";
+	v2.erase(v2.begin() + 2);
+	for (size_t i = 0; i < v2.size(); i++)
+		std::cout << "\n" << i << " | " << v2[i];
+	std::cout << std::endl;
+
+	std::cout << "\nRANGE | Erasing multiple values:\n";
+	v1.erase(v1.begin() + 3, v1.begin() + 5);
+	for (size_t i = 0; i < v1.size(); i++)
+		std::cout << "\n" << i << " | " << v1[i];
+	std::cout << std::endl;
+
     return 0;
 }

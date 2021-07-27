@@ -1,10 +1,10 @@
 #include "Vector_functions.hpp"
 #include <vector>
 
-// DONE : enable_if, is_integral, lexicographical_compare
+// DONE : enable_if, is_integral, equal/lexicographical compare,
 
 // TO DO : reverse iterator for rbegin rend
-// iterators_traits, reverse_iterator, equal/lexicographical compare,
+// iterators_traits, reverse_iterator, 
 // std::pair, std::make_pair, must be reimplemented.
 
 int main(void)
@@ -59,7 +59,6 @@ int main(void)
     	std::cout << ' ' << *itv3;
   	std::cout << "\n";
 
-
 	std::cout << "\nLexicographical_compare:\n";	
 	std::vector<int> foo (3,100);   // three ints with a value of 100
   	std::vector<int> bar (2,200);   // two ints with a value of 200
@@ -69,6 +68,28 @@ int main(void)
 	if (foo1< bar1) std::cout << "[MINE] foo is less than bar\n";
 	if (foo> bar) std::cout << "[REAL] foo is less than bar\n";
 	if (foo1> bar1) std::cout << "[MINE] foo is less than bar\n";
+
+	std::cout << "\nEqual:\n";
+	int myints[] = {20,40,60,80,100};
+  	std::vector<int>myvector (myints,myints+5);
+  	ft::vector<int>myvector1 (myints,myints+5);
+	if ( std::equal (myvector.begin(), myvector.end(), myints) )
+		std::cout << "[REAL] The contents of both sequences are equal.\n";
+	else
+		std::cout << "[REAL] The contents of both sequences differ.\n";
+	if (ft::equal (myvector1.begin(), myvector1.end(), myints) )
+		std::cout << "[MINE] The contents of both sequences are equal.\n";
+	else
+		std::cout << "[MINE] The contents of both sequences differ.\n";
+	myvector[3] = 81; myvector1[3] = 81;
+	if ( std::equal (myvector.begin(), myvector.end(), myints) )
+		std::cout << "[REAL] The contents of both sequences are equal.\n";
+	else
+		std::cout << "[REAL] The contents of both sequences differ.\n";
+	if (ft::equal (myvector1.begin(), myvector1.end(), myints) )
+		std::cout << "[MINE] The contents of both sequences are equal.\n";
+	else
+		std::cout << "[MINE] The contents of both sequences differ.\n";
 
 	std::cout << std::endl;
 	std::cout << "Size:\t\t" << v1.size() << "\t\t\t" << v2.size() << std::endl;

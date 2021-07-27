@@ -667,7 +667,29 @@ typename vector<T, Alloc>::iterator vector<T, Alloc>::insert(iterator position, 
 	return iterator(this->begin() + (_size));
 }
 
-// void insert (iterator position, size_type n, const value_type& val);
+template<typename T, typename Alloc>
+void	vector<T, Alloc>::insert(iterator position, size_type n, const value_type &val)
+{
+	vector<T, Alloc>	tmp;
+	iterator first = begin(); iterator last = end();
+	size_type	index = 0;
+
+	if (!n)
+		return ;
+	_size += n;
+	tmp = *this;
+	if (_size > _capacity)
+		_capacity++;
+	tmp._tab = _alloc.allocate(_capacity);
+	for (; first != position; ++first)
+		_alloc.construct(&tmp._tab[index++], *first);
+	for (size_type i = index + n; index < i; ++first)
+		_alloc.construct(&tmp._tab[index++], val);
+	for (; first != last; ++first)
+		_alloc.construct(&tmp._tab[++index], *first);
+	*this = tmp;
+}
+
 // template <class InputIterator>
 // void insert (iterator position, InputIterator first, InputIterator last);
 // iterator erase (iterator position);

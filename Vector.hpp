@@ -213,14 +213,14 @@ class	vector
 		**	Modifiers
 		*/
 		template <class InputIterator>
-  		void assign(typename ft::enable_if<!std::numeric_limits<InputIterator>::is_integer, InputIterator>::type first, InputIterator last);
+  			void assign(typename ft::enable_if<!std::numeric_limits<InputIterator>::is_integer, InputIterator>::type first, InputIterator last);
 		void assign(size_type n, const value_type& val);
 		void push_back(const value_type& val);
 		void pop_back();
-		iterator insert (iterator position, const value_type& val);
-		void insert (iterator position, size_type n, const value_type& val);
+		iterator	insert(iterator position, const value_type& val);
+		void		insert(iterator position, size_type n, const value_type &val);
 		template <class InputIterator>
-		void insert (iterator position, InputIterator first, InputIterator last);
+			void insert (iterator position, InputIterator first, InputIterator last);
 		iterator erase (iterator position);
 		iterator erase (iterator first, iterator last);
 		void swap (vector& x);

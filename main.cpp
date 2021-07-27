@@ -119,9 +119,15 @@ int main(void)
 		std::cout << "\n" << i << " | " << v1[i];
 	std::cout << std::endl;
 	v1.insert(v1.begin(), 2);
-	std::cout << "\nAf insert:";
+	std::cout << "\nAf insert 1 value:";
 	for (size_t i = 0; i < v1.size(); i++)
 		std::cout << "\n" << i << " | " << v1[i];
+	std::cout << std::endl;
+
+	v2.insert(v2.begin(), 5, 4);
+	std::cout << "\nAf insert some values:";
+	for (size_t i = 0; i < v2.size(); i++)
+		std::cout << "\n" << i << " | " << v2[i];
 	std::cout << std::endl;
 
     return 0;

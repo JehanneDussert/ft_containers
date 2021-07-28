@@ -502,8 +502,6 @@ void vector<T, Alloc>::reserve(size_type n)
 	iterator first = begin(); iterator last = end();
 
 	_size = 0;
-	std::cout << "Size is : " << _size << std::endl;
-	std::cout << "[bef] n : " << n << "\tcapacity : " << _capacity << "\tsize : " << _size << std::endl;
 	if (n > _size)
 	{
 		if (n > _capacity * 2)
@@ -514,17 +512,13 @@ void vector<T, Alloc>::reserve(size_type n)
 			n = _capacity;
 		}
 	}
-	// std::cout << "[af] n : " << n << "\tcapacity : " << _capacity << "\tsize : " << _size << "\n\n";
 	tmp._tab = _alloc.allocate(n);
 	for (; first != last; ++first)
 		_alloc.construct(&tmp._tab[_size++], *first);
-	// _clear_tab();
 	_tab = _alloc.allocate(n);
-	// _capacity = n;
 	for (size_type i = 0; i < _size; i++)
 		_alloc.construct(&_tab[i], tmp[i]);
 	tmp._clear_tab();
-	std::cout << "Size is : " << _size << std::endl;
 }
 
 template <class T, class Alloc>
@@ -538,11 +532,7 @@ void vector<T, Alloc>::resize(size_type n, value_type val)
 		if (n > _capacity)
 			reserve(n);
 		for (; _size < n; _size++)
-		{
-			std::cout << "index is : " << _size << "\t" << n << std::endl;
-			_alloc.construct(&_tab[_size++], val);
-			std::cout << "Size here is : " << _size << std::endl;
-		}
+			_alloc.construct(&_tab[_size], val);
 	}
 }
 
@@ -650,7 +640,7 @@ void  vector<T, Alloc>::push_back(const value_type& val)
 	if (_size + 1 > _capacity)
 		resize(_size + 1, val);
 	else
-		_alloc.construct(&_tab[_size], val);
+		_alloc.construct(&_tab[_size++], val);
 }
 
 template <typename T, typename Alloc>

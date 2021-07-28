@@ -55,9 +55,7 @@ void	assign_test()
 	check_capacity(v1, v2);
 	check_content(v1, v2);
 
-	v1.push_back(5); 
-	std::cout << "New size should be " << v1.size() << std::endl;
-	v1.push_back(4); v1.push_back(3); v1.push_back(2); v1.push_back(1);
+	v1.push_back(5); v1.push_back(4); v1.push_back(3); v1.push_back(2); v1.push_back(1);
 	v2.push_back(5); v2.push_back(4); v2.push_back(3); v2.push_back(2); v2.push_back(1);
 	v1.pop_back(); v2.pop_back();
 	v1.pop_back(); v2.pop_back();

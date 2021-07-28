@@ -87,5 +87,16 @@ void	assign_test()
 
 void	vector_test(void)
 {
+	std::cout << "\n\t\t\t\t\e[0;01mVECTOR TEST\e[0m\n\n";
+	std::cout << "-> Assign\n\n";
 	assign_test();
+	// std::cout << "-> Const at\n\n";
+	// std::cout << "-> at\n\n";
+	// std::cout << "-> Erase\n\n";
+	// std::cout << "-> Insert\n\n";
+	// std::cout << "-> Iterators\n\n";
+	// std::cout << "-> Push & pop\n\n";
+	// std::cout << "-> Relational operators\n\n";
+	// std::cout << "-> Reverse iterators\n\n";
+	// std::cout << "-> Swap\n\n";
 }

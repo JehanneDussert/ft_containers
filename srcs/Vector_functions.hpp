@@ -1,5 +1,5 @@
-#ifndef vector_FUNCTIONS_HPP
-# define vector_FUNCTIONS_HPP
+#ifndef VECTOR_FUNCTIONS_HPP
+# define VECTOR_FUNCTIONS_HPP
 
 # include "Vector.hpp"
 
@@ -68,11 +68,15 @@ InputIterator last, const allocator_type& alloc) : _max_size(alloc.max_size()), 
 ** Copy constructor
 */
 
+
+// prbl here
+
 template <typename T, typename Alloc>
 vector<T, Alloc>::vector(const vector& x)
 {
 	_size = x.size();
 	_capacity = x.capacity();
+	_max_size = x.max_size();
 	_tab = _alloc.allocate(_capacity);
 	for (size_type i = 0; i < _size; i++)
 		_alloc.construct(&_tab[i], x[i]);
@@ -624,7 +628,7 @@ void  vector<T, Alloc>::assign(size_type n, const value_type& val)
 template <typename T, typename Alloc>
 void  vector<T, Alloc>::push_back(const value_type& val)
 {
-	if (_size + 1 >= _capacity)
+	if (_size + 1 > _capacity)
 		resize(_size + 1, val);
 	else
 		_alloc.construct(&_tab[_size], val);

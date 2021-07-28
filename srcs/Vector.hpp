@@ -111,6 +111,34 @@ class	vector
 				value_type*	_value;
 				//friend class vector;
 		};
+		// template <class Iterator> class iterator_traits
+		// {
+		// 	public:
+		// 		difference_type	difference_type;
+		// 		value_type		value_type;
+		// 		value_type*		pointer;
+		// 		value_type&		reference;
+		// 		// iterator_category	random_access_iterator_tag;
+		// 		template <class T> class iterator_traits<T*>
+		// 		{
+		// 			public:
+		// 				difference_type	difference_type;
+		// 				value_type		value_type;
+		// 				value_type*		pointer;
+		// 				value_type&		reference;
+		// 				// iterator_category	random_access_iterator_tag;
+		// 		};
+		// 		template <class T> class iterator_traits<const T*>
+		// 		{
+		// 			public:
+		// 				difference_type	difference_type;
+		// 				value_type		value_type;
+		// 				value_type*		pointer;
+		// 				value_type&		reference;
+		// 				// iterator_category	random_access_iterator_tag;
+		// 		};
+		// };
+
 		template <class Iterator>
 		class reverse_iterator
 		{

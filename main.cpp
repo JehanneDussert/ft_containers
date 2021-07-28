@@ -1,4 +1,4 @@
-#include "Vector_functions.hpp"
+#include "srcs/Vector_functions.hpp"
 #include <vector>
 
 // DONE : enable_if, is_integral, equal/lexicographical compare,
@@ -22,7 +22,8 @@ int main(void)
     	std::cout << ' ' << *itsec;
   	std::cout << '\n';
 	std::vector<int> third (second.begin(),second.end());  // iterating through second
-	// std::vector<int> fourth (third);                       // a copy of third
+	std::cout << "Copy constructor.\n";
+	std::vector<int> fourth (third);                       // a copy of third
 
 	std::cout << "\n\n** MINE **\n\n";
 	ft::vector<int> v1;                                // empty vector of ints
@@ -48,7 +49,8 @@ int main(void)
 	else
 		std::cout << "v1 is not empty\n";
 	ft::vector<int> v3(v2.begin(),v2.end());  // iterating through second
-	// ft::vector<int> v4(v3);                       // a copy of third
+	std::cout << "Copy constructor.\n";
+	ft::vector<int> v4(v3);                       // a copy of third
                    // four ints with value 100
 	std::cout << "The contents of 1 are:";
   	for (ft::vector<int>::iterator itv1 = v1.begin(); itv1 != v1.end(); ++itv1)

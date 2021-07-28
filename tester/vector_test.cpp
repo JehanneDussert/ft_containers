@@ -55,11 +55,10 @@ void	assign_test()
 	check_capacity(v1, v2);
 	check_content(v1, v2);
 
-	v1.push_back(5); v1.push_back(4); v1.push_back(3); v1.push_back(2); v1.push_back(1);
-	std::cout << "ok\n";
-	v2.push_back(5); 
-	std::cout << "ok1\n";
-	v2.push_back(4); v2.push_back(3); v2.push_back(2); v2.push_back(1);
+	v1.push_back(5); 
+	std::cout << "New size should be " << v1.size() << std::endl;
+	v1.push_back(4); v1.push_back(3); v1.push_back(2); v1.push_back(1);
+	v2.push_back(5); v2.push_back(4); v2.push_back(3); v2.push_back(2); v2.push_back(1);
 	v1.pop_back(); v2.pop_back();
 	v1.pop_back(); v2.pop_back();
 
@@ -78,35 +77,12 @@ void	assign_test()
 	check_capacity(v3, v4);
 	check_content(v3, v4);
 
-	std::cout << "bef push : " << '\t' << v3.capacity() << '\t' << v4.capacity() << std::endl;
-	v3.push_back(5); 
-	std::cout << "cap : " << "\t\t" << v3.capacity() << '\t';
-	v3.push_back(4); 
-	std::cout << v3.capacity() << '\t';
-	v3.push_back(3); 
-	std::cout << v3.capacity() << '\t';
-	v3.push_back(2); 
-	std::cout << v3.capacity() << '\t';
-	v3.push_back(1);
-	std::cout << v3.capacity() << '\n';
-
-	v4.push_back(5); 
-	std::cout << "cap : " << "\t\t" << v4.capacity() << '\t';
-	v4.push_back(4); 
-	std::cout << v4.capacity() << '\t';
-	v4.push_back(3); 
-	std::cout << v4.capacity() << '\t';
-	v4.push_back(2); 
-	std::cout << v4.capacity() << '\t';
-	v4.push_back(1);
-	std::cout << v4.capacity() << '\n';
-	// std::cout << "af push : " << v3.capacity() << '\t' << v4.capacity() << std::endl;
+	v3.push_back(5); v3.push_back(4); v3.push_back(3); v3.push_back(2); v3.push_back(1);
+	v4.push_back(5); v4.push_back(4); v4.push_back(3); v4.push_back(2); v4.push_back(1);
 	v3.pop_back(); v4.pop_back();
 	v3.pop_back(); v4.pop_back();
-	std::cout << "af pop: " << v3.capacity() << '\t' << v4.capacity() << std::endl;
 
 	check_size(v3, v4);
-	std::cout << v3.capacity() << '\t' << v4.capacity() << std::endl;
 	check_capacity(v3, v4);
 	check_content(v3, v4);
 }

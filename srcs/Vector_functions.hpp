@@ -215,7 +215,7 @@ bool	vector<T, Alloc>::iterator::operator<(const iterator& x) const
 template <typename T, typename Alloc>
 bool	vector<T, Alloc>::iterator::operator>(const iterator& x) const
 {
-	return (this < x ? false : true);
+	return (this->_value < x._value ? false : true);
 }
 
 template <typename T, typename Alloc>
@@ -227,7 +227,7 @@ bool	vector<T, Alloc>::iterator::operator<=(const iterator& x) const
 template <typename T, typename Alloc>
 bool	vector<T, Alloc>::iterator::operator>=(const iterator& x) const
 {
-	return (this <= x ? false : true);
+	return (this->_value <= x._value ? false : true);
 }
 
 template <typename T, typename Alloc>
@@ -366,7 +366,7 @@ bool	vector<T, Alloc>::const_iterator::operator<(const const_iterator& x) const
 template <typename T, typename Alloc>
 bool	vector<T, Alloc>::const_iterator::operator>(const const_iterator& x) const
 {
-	return (this < x ? false : true);
+	return (this->_value < x._value ? false : true);
 }
 
 template <typename T, typename Alloc>
@@ -378,7 +378,7 @@ bool	vector<T, Alloc>::const_iterator::operator<=(const const_iterator& x) const
 template <typename T, typename Alloc>
 bool	vector<T, Alloc>::const_iterator::operator>=(const const_iterator& x) const
 {
-	return (this <= x ? false : true);
+	return (this->_value <= x._value ? false : true);
 }
 
 template <typename T, typename Alloc>

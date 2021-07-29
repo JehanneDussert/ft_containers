@@ -5,7 +5,7 @@ void	assign_test()
 	std::vector<int>			v1;
 	ft::vector<int>				v2;
 
-	std::cout << "| FILL |\n";
+	std::cout << "📍 FILL\n";
 	v1.assign(5, 200);
 	v2.assign(5, 200);
 
@@ -25,7 +25,7 @@ void	assign_test()
 	std::vector<int>			v3;
 	ft::vector<int>				v4;
 
-	std::cout << "\n| RANGE |\n";
+	std::cout << "\n📍 RANGE\n";
 	v3.assign(v1.begin() + 1, v1.begin() + 7);
 	v4.assign(v2.begin() + 1, v2.begin() + 7);
 

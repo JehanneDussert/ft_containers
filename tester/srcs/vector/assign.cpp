@@ -41,4 +41,6 @@ void	assign_test()
 	check_size(v3, v4);
 	check_capacity(v3, v4);
 	check_content(v3, v4);
+
+	std::cout << "\n";
 }

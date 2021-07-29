@@ -657,17 +657,22 @@ typename vector<T, Alloc>::iterator vector<T, Alloc>::insert(iterator position, 
 	iterator first = begin(); iterator last = end();
 	size_type	index = 0;
 
-	_size++;
 	tmp = *this;
-	if (_size > _capacity)
-		_capacity++;
+	_size++;
+	if (_size > _capacity * 2)
+		_capacity = _size;
+	else if (_size > _capacity)
+		_capacity = _capacity * 2; 
 	tmp._tab = _alloc.allocate(_capacity);
 	for (; first != position; ++first)
 		_alloc.construct(&tmp._tab[index++], *first);
+	_tab = _alloc.allocate(_capacity);
 	tmp._tab[index] = val;
 	for (; first != last; ++first)
 		_alloc.construct(&tmp._tab[++index], *first);
-	*this = tmp;
+	for (size_type i = 0; i < _size; i++)
+		_alloc.construct(&_tab[i], tmp[i]);
+	tmp._clear_tab();
 
 	return iterator(this->begin() + (_size));
 }
@@ -683,16 +688,21 @@ void	vector<T, Alloc>::insert(iterator position, size_type n, const value_type &
 		return ;
 	tmp = *this;
 	_size += n;
-	if (_size > _capacity)
+	if (_size > _capacity * 2)
 		_capacity = _size;
+	else if (_size > _capacity)
+		_capacity = _capacity * 2; 
 	tmp._tab = _alloc.allocate(_capacity);
 	for (; first != position; ++first)
 		_alloc.construct(&tmp._tab[index++], *first);
-	for (size_type i = index + n; index < i; ++first)
-		_alloc.construct(&tmp._tab[index++], val);
-	for (; first != last; ++first)
+	for(size_type i = index + n; index < i; index++)
+		_alloc.construct(&tmp._tab[index], val);
+	for (; index < _size; ++first)
 		_alloc.construct(&tmp._tab[index++], *first);
-	*this = tmp;
+	_tab = _alloc.allocate(_capacity);
+	for (size_type i = 0; i < _size; i++)
+		_alloc.construct(&_tab[i], tmp[i]);
+	tmp._clear_tab();
 }
 
 template<typename T, typename Alloc>

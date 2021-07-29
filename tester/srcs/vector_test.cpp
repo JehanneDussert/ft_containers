@@ -1,4 +1,4 @@
-#include "../srcs/Vector_functions.hpp"
+#include "../../srcs/Vector_functions.hpp"
 #include <vector>
 
 void	check_size(std::vector<int> &v1, ft::vector<int> &v2)
@@ -87,7 +87,6 @@ void	assign_test()
 
 void	vector_test(void)
 {
-	std::cout << "\n\t\t\t\t\e[0;01mVECTOR TEST\e[0m\n\n";
 	std::cout << "-> Assign\n\n";
 	assign_test();
 	// std::cout << "-> Const at\n\n";
@@ -99,4 +98,11 @@ void	vector_test(void)
 	// std::cout << "-> Relational operators\n\n";
 	// std::cout << "-> Reverse iterators\n\n";
 	// std::cout << "-> Swap\n\n";
+}
+
+int	main(void)
+{
+	vector_test();
+
+	return 0;
 }

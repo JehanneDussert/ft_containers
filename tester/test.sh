@@ -23,6 +23,6 @@ GREEN="\032[0;31m"
 YELLOW="\133[0;31m"
 
 printf "\n\t\t\t\t${BOLD}VECTOR TEST${EOC}\n";
-$CXX $CXXFLAGS srcs/vector_test.cpp && ./a.out
+$CXX $CXXFLAGS srcs/vector/vector_test.cpp && ./a.out
 #$CXX $CXXFLAGS srcs/map_test.cpp && ./a.out
 #$CXX $CXXFLAGS srcs/stack_test.cpp && ./a.out

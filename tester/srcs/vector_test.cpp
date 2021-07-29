@@ -3,21 +3,21 @@
 
 void	check_size(std::vector<int> &v1, ft::vector<int> &v2)
 {
-	std::cout << "Size test:\t";
+	std::cout << "Size :\t";
 	if (v1.size() != v2.size())
-		std::cout << "\e[0;31mError. Wrong size.\e[0m\t[REAL] " << v1.size() << " [YOURS] " << v2.size() << "\n";
+		std::cout << "\e[0;31m[💥]\e[0m\t"; //[REAL] " << v1.size() << " [YOURS] " << v2.size() << "\n";
 	else
-		std::cout << "\e[0;32mOK\e[0m\t";
+		std::cout << "\e[0;32m[⭐️]\e[0m\t";
 }
 
 void	check_capacity(std::vector<int> &v1, ft::vector<int> &v2)
 {
 	// corriger constructeur par copie
-	std::cout << "Capacity test:\t";
+	std::cout << "Capacity :\t";
 	if (v1.capacity() != v2.capacity())
-		std::cout << "\e[0;31mError. Wrong capacity.\e[0m\t[REAL] " << v1.capacity() << " [YOURS] " << v2.capacity() << "\n";
+		std::cout << "\e[0;31m[☠💥]\e[0m\t"; //[REAL] " << v1.capacity() << " [YOURS] " << v2.capacity() << "\n";
 	else
-		std::cout << "\e[0;32mOK\e[0m\t";
+		std::cout << "\e[0;32m[⭐️]\e[0m\t";
 }
 
 void	check_content(std::vector<int> &v1, ft::vector<int> &v2)
@@ -27,18 +27,18 @@ void	check_content(std::vector<int> &v1, ft::vector<int> &v2)
 	ft::vector<int>::iterator	it2_beg = v2.begin();
 	ft::vector<int>::iterator	it2_end = v2.end();
 
-	std::cout << "Content test:\t";
+	std::cout << "Content :\t";
 	for (std::vector<int>::iterator it1 = v1.begin(); it1 != v1.end(); ++it1)
 	{
 		if (*it2_beg != *it1)
 		{
-			std::cout << "\n\e[0;31mError. Wrong content.\e[0m\n[REAL] " << *it1 << "\t[YOURS] " << *it2_beg;
+			std::cout << "\n\e[0;31m[💥]\e[0m\t"; //[REAL] " << *it1 << "\t[YOURS] " << *it2_beg;
 			err++;
 		}
 		++it2_beg;
 	}
 	if (!err)
-		std::cout << "\e[0;32mOK\e[0m";
+		std::cout << "\e[0;32m[⭐️]\e[0m\t";
 	std::cout << '\n';
 }
 
@@ -48,8 +48,8 @@ void	assign_test()
 	ft::vector<int>				v2;
 
 	std::cout << "| FILL |\n\n";
-	v1.assign(5, 100);
-	v2.assign(5, 100);
+	v1.assign(5, 200);
+	v2.assign(5, 200);
 
 	check_size(v1, v2);
 	check_capacity(v1, v2);
@@ -87,7 +87,7 @@ void	assign_test()
 
 void	vector_test(void)
 {
-	std::cout << "-> Assign\n\n";
+	std::cout << "1️⃣  Assign\n\n";
 	assign_test();
 	// std::cout << "-> Const at\n\n";
 	// std::cout << "-> at\n\n";

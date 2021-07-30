@@ -54,7 +54,6 @@ class	vector
 				iterator	&operator--(void);
 				iterator	operator--(int);
 				iterator	operator+(const iterator& x);
-				iterator	operator-(const iterator& x);
 				iterator	operator+(difference_type);
 				iterator	operator-(difference_type);
 				bool		operator<(const iterator& x) const;

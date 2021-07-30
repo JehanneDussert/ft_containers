@@ -4,6 +4,7 @@
 # include <iostream>
 # include <iterator>
 # include <sstream>
+# include "Vector.hpp"
 
 namespace ft
 {
@@ -74,6 +75,20 @@ namespace ft
 			++first1; ++first2;
 		}
 		return true;
+	}
+
+	typedef size_t										size_type;
+	// template<typename T, typename Alloc>
+	template <class InputIterator>
+	size_type	iterator_len(InputIterator first, InputIterator last)
+	{
+		size_type i = 0;
+		while (first != last)
+		{
+			first++;
+			i++;
+		}
+		return i;
 	}
 }
 

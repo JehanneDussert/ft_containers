@@ -50,18 +50,12 @@ _alloc(alloc), _capacity(n)
 template <typename T, typename Alloc>
 template <class InputIterator>
 vector<T, Alloc>::vector(typename ft::enable_if<!std::numeric_limits<InputIterator>::is_integer, InputIterator>::type first,
-InputIterator last, const allocator_type& alloc) : _max_size(alloc.max_size()), _alloc(alloc), _capacity(0)
+InputIterator last, const allocator_type& alloc) : _size(0), _max_size(alloc.max_size()), _alloc(alloc), _capacity(0)
 {
-	size_type	n = 0;
-	while (first + n != last)
-	{
-		n++;
-		_capacity++;
-	}
+	_capacity += iterator_len(first, last);
 	_tab = _alloc.allocate(_capacity);
-	for (size_type i = 0; first != last; ++first)
-		_alloc.construct(&_tab[i++], *first);
-	_size = _capacity;
+	for (; first != last; ++first)
+		_alloc.construct(&_tab[_size++], *first);
 }
 
 /*
@@ -99,12 +93,15 @@ vector<T, Alloc>	&vector<T, Alloc>::operator=(const vector &x)
 		return *this;
 	for (size_type i = 0; i < _size; i++)
 		_alloc.destroy(&_tab[i]);
-	tmp._capacity = x.capacity();
+	if (x.size() > tmp._capacity)
+		tmp._capacity = x.size();
+	if (x.capacity() < _capacity)
+		tmp._capacity = _capacity;
 	tmp._tab = _alloc.allocate(tmp._capacity);
 	const_iterator first = x.begin(); const_iterator last = x.end();
 	for (size_type i = 0; first != last; ++first)
 		tmp._alloc.construct(&tmp._tab[i++], *first);
-	_tab = tmp._tab; _size = x.size(); _capacity = tmp.capacity();
+	_tab = tmp._tab; _size = x.size(); _capacity = tmp._capacity;
 
 	return *this;
 }
@@ -201,9 +198,9 @@ typename vector<T, Alloc>::iterator			vector<T, Alloc>::iterator::operator+(cons
 }
 
 template <typename T, typename Alloc>
-typename vector<T, Alloc>::iterator			vector<T, Alloc>::iterator::operator-(const iterator& x)
+typename vector<T, Alloc>::difference_type	vector<T, Alloc>::iterator::operator-(const iterator& x) const
 {
-	return iterator(this->_value - x._value);
+	return (this->_value - x._value);
 }
 
 template <typename T, typename Alloc>
@@ -554,22 +551,22 @@ typename vector<T, Alloc>::const_reference vector<T, Alloc>::operator[] (size_ty
 
 template <typename T, typename Alloc>
 typename vector<T, Alloc>::reference vector<T, Alloc>::at(size_type n)
-{
-	std::ostringstream ostr; ostr << "Vector.";
-
-	if (n >= _size - 1)
-		throw std::out_of_range(ostr.str());
-	return (*this)[n];
+{	
+	if (n < this->_size)
+		return ((*this)[n]);
+	std::ostringstream ostr;
+	ostr << "Out of Range error: vector::_M_range_check";
+	throw std::out_of_range(ostr.str());
 }
 
 template <typename T, typename Alloc>
 typename vector<T, Alloc>::const_reference vector<T, Alloc>::at(size_type n) const
 {
-	std::ostringstream ostr; ostr << "Vector.";
-
-	if (n >= _size - 1)
-		throw std::out_of_range(ostr.str());
-	return (*this)[n];
+	if (n < this->_size)
+		return ((*this)[n]);
+	std::ostringstream ostr;
+	ostr << "Out of Range error: vector::_M_range_check";
+	throw std::out_of_range(ostr.str());
 }
 
 template <typename T, typename Alloc>
@@ -604,9 +601,7 @@ template <typename T, typename Alloc>
 template <class InputIterator>
 void vector<T, Alloc>::assign(typename ft::enable_if<!std::numeric_limits<InputIterator>::is_integer, InputIterator>::type first, InputIterator last)
 {
-	size_type	n = 0;
-	while (first + n != last)
-		n++;
+	size_type	n = iterator_len(first, last);
 	if (n > _capacity)
 	{
 		_clear_tab();
@@ -715,10 +710,8 @@ typename ft::enable_if<!std::numeric_limits<InputIterator>::is_integer, InputIte
 	vector<T, Alloc>	tmp;
 	iterator	first_it = begin(); iterator	last_it = end();
 	size_type	index = 0;
-	size_type	len = 0;
+	size_type	len = iterator_len(first, last);
 
-	while (first + len != last)
-		len++;
 	if (!len)
 		return ;
 	tmp = *this;

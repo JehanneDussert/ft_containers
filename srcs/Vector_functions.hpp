@@ -156,7 +156,7 @@ typename vector<T, Alloc>::iterator&			vector<T, Alloc>::iterator::operator++(vo
 template <typename T, typename Alloc>
 typename vector<T, Alloc>::iterator				vector<T, Alloc>::iterator::operator++(int)
 {
-	ft::vector<int>::iterator	tmp(*this);
+	ft::vector<T, Alloc>::iterator	tmp(*this);
 
 	this->operator++();
 	return tmp;
@@ -173,7 +173,7 @@ typename vector<T, Alloc>::iterator&			vector<T, Alloc>::iterator::operator--(vo
 template <typename T, typename Alloc>
 typename vector<T, Alloc>::iterator				vector<T, Alloc>::iterator::operator--(int)
 {
-	ft::vector<int>::iterator	tmp(*this);
+	ft::vector<T, Alloc>::iterator	tmp(*this);
 
 	this->operator--();
 	return tmp;
@@ -307,7 +307,7 @@ typename vector<T, Alloc>::const_iterator&			vector<T, Alloc>::const_iterator::o
 template <typename T, typename Alloc>
 typename vector<T, Alloc>::const_iterator				vector<T, Alloc>::const_iterator::operator++(int)
 {
-	ft::vector<int>::const_iterator	tmp(*this);
+	ft::vector<T, Alloc>::const_iterator	tmp(*this);
 
 	this->operator++();
 	return tmp;
@@ -324,7 +324,7 @@ typename vector<T, Alloc>::const_iterator&			vector<T, Alloc>::const_iterator::o
 template <typename T, typename Alloc>
 typename vector<T, Alloc>::const_iterator				vector<T, Alloc>::const_iterator::operator--(int)
 {
-	ft::vector<int>::const_iterator	tmp(*this);
+	ft::vector<T, Alloc>::const_iterator	tmp(*this);
 
 	this->operator--();
 	return tmp;
@@ -422,7 +422,7 @@ typename vector<T, Alloc>::iterator vector<T, Alloc>::begin()
 	return iterator(_tab);
 }
 
-template <typename T, typename Alloc>
+template<typename T, typename Alloc>
 typename vector<T, Alloc>::const_iterator vector<T, Alloc>::begin() const
 {
 	return const_iterator(_tab);
@@ -498,6 +498,7 @@ void vector<T, Alloc>::reserve(size_type n)
 	vector<T, Alloc>	tmp;
 	iterator first = begin(); iterator last = end();
 
+	// problem with size
 	_size = 0;
 	if (n > _size)
 	{
@@ -522,8 +523,8 @@ template <class T, class Alloc>
 void vector<T, Alloc>::resize(size_type n, value_type val)
 {
 	if (n < _size)
-		for (size_type i = n; i < _size; i++)
-			_alloc.destroy(&_tab[i]);
+		for (; n < _size; _size--)
+			_alloc.destroy(&_tab[_size]);
 	else
 	{
 		if (n > _capacity)
@@ -731,24 +732,19 @@ typename ft::enable_if<!std::numeric_limits<InputIterator>::is_integer, InputIte
 template<typename T, typename Alloc>
 typename vector<T, Alloc>::iterator vector<T, Alloc>::erase (iterator first, iterator last)
 {
-	vector<T, Alloc>	tmp;
-	iterator	first_it = begin(); iterator	last_it = end(); iterator	tmp_it = first;
-	size_type	index = 0;
-
-	tmp = *this;
-	tmp._tab = _alloc.allocate(_capacity);
-	for (; first_it != first; ++first_it)
-		_alloc.construct(&tmp._tab[index++], *first_it);
-	while (first_it != last)
+	iterator			it = begin(); iterator	it_tmp = first;
+	size_type			len = iterator_len(first, last);
+	
+	while (last != end())
 	{
-		first_it++;
-		tmp._size--;
+		*first = *last;
+		first++;
+		last++;
 	}
-	for (; first_it != last_it; ++first_it)
-		_alloc.construct(&tmp._tab[index++], *first_it);
-	*this = tmp;
+	while (len--)
+		_alloc.destroy(&_tab[--_size]);
 
-	return tmp_it;
+	return it_tmp;
 }
 
 template<typename T, typename Alloc>

@@ -42,7 +42,7 @@ class	vector
 				typedef ptrdiff_t	difference_type;
 				iterator(void) { return; };
 				iterator(value_type *x) : _value(x) { return ; };
-				iterator(const iterator& x) { this->_value = x._value; return ;};
+				iterator(const iterator& x) { *this = x; return ;};
 				~iterator(void) { return; };
 				reference	operator*(void) const;
 				pointer		operator->(void)const;

@@ -611,10 +611,11 @@ void vector<T, Alloc>::assign(typename ft::enable_if<!std::numeric_limits<InputI
 	{
 		_clear_tab();
 		_tab = _alloc.allocate(n);
+		_capacity = n;
 	}
 	else
 		clear();
-	_capacity = n; _size = n;
+	_size = n;
 	for (size_type i = 0; first != last; ++first)
 		_alloc.construct(&_tab[i++], *first);
 }
@@ -626,10 +627,11 @@ void  vector<T, Alloc>::assign(size_type n, const value_type& val)
 	{
 		_clear_tab();
 		_tab = _alloc.allocate(n);
+		_capacity = n;
 	}
 	else
 		clear();
-	_capacity = n; _size = n;
+	_size = n;
 	for (size_type i = 0; i < n; i++)
 		_alloc.construct(&_tab[i], val);
 }	

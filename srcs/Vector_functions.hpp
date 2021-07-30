@@ -769,19 +769,11 @@ void vector<T, Alloc>::clear()
 		_alloc.destroy(&_tab[--_size]);
 }
 
-//Removes from the vector either a single element (position) or a range of elements ([first,last)).
-
-// template <typename T, typename Alloc>
-// iterator  vector<T, Alloc>::erase(iterator position)
-// {
-// 	;
-// }
-
-// template <typename T, typename Alloc>
-// iterator  vector<T, Alloc>::erase(iterator first, iterator last)
-// {
-// 	;
-// }
+template <typename T, typename Alloc>
+typename vector<T, Alloc>::allocator_type	vector<T, Alloc>::get_allocator() const
+{
+	return this->_alloc;
+}
 
 template <typename T, typename Alloc>
 void	vector<T, Alloc>::swap(vector &x)

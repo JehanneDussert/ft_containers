@@ -645,28 +645,10 @@ void vector<T, Alloc>::pop_back()
 template <typename T, typename Alloc>
 typename vector<T, Alloc>::iterator vector<T, Alloc>::insert(iterator position, const value_type& val)
 {
-	vector<T, Alloc>	tmp;
-	iterator first = begin(); iterator last = end();
-	size_type	index = 0;
+	size_type i = position - begin();
+	insert(position, 1, val);
 
-	tmp = *this;
-	_size++;
-	if (_size > _capacity * 2)
-		_capacity = _size;
-	else if (_size > _capacity)
-		_capacity = _capacity * 2; 
-	tmp._tab = _alloc.allocate(_capacity);
-	for (; first != position; ++first)
-		_alloc.construct(&tmp._tab[index++], *first);
-	_tab = _alloc.allocate(_capacity);
-	tmp._tab[index] = val;
-	for (; first != last; ++first)
-		_alloc.construct(&tmp._tab[++index], *first);
-	for (size_type i = 0; i < _size; i++)
-		_alloc.construct(&_tab[i], tmp[i]);
-	tmp._clear_tab();
-
-	return iterator(this->begin() + (_size));
+	return iterator(this->begin() + i);
 }
 
 template<typename T, typename Alloc>
@@ -709,10 +691,7 @@ typename ft::enable_if<!std::numeric_limits<InputIterator>::is_integer, InputIte
 
 	if (!len)
 		return ;
-	tmp = *this;
-	_size += len;
-	if (_size > _capacity)
-		_capacity = _size;
+	resize(_size + len);
 	tmp._tab = _alloc.allocate(_capacity);
 	for (; first_it != position; ++first_it)
 		_alloc.construct(&tmp._tab[index++], *first_it);

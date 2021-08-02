@@ -187,6 +187,8 @@ class	vector
 			
 				iterator_type 		base(void) const; // Returns a copy of the base iterator.
 				
+				template <class Iter>
+				difference_type		operator-(const reverse_iterator<Iter> &rhs) { return rhs.base().operator-(this->_base); };
 				reverse_iterator	operator+(difference_type n) const { return reverse_iterator(this->_base.operator-(n)); };
 				reverse_iterator& 	operator++(void) { this->_base.operator--(); return *this; };
 				reverse_iterator	operator++(int) { return reverse_iterator(this->_base.operator--(0)); };
@@ -238,8 +240,15 @@ class	vector
 				reference			operator[] (difference_type n) const { return *this->operator+(n); };
 				friend const_reverse_iterator	operator+(difference_type n, const const_reverse_iterator &rhs) { return rhs.operator+(n); };
 		};
-		typedef reverse_iterator<const_iterator>		const_reverse_iterator;
-		typedef reverse_iterator<iterator>				reverse_iterator;
+		// typedef ft::reverse_iterator<const_iterator>		const_reverse_iterator;
+		// typedef ft:::reverse_iterator<iterator>				reverse_iterator;
+		template <class Iter> bool	operator==(const reverse_iterator<Iter> &rhs) const { return this->_base.operator==(rhs.base()); };
+		template <class Iter> bool	operator!=(const reverse_iterator<Iter> &rhs) const { return this->_base.operator!=(rhs.base()); };
+		template <class Iter> bool	operator< (const reverse_iterator<Iter> &rhs) const { return this->_base.operator> (rhs.base()); };
+		template <class Iter> bool	operator<=(const reverse_iterator<Iter> &rhs) const { return this->_base.operator>=(rhs.base()); };
+		template <class Iter> bool	operator> (const reverse_iterator<Iter> &rhs) const { return this->_base.operator< (rhs.base()); };
+		template <class Iter> bool	operator>=(const reverse_iterator<Iter> &rhs) const { return this->_base.operator<=(rhs.base()); };
+
 		// template <class Iterator>
 		// bool operator==(const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs)
 		// { lhs._base == rhs._base ? return true : return false; };

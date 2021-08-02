@@ -426,25 +426,29 @@ typename vector<T, Alloc>::const_iterator vector<T, Alloc>::end() const
 }
 
 template <typename T, typename Alloc>
-vector<T, Alloc>::reverse_iterator<T, Alloc>::rbegin()
+template <class Iterator>
+typename vector<T, Alloc>::reverse_iterator<Iterator>::rbegin()
 {
 	return reverse_iterator(_tab);
 }
 
 template <typename T, typename Alloc>
-vector<T, Alloc>::rconst_reverse_iterator<T, Alloc>::rbegin() const
+template <class Iterator>
+typename vector<T, Alloc>::const_reverse_iterator<Iterator>::rbegin() const
 {
 	return const_reverse_iterator(_tab);
 }
 
 template <typename T, typename Alloc>
-vector<T, Alloc>::reverse_iterator<T, Alloc>::rend()
+template <class Iterator>
+typename vector<T, Alloc>::reverse_iterator<Iterator>::rend()
 {
 	return reverse_iterator(_tab[_size]);
 }
 
 template <typename T, typename Alloc>
-vector<T, Alloc>::rconst_reverse_iterator<T, Alloc>::rend() const
+template <class Iterator>
+typename vector<T, Alloc>::const_reverse_iterator<Iterator>::rend() const
 {
 	return const_reverse_iterator(_tab[_size]);
 }

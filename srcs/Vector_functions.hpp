@@ -720,7 +720,7 @@ typename ft::enable_if<!std::numeric_limits<InputIterator>::is_integer, InputIte
 		_alloc.construct(&tmp._tab[index++], *first);
 	for (; first_it != last_it; ++first_it)
 		_alloc.construct(&tmp._tab[index++], *first_it);
-	*this = tmp;
+	_tab = tmp._tab;
 }
 
 template<typename T, typename Alloc>

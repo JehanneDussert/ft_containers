@@ -32,10 +32,37 @@ class	vector
 		/*** ITERATORS ***/
 		/*****************/
 
+		// class	random_iterator
+		// {
+		// 	protected:
+		// 		value_type	*_value;
+		// 	public:
+		// 		typedef	value_type&	reference;
+		// 		typedef	value_type&	const_reference;
+		// 		typedef	value_type*	pointer;
+		// 		typedef ptrdiff_t	difference_type;
+		// 		random_iterator(void) { return ; };
+		// 		random_iterator(value_type *value) : _value(x) { return ; };
+		// 		random_iterator(const random_iterator& x) { *this = x ; return ; }
+		// 		random_iterator				&operator=(const iterator& x) { _value = x._value ; return *this; };
+		// 		// bool						operator==(const iterator& x) const;
+		// 		// bool						operator!=(const iterator& x) const;
+		// 		// random_iterator<value_type>	&operator++(void);
+		// 		// random_iterator<value_type>	operator++(int);
+		// 		// random_iterator<value_type>	&operator--(void);
+		// 		// random_iterator<value_type>	operator--(int);
+		// 		// random_iterator<value_type>	operator+(const iterator& x);
+		// 		// random_iterator<value_type>	operator+(difference_type);
+		// 		// random_iterator<value_type>	operator-(difference_type);
+		// 		// bool						operator<(const iterator& x) const;
+		// 		// bool						operator>(const iterator& x) const;
+		// 		// bool						operator<=(const iterator& x) const;
+		// 		// bool						operator>=(const iterator& x) const;
+		// 		// difference_type				operator-(const iterator& x) const;
+		// }
 		class iterator
 		{
 			public:
-
 				typedef	value_type&	reference;
 				typedef	value_type&	const_reference;
 				typedef	value_type*	pointer;
@@ -43,6 +70,7 @@ class	vector
 				iterator(void) { return; };
 				iterator(value_type *x) : _value(x) { return ; };
 				iterator(const iterator& x) { *this = x; return ;};
+				// iterator(const const_iterator& x) { _value = x.getValue() ; return ;};
 				~iterator(void) { return; };
 				reference	operator*(void) const;
 				pointer		operator->(void)const;
@@ -53,23 +81,22 @@ class	vector
 				iterator	operator++(int);
 				iterator	&operator--(void);
 				iterator	operator--(int);
-				iterator	operator+(const iterator& x);
-				iterator	operator+(difference_type);
+				iterator	operator+(difference_type n);
 				iterator	operator-(difference_type);
 				bool		operator<(const iterator& x) const;
 				bool		operator>(const iterator& x) const;
 				bool		operator<=(const iterator& x) const;
 				bool		operator>=(const iterator& x) const;
+				difference_type	operator-(const iterator& x) const;
 				iterator	&operator+=(difference_type);
 				iterator	&operator-=(difference_type);
 				reference	operator[](size_type n);
 				const_reference operator[](size_type n) const;
 				difference_type	operator[](const iterator&) const;
-				difference_type	operator-(const iterator& x) const;
-				//to do : *a = t; ?
+				value_type	*getValue(void) const { return _value; };
 			private:
 				value_type	*_value;
-				//friend class vector;
+				// friend class const_iterator;
 		};
 		class const_iterator
 		{
@@ -80,7 +107,8 @@ class	vector
 				typedef ptrdiff_t	difference_type;
 				const_iterator(void) { return; };
 				const_iterator(value_type *x) : _value(x) { return ; };
-				const_iterator(const const_iterator& x) { this->_value = x._value; return ;};//*a = t; ?
+				const_iterator(const const_iterator& x) { *this = x; return ;};
+				const_iterator(const iterator& x) { _value = x.getValue() ; return ;};
 				~const_iterator(void) { return; };
 				reference	operator*(void) const;
 				pointer		operator->(void)const;
@@ -91,9 +119,7 @@ class	vector
 				const_iterator	operator++(int);
 				const_iterator	&operator--(void);
 				const_iterator	operator--(int);
-				const_iterator	operator+(const const_iterator& x);
-				const_iterator	operator-(const const_iterator& x);
-				const_iterator	operator+(difference_type);
+				const_iterator	operator+(difference_type n);
 				const_iterator	operator-(difference_type);
 				bool			operator<(const const_iterator& x) const;
 				bool			operator>(const const_iterator& x) const;
@@ -105,10 +131,10 @@ class	vector
 				const_reference operator[](size_type n) const;
 				difference_type	operator[](const const_iterator&) const;
 				difference_type	operator-(const const_iterator& x) const;
-				//to do : *a = t; ?
+				value_type		*getValue(void) const { return _value; };
 			private:
 				value_type*	_value;
-				//friend class vector;
+				// friend class vector;
 		};
 		// template <class Iterator> class iterator_traits
 		// {
@@ -299,6 +325,8 @@ class	vector
 	bool operator>  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs);
 	template <class T, class Alloc>
 	bool operator>= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs);
+	template <class Iterator>
+	Iterator	operator+(int n, const Iterator& it) { return Iterator(n + it.getValue()); }
 
 	/*
 	**	TO COMPLETE

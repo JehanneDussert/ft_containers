@@ -730,10 +730,18 @@ typename vector<T, Alloc>::allocator_type	vector<T, Alloc>::get_allocator() cons
 template <typename T, typename Alloc>
 void	vector<T, Alloc>::swap(vector &x)
 {
-	vector<T, Alloc>	tmp(x);
+	vector<T, Alloc>	tmp(*this);
 
-	x = *this;
-	*this = tmp;
+	if (this == &x)
+		return ;
+	_clear_tab(); _tab = _alloc.allocate(x.capacity());
+	_size = 0; _capacity = x.capacity();
+	for (; _size < x.size(); _size++)
+		_tab[_size] = x._tab[_size];
+	x._clear_tab(); x._tab = _alloc.allocate(tmp.capacity());
+	x._size = 0; x._capacity = tmp.capacity();
+	for (; x._size < tmp.size(); x._size++)
+		x._tab[x._size] = tmp._tab[x._size];
 }
 
 /*
@@ -796,9 +804,7 @@ bool operator>=(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
 template <class T, class Alloc>
 void swap (vector<T,Alloc>& x, vector<T,Alloc>& y)
 {
-    vector<T, Alloc>    tmp(x);
-    x = y;
-    y = tmp;
+	x.swap(y);
 
 	return ;
 }

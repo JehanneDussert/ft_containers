@@ -498,25 +498,15 @@ void vector<T, Alloc>::reserve(size_type n)
 	vector<T, Alloc>	tmp;
 	iterator first = begin(); iterator last = end();
 
-	// problem with size
-	_size = 0;
-	if (n > _size)
+	if (n > _capacity)
 	{
-		if (n > _capacity * 2)
-			_capacity = n;
-		else
-		{
-			_capacity *= 2;
-			n = _capacity;
-		}
+		_size = 0 ;
+		_capacity = n;
+		tmp._tab = _alloc.allocate(n);
+		for (; first != last; ++first)
+			_alloc.construct(&tmp._tab[_size++], *first);
+		_tab = tmp._tab;
 	}
-	tmp._tab = _alloc.allocate(n);
-	for (; first != last; ++first)
-		_alloc.construct(&tmp._tab[_size++], *first);
-	_tab = _alloc.allocate(n);
-	for (size_type i = 0; i < _size; i++)
-		_alloc.construct(&_tab[i], tmp[i]);
-	tmp._clear_tab();
 }
 
 template <class T, class Alloc>
@@ -527,7 +517,11 @@ void vector<T, Alloc>::resize(size_type n, value_type val)
 			_alloc.destroy(&_tab[_size]);
 	else
 	{
-		if (n > _capacity)
+		if (n <= _capacity)
+			;
+		else if (n <= _capacity * 2)
+			reserve(_capacity * 2);
+		else
 			reserve(n);
 		for (; _size < n; _size++)
 			_alloc.construct(&_tab[_size], val);

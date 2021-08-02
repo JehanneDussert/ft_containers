@@ -62,9 +62,6 @@ InputIterator last, const allocator_type& alloc) : _size(0), _max_size(alloc.max
 ** Copy constructor
 */
 
-
-// prbl here
-
 template <typename T, typename Alloc>
 vector<T, Alloc>::vector(const vector& x)
 {
@@ -428,29 +425,29 @@ typename vector<T, Alloc>::const_iterator vector<T, Alloc>::end() const
 	return const_iterator(&_tab[_size]);
 }
 
-// template <typename T, typename Alloc>
-// vector<T, Alloc>::reverse_iterator<T, Alloc>::rbegin()
-// {
-// 	return reverse_iterator(_tab);
-// }
+template <typename T, typename Alloc>
+vector<T, Alloc>::reverse_iterator<T, Alloc>::rbegin()
+{
+	return reverse_iterator(_tab);
+}
 
-// template <typename T, typename Alloc>
-// vector<T, Alloc>::rconst_reverse_iterator<T, Alloc>::rbegin() const;
-// {
-// 	return const_reverse_iterator(_tab);
-// }
+template <typename T, typename Alloc>
+vector<T, Alloc>::rconst_reverse_iterator<T, Alloc>::rbegin() const
+{
+	return const_reverse_iterator(_tab);
+}
 
-// template <typename T, typename Alloc>
-// vector<T, Alloc>::reverse_iterator<T, Alloc>::rend()
-// {
-// 	return reverse_iterator(_tab[_size]);
-// }
+template <typename T, typename Alloc>
+vector<T, Alloc>::reverse_iterator<T, Alloc>::rend()
+{
+	return reverse_iterator(_tab[_size]);
+}
 
-// template <typename T, typename Alloc>
-// vector<T, Alloc>::rconst_reverse_iterator<T, Alloc>::rend() const;
-// {
-// 	return const_reverse_iterator(_tab[_size]);
-// }
+template <typename T, typename Alloc>
+vector<T, Alloc>::rconst_reverse_iterator<T, Alloc>::rend() const
+{
+	return const_reverse_iterator(_tab[_size]);
+}
 
 /*
 ** CAPACITY

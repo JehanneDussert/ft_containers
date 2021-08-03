@@ -3,6 +3,7 @@
 
 # include "Utils.hpp"
 # include "ReverseIterator.hpp"
+# include "RandomIterator.hpp"
 
 namespace ft
 {
@@ -23,81 +24,63 @@ class	vector
 		/*** ITERATORS ***/
 		/*****************/
 
-		class iterator
+		class iterator : public Random<value_type>
 		{
 			public:
 				typedef	value_type&	reference;
 				typedef	value_type&	const_reference;
 				typedef	value_type*	pointer;
 				typedef ptrdiff_t	difference_type;
-				iterator(void) { return; };
-				iterator(value_type *x) : _value(x) { return ; };
-				iterator(const iterator& x) { *this = x; return ;};
-				// iterator(const const_iterator& x) { _value = x.getValue() ; return ;};
-				~iterator(void) { return; };
+
+				iterator(void) : Random<value_type>() { return; };
+				iterator(value_type *x) : Random<value_type>(x) { return ; };
+				iterator(const Random<value_type>& x) : Random<value_type>(x) { return ; };
+
 				reference	operator*(void) const;
 				pointer		operator->(void)const;
-				iterator	&operator=(const iterator& x);
-				bool		operator==(const iterator& x) const;
-				bool		operator!=(const iterator& x) const;
-				iterator	&operator++(void);
-				iterator	operator++(int);
-				iterator	&operator--(void);
-				iterator	operator--(int);
-				iterator	operator+(difference_type n);
-				iterator	operator-(difference_type);
-				bool		operator<(const iterator& x) const;
-				bool		operator>(const iterator& x) const;
-				bool		operator<=(const iterator& x) const;
-				bool		operator>=(const iterator& x) const;
-				difference_type	operator-(const iterator& x) const;
 				iterator	&operator+=(difference_type);
 				iterator	&operator-=(difference_type);
 				reference	operator[](size_type n);
 				const_reference operator[](size_type n) const;
-				difference_type	operator[](const iterator&) const;
-				value_type	*getValue(void) const { return _value; };
-			private:
-				value_type	*_value;
-				// friend class const_iterator;
+				difference_type	operator[](const Random<value_type>&) const;
+				// iterator	&operator=(const iterator& x);
+				iterator	operator-(difference_type n) const;
+				difference_type	operator-(const Random<value_type>& x) const;
+				iterator	operator+(difference_type n) const;
+				// friend iterator	operator+(difference_type n, const Random<value_type> &x);
+				iterator	&operator++(void);
+				iterator	operator++(int);
+				iterator	&operator--(void);
+				iterator	operator--(int);
 		};
-		class const_iterator
+		class const_iterator : public Random<value_type>
 		{
 			public:
 				typedef	value_type&	reference;
 				typedef	value_type&	const_reference;
 				typedef	value_type*	pointer;
 				typedef ptrdiff_t	difference_type;
-				const_iterator(void) { return; };
-				const_iterator(value_type *x) : _value(x) { return ; };
-				const_iterator(const const_iterator& x) { *this = x; return ;};
-				const_iterator(const iterator& x) { _value = x.getValue() ; return ;};
-				~const_iterator(void) { return; };
+
+				const_iterator(void) : Random<value_type>() { return; };
+				const_iterator(value_type *x) : Random<value_type>(x) { return ; };
+				const_iterator(const Random<value_type>& x) : Random<value_type>(x) { return ; };
+
 				reference	operator*(void) const;
 				pointer		operator->(void)const;
-				const_iterator	&operator=(const const_iterator& x);
-				bool		operator==(const const_iterator& x) const;
-				bool		operator!=(const const_iterator& x) const;
+				const_iterator	&operator+=(difference_type);
+				const_iterator	&operator-=(difference_type);
+				reference	operator[](size_type n);
+				const_reference operator[](size_type n) const;
+				difference_type	operator[](const Random<value_type>&) const;
+				// iterator	&operator=(const iterator& x);
+				const_iterator	operator-(difference_type) const;
+				difference_type	operator-(const Random<value_type>& x) const;
+				const_iterator	operator+(difference_type n) const;
+				// friend iterator	operator+(difference_type n, const Random<value_type> &x) { return x.operator+(n); };
 				const_iterator	&operator++(void);
 				const_iterator	operator++(int);
 				const_iterator	&operator--(void);
 				const_iterator	operator--(int);
-				const_iterator	operator+(difference_type n);
-				const_iterator	operator-(difference_type);
-				bool			operator<(const const_iterator& x) const;
-				bool			operator>(const const_iterator& x) const;
-				bool			operator<=(const const_iterator& x) const;
-				bool			operator>=(const const_iterator& x) const;
-				const_iterator	&operator+=(difference_type);
-				const_iterator	&operator-=(difference_type);
-				reference		operator[](size_type n);
-				const_reference operator[](size_type n) const;
-				difference_type	operator[](const const_iterator&) const;
-				difference_type	operator-(const const_iterator& x) const;
-				value_type		*getValue(void) const { return _value; };
-			private:
-				value_type*	_value;
-				// friend class vector;
 		};
 		// template <class Iterator> class iterator_traits
 		// {
@@ -129,38 +112,6 @@ class	vector
 
 		typedef ft::reverse_iterator<const_iterator>		const_reverse_iterator;
 		typedef ft::reverse_iterator<iterator>				reverse_iterator;
-		// template <class Iter> bool	operator==(const reverse_iterator<Iter> &rhs) const { return this->_base.operator==(rhs.base()); };
-		// template <class Iter> bool	operator!=(const reverse_iterator<Iter> &rhs) const { return this->_base.operator!=(rhs.base()); };
-		// template <class Iter> bool	operator< (const reverse_iterator<Iter> &rhs) const { return this->_base.operator> (rhs.base()); };
-		// template <class Iter> bool	operator<=(const reverse_iterator<Iter> &rhs) const { return this->_base.operator>=(rhs.base()); };
-		// template <class Iter> bool	operator> (const reverse_iterator<Iter> &rhs) const { return this->_base.operator< (rhs.base()); };
-		// template <class Iter> bool	operator>=(const reverse_iterator<Iter> &rhs) const { return this->_base.operator<=(rhs.base()); };
-
-		// template <class Iterator>
-		// bool operator==(const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs)
-		// { lhs._base == rhs._base ? return true : return false; };
-		// template <class Iterator>
-  		// bool operator!=(const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs)
-		// { lhs._base == rhs._base ? return false : return true; };
-		// template <class Iterator>
-  		// bool operator<(const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs)
-		// { lhs._base < rhs._base ? return true : return false; };
-		// template <class Iterator>
-  		// bool operator<=(const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs)
-		// { lhs._base <= rhs._base ? return true : return false; };
-		// template <class Iterator>
- 		// bool operator>(const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs)
-		// { lhs._base > rhs._base ? return true : return false; };
-		// template <class Iterator>
-  		// bool operator>=(const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs)
-		// { lhs._base >= rhs._base ? return true : return false; };
-		// template <class Iterator>
-  		// reverse_iterator<Iterator> operator+(typename reverse_iterator<Iterator>::difference_type n,
-		// 	const reverse_iterator<Iterator>& rev_it) { return rev_it.operator+(n); }
-		// template <class Iterator>
-		// typename reverse_iterator<Iterator>::difference_type operator- (
-		// 	const reverse_iterator<Iterator>& lhs,
-		// 	const reverse_iterator<Iterator>& rhs);
 
 		/**********************/
 		/**	MEMBER FUNCTIONS **/
@@ -245,17 +196,17 @@ class	vector
 	/**************************************/
 
 	template <class T, class Alloc>
-	bool operator== (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs);
+	bool operator== (const vector<T,Alloc>& lhs, const vector<T,Alloc>& x);
 	template <class T, class Alloc>
-	bool operator!= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs);
+	bool operator!= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& x);
 	template <class T, class Alloc>
-	bool operator<  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs);
+	bool operator<  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& x);
 	template <class T, class Alloc>
-	bool operator<= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs);
+	bool operator<= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& x);
 	template <class T, class Alloc>
-	bool operator>  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs);
+	bool operator>  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& x);
 	template <class T, class Alloc>
-	bool operator>= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs);
+	bool operator>= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& x);
 	template <class Iterator>
 	Iterator operator+(int n, const Iterator& it) { return Iterator(n + it.base().getValue()); }
 	template <class T, class Alloc>

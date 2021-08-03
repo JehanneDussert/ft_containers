@@ -32,22 +32,28 @@ class reverse_iterator {
 		template <class Iter>
 		difference_type		operator-(const reverse_iterator<Iter> &u) { return u.base().operator-(this->_base); };
 		reverse_iterator	operator+(difference_type n) const { return reverse_iterator(this->_base.getValue() - n); };
-		reverse_iterator	&operator+=(difference_type n) { this->_base._value -= n; return *this; };
+		reverse_iterator	&operator+=(difference_type n) { this->_base.operator-=(n); return *this; };
 		reverse_iterator	operator-(difference_type n) const { return reverse_iterator(this->_base.getValue() + n); };
-		reverse_iterator	&operator-=(difference_type n) { this->_base._value += n; return *this; }; //operator+=(n); return *this; };
+		reverse_iterator	&operator-=(difference_type n) { this->_base.operator+=(n); /*std::cout << "lol\n" ; */return *this; };
 		reference			operator[](difference_type n) const { return *this->operator+(n); };
 
 		friend reverse_iterator	operator+(difference_type n, const reverse_iterator &rhs)
 			{ return rhs.operator+(n); };
 
-		template <class Iter> bool	operator==(const reverse_iterator<Iter> &rhs) const { return this->_base.operator==(rhs.base()); };
-		template <class Iter> bool	operator!=(const reverse_iterator<Iter> &rhs) const { return this->_base.operator!=(rhs.base()); };
-		template <class Iter> bool	operator< (const reverse_iterator<Iter> &rhs) const { return this->_base.operator> (rhs.base()); };
-		template <class Iter> bool	operator<=(const reverse_iterator<Iter> &rhs) const { return this->_base.operator>=(rhs.base()); };
-		template <class Iter> bool	operator> (const reverse_iterator<Iter> &rhs) const { return this->_base.operator< (rhs.base()); };
-		template <class Iter> bool	operator>=(const reverse_iterator<Iter> &rhs) const { return this->_base.operator<=(rhs.base()); };
+		template <class Iter>
+		bool				operator==(const reverse_iterator<Iter> &rhs) const { return this->_base.operator==(rhs.base()); };
+		template <class Iter>
+		bool				operator!=(const reverse_iterator<Iter> &rhs) const { return this->_base.operator!=(rhs.base()); };
+		template <class Iter>
+		bool				operator< (const reverse_iterator<Iter> &rhs) const { return this->_base.operator> (rhs.base()); };
+		template <class Iter>
+		bool				operator<=(const reverse_iterator<Iter> &rhs) const { return this->_base.operator>=(rhs.base()); };
+		template <class Iter>
+		bool				operator> (const reverse_iterator<Iter> &rhs) const { return this->_base.operator< (rhs.base()); };
+		template <class Iter>
+		bool				operator>=(const reverse_iterator<Iter> &rhs) const { return this->_base.operator<=(rhs.base()); };
 
-}; // ************************************************** class ReverseIte end //
+};
 
 template <class Iterator>
 reverse_iterator<Iterator>::reverse_iterator(void) : _base() { };
@@ -56,7 +62,7 @@ template <class Iterator>
 reverse_iterator<Iterator>::reverse_iterator(Iterator x) : _base(x) { };
 
 template <class Iterator> template <class Iter>
-reverse_iterator<Iterator>::reverse_iterator(const reverse_iterator<Iter> &u) : _base(u.base()) { };
+reverse_iterator<Iterator>::reverse_iterator(const reverse_iterator<Iter> &u) : _base(u.base()) { return ; };
 
 template <class Iterator> template <class Iter>
 reverse_iterator<Iterator>	&reverse_iterator<Iterator>::operator=(const reverse_iterator<Iter> &u) {

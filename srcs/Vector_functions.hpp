@@ -32,6 +32,7 @@ _max_size(alloc.max_size()), _alloc(alloc), _capacity(0) { return ; };
 ** Fill constructor
 */
 
+// prbl ici
 template <typename T, typename Alloc>
 vector<T, Alloc>::vector(size_type n, const value_type& val,
 const allocator_type& alloc) : _size(n), _max_size(alloc.max_size()), 
@@ -122,30 +123,9 @@ typename vector<T, Alloc>::iterator::pointer	vector<T, Alloc>::iterator::operato
 }
 
 template <typename T, typename Alloc>
-typename vector<T, Alloc>::iterator&			vector<T, Alloc>::iterator::operator=(const iterator& x)
-{
-	if (this == &x)
-		return *this;
-	this->_value = x._value;
-	return *this;
-}
-
-template <typename T, typename Alloc>
-bool	vector<T, Alloc>::iterator::operator==(const iterator& x) const
-{
-	return (this->_value == x._value ? true : false);
-}
-
-template <typename T, typename Alloc>
-bool	vector<T, Alloc>::iterator::operator!=(const iterator& x) const
-{
-	return (this->_value != x._value ? true : false);
-}
-
-template <typename T, typename Alloc>
 typename vector<T, Alloc>::iterator&			vector<T, Alloc>::iterator::operator++(void)
 {
-	this->_value++;
+	Random<value_type>::operator++();
 
 	return *this;
 }
@@ -153,16 +133,13 @@ typename vector<T, Alloc>::iterator&			vector<T, Alloc>::iterator::operator++(vo
 template <typename T, typename Alloc>
 typename vector<T, Alloc>::iterator				vector<T, Alloc>::iterator::operator++(int)
 {
-	ft::vector<T, Alloc>::iterator	tmp(*this);
-
-	this->operator++();
-	return tmp;
+	return Random<value_type>::operator++(0);
 }
 
 template <typename T, typename Alloc>
 typename vector<T, Alloc>::iterator&			vector<T, Alloc>::iterator::operator--(void)
 {
-	this->_value--;
+	Random<value_type>::operator--();
 
 	return *this;
 }
@@ -170,56 +147,29 @@ typename vector<T, Alloc>::iterator&			vector<T, Alloc>::iterator::operator--(vo
 template <typename T, typename Alloc>
 typename vector<T, Alloc>::iterator				vector<T, Alloc>::iterator::operator--(int)
 {
-	ft::vector<T, Alloc>::iterator	tmp(*this);
-
-	this->operator--();
-	return tmp;
+	return Random<value_type>::operator--(0);
 }
 
 template <typename T, typename Alloc>
-typename vector<T, Alloc>::iterator			vector<T, Alloc>::iterator::operator+(difference_type n)
+typename vector<T, Alloc>::iterator			vector<T, Alloc>::iterator::operator+(difference_type n) const
 {
-	return iterator(this->_value + n);
+	return Random<value_type>::operator+(n);
 }
 
 template <typename T, typename Alloc>
-typename vector<T, Alloc>::iterator			vector<T, Alloc>::iterator::operator-(difference_type n)
+typename vector<T, Alloc>::iterator			vector<T, Alloc>::iterator::operator-(difference_type n) const
 {
-	return iterator(this->_value - n);
+	return Random<value_type>::operator-(n);
 }
 
 template <typename T, typename Alloc>
-typename vector<T, Alloc>::difference_type	vector<T, Alloc>::iterator::operator-(const iterator& x) const
+typename vector<T, Alloc>::difference_type	vector<T, Alloc>::iterator::operator-(const Random<value_type>& x) const
 {
-	return (this->_value - x.getValue());
+	return Random<value_type>::operator-(x);
 }
 
 template <typename T, typename Alloc>
-bool	vector<T, Alloc>::iterator::operator<(const iterator& x) const
-{
-	return (this->_value < x._value ? true : false);
-}
-
-template <typename T, typename Alloc>
-bool	vector<T, Alloc>::iterator::operator>(const iterator& x) const
-{
-	return (this->_value < x._value ? false : true);
-}
-
-template <typename T, typename Alloc>
-bool	vector<T, Alloc>::iterator::operator<=(const iterator& x) const
-{
-	return (this->_value <= x._value ? true : false);
-}
-
-template <typename T, typename Alloc>
-bool	vector<T, Alloc>::iterator::operator>=(const iterator& x) const
-{
-	return (this->_value <= x._value ? false : true);
-}
-
-template <typename T, typename Alloc>
-typename vector<T, Alloc>::iterator&			vector<T, Alloc>::iterator::operator+=(ptrdiff_t n)
+typename vector<T, Alloc>::iterator&			vector<T, Alloc>::iterator::operator+=(difference_type n)
 {
 	this->_value += n;
 
@@ -227,7 +177,7 @@ typename vector<T, Alloc>::iterator&			vector<T, Alloc>::iterator::operator+=(pt
 }
 
 template <typename T, typename Alloc>
-typename vector<T, Alloc>::iterator&			vector<T, Alloc>::iterator::operator-=(ptrdiff_t n)
+typename vector<T, Alloc>::iterator&			vector<T, Alloc>::iterator::operator-=(difference_type n)
 {
 	this->_value -= n;
 
@@ -247,7 +197,7 @@ typename vector<T, Alloc>::iterator::const_reference			vector<T, Alloc>::iterato
 }
 
 template <typename T, typename Alloc>
-typename vector<T, Alloc>::iterator::difference_type			vector<T, Alloc>::iterator::operator[](const iterator& x) const
+typename vector<T, Alloc>::iterator::difference_type			vector<T, Alloc>::iterator::operator[](const Random<value_type>& x) const
 {
 	return this->_value - x._value;
 }
@@ -267,30 +217,9 @@ typename vector<T, Alloc>::const_iterator::pointer	vector<T, Alloc>::const_itera
 }
 
 template <typename T, typename Alloc>
-typename vector<T, Alloc>::const_iterator&			vector<T, Alloc>::const_iterator::operator=(const const_iterator& x)
-{
-	if (this == &x)
-		return *this;
-	this->_value = x._value;
-	return *this;
-}
-
-template <typename T, typename Alloc>
-bool	vector<T, Alloc>::const_iterator::operator==(const const_iterator& x) const
-{
-	return (this->_value == x._value ? true : false);
-}
-
-template <typename T, typename Alloc>
-bool	vector<T, Alloc>::const_iterator::operator!=(const const_iterator& x) const
-{
-	return (this->_value == x._value ? false : true);
-}
-
-template <typename T, typename Alloc>
 typename vector<T, Alloc>::const_iterator&			vector<T, Alloc>::const_iterator::operator++(void)
 {
-	this->_value++;
+	Random<value_type>::operator++();
 
 	return *this;
 }
@@ -298,16 +227,13 @@ typename vector<T, Alloc>::const_iterator&			vector<T, Alloc>::const_iterator::o
 template <typename T, typename Alloc>
 typename vector<T, Alloc>::const_iterator				vector<T, Alloc>::const_iterator::operator++(int)
 {
-	ft::vector<T, Alloc>::const_iterator	tmp(*this);
-
-	this->operator++();
-	return tmp;
+	return Random<value_type>::operator++(0);
 }
 
 template <typename T, typename Alloc>
 typename vector<T, Alloc>::const_iterator&			vector<T, Alloc>::const_iterator::operator--(void)
 {
-	this->_value--;
+	Random<value_type>::operator--();
 
 	return *this;
 }
@@ -315,56 +241,29 @@ typename vector<T, Alloc>::const_iterator&			vector<T, Alloc>::const_iterator::o
 template <typename T, typename Alloc>
 typename vector<T, Alloc>::const_iterator				vector<T, Alloc>::const_iterator::operator--(int)
 {
-	ft::vector<T, Alloc>::const_iterator	tmp(*this);
-
-	this->operator--();
-	return tmp;
+	return Random<value_type>::operator--(0);
 }
 
 template <typename T, typename Alloc>
-typename vector<T, Alloc>::const_iterator			vector<T, Alloc>::const_iterator::operator+(difference_type n)
+typename vector<T, Alloc>::const_iterator			vector<T, Alloc>::const_iterator::operator+(difference_type n) const
 {
-	return const_iterator(this->_value + n);
+	return Random<value_type>::operator+(n);
 }
 
 template <typename T, typename Alloc>
-typename vector<T, Alloc>::const_iterator			vector<T, Alloc>::const_iterator::operator-(difference_type n)
+typename vector<T, Alloc>::const_iterator			vector<T, Alloc>::const_iterator::operator-(difference_type n) const
 {
-	return const_iterator(this->_value - n);
+	return Random<value_type>::operator-(n);
 }
 
 template <typename T, typename Alloc>
-typename vector<T, Alloc>::difference_type			vector<T, Alloc>::const_iterator::operator-(const const_iterator& x) const
+typename vector<T, Alloc>::difference_type			vector<T, Alloc>::const_iterator::operator-(const Random<value_type>& x) const
 {
-	return (this->_value - x.getValue());
+	return Random<value_type>::operator-(x);
 }
 
 template <typename T, typename Alloc>
-bool	vector<T, Alloc>::const_iterator::operator<(const const_iterator& x) const
-{
-	return (this->_value < x._value ? true : false);
-}
-
-template <typename T, typename Alloc>
-bool	vector<T, Alloc>::const_iterator::operator>(const const_iterator& x) const
-{
-	return (this->_value < x._value ? false : true);
-}
-
-template <typename T, typename Alloc>
-bool	vector<T, Alloc>::const_iterator::operator<=(const const_iterator& x) const
-{
-	return (this->_value <= x._value ? true : false);
-}
-
-template <typename T, typename Alloc>
-bool	vector<T, Alloc>::const_iterator::operator>=(const const_iterator& x) const
-{
-	return (this->_value <= x._value ? false : true);
-}
-
-template <typename T, typename Alloc>
-typename vector<T, Alloc>::const_iterator&			vector<T, Alloc>::const_iterator::operator+=(ptrdiff_t n)
+typename vector<T, Alloc>::const_iterator&			vector<T, Alloc>::const_iterator::operator+=(difference_type n)
 {
 	this->_value += n;
 
@@ -372,7 +271,7 @@ typename vector<T, Alloc>::const_iterator&			vector<T, Alloc>::const_iterator::o
 }
 
 template <typename T, typename Alloc>
-typename vector<T, Alloc>::const_iterator&			vector<T, Alloc>::const_iterator::operator-=(ptrdiff_t n)
+typename vector<T, Alloc>::const_iterator&			vector<T, Alloc>::const_iterator::operator-=(difference_type n)
 {
 	this->_value -= n;
 
@@ -385,14 +284,14 @@ typename vector<T, Alloc>::const_iterator::reference			vector<T, Alloc>::const_i
 	return this->_value[n];
 }
 
-// template <typename T, typename Alloc>
-// typename vector<T, Alloc>::const_iterator::const_reference			vector<T, Alloc>::const_iterator::operator[](size_type n) const
-// {
-// 	return this->_value[n];
-// }
+template <typename T, typename Alloc>
+typename vector<T, Alloc>::const_iterator::const_reference			vector<T, Alloc>::const_iterator::operator[](size_type n) const
+{
+	return this->_value[n];
+}
 
 template <typename T, typename Alloc>
-typename vector<T, Alloc>::const_iterator::difference_type			vector<T, Alloc>::const_iterator::operator[](const const_iterator& x) const
+typename vector<T, Alloc>::const_iterator::difference_type			vector<T, Alloc>::const_iterator::operator[](const Random<value_type>& x) const
 {
 	return this->_value - x._value;
 }

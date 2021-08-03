@@ -1,4 +1,5 @@
 #include "srcs/Vector_functions.hpp"
+#include "srcs/ReverseIterator.hpp"
 #include <vector>
 
 // DONE : enable_if, is_integral, equal/lexicographical compare,
@@ -188,6 +189,10 @@ int main(void)
 	for (size_t i = 0; i < v1.size(); i++)
 		std::cout << "\n" << i << " | " << v1[i];
 	std::cout << std::endl;
+	ft::vector<int>::reverse_iterator	rit1 = v1.rbegin();
+	ft::vector<int>::reverse_iterator	rit2 = v2.rbegin();
+	(void)rit1;
+	(void)rit2;
 
     return 0;
 }

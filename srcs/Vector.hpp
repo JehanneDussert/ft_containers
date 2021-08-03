@@ -2,6 +2,7 @@
 # define VECTOR_HPP
 
 # include "Utils.hpp"
+# include "ReverseIterator.hpp"
 
 namespace ft
 {
@@ -15,49 +16,13 @@ class	vector
 		typedef typename allocator_type::const_reference	const_reference;
 		typedef typename allocator_type::pointer			pointer;
 		typedef typename allocator_type::const_pointer		const_pointer;
-		// typedef vector::iterator				iterator;
-		// typedef ft::reverse_iterator<const_iterator>		const_reverse_iterator;
 		typedef ptrdiff_t									difference_type;
 		typedef size_t										size_type;
-
-		// class out_of_range : public std::logic_error
-		// {
-		// 	public:
-		// 		explicit out_of_range (const std::string& what_arg);
-		// };
 		
 		/*****************/
 		/*** ITERATORS ***/
 		/*****************/
 
-		// class	random_iterator
-		// {
-		// 	protected:
-		// 		value_type	*_value;
-		// 	public:
-		// 		typedef	value_type&	reference;
-		// 		typedef	value_type&	const_reference;
-		// 		typedef	value_type*	pointer;
-		// 		typedef ptrdiff_t	difference_type;
-		// 		random_iterator(void) { return ; };
-		// 		random_iterator(value_type *value) : _value(x) { return ; };
-		// 		random_iterator(const random_iterator& x) { *this = x ; return ; }
-		// 		random_iterator				&operator=(const iterator& x) { _value = x._value ; return *this; };
-		// 		// bool						operator==(const iterator& x) const;
-		// 		// bool						operator!=(const iterator& x) const;
-		// 		// random_iterator<value_type>	&operator++(void);
-		// 		// random_iterator<value_type>	operator++(int);
-		// 		// random_iterator<value_type>	&operator--(void);
-		// 		// random_iterator<value_type>	operator--(int);
-		// 		// random_iterator<value_type>	operator+(const iterator& x);
-		// 		// random_iterator<value_type>	operator+(difference_type);
-		// 		// random_iterator<value_type>	operator-(difference_type);
-		// 		// bool						operator<(const iterator& x) const;
-		// 		// bool						operator>(const iterator& x) const;
-		// 		// bool						operator<=(const iterator& x) const;
-		// 		// bool						operator>=(const iterator& x) const;
-		// 		// difference_type				operator-(const iterator& x) const;
-		// }
 		class iterator
 		{
 			public:
@@ -162,92 +127,14 @@ class	vector
 		// 		};
 		// };
 
-		template <class Iterator>
-		class reverse_iterator
-		{
-			private:
-				typedef	Iterator	_base;
-			public: 
-				typedef Iterator	iterator_type;
-				typedef	value_type&	reference;
-				typedef	value_type&	const_reference;
-				typedef	value_type*	pointer;
-				typedef ptrdiff_t	difference_type;
-				// Need to do iterator_traits<>
-				// typedef typename iterator_traits<Iterator>::difference_type	difference_type;
-				// typedef typename iterator_traits<Iterator>::reference		reference;
-				// typedef typename iterator_traits<Iterator>::pointer			pointer;
-
-				reverse_iterator(void);
-				explicit reverse_iterator(iterator_type it);
-				template <class Iter>
-				reverse_iterator(const reverse_iterator<Iter>& rev_it);
-				template <class Iter>
-				reverse_iterator	operator=(const reverse_iterator<Iter>& rev_it);
-			
-				iterator_type 		base(void) const; // Returns a copy of the base iterator.
-				
-				template <class Iter>
-				difference_type		operator-(const reverse_iterator<Iter> &rhs) { return rhs.base().operator-(this->_base); };
-				reverse_iterator	operator+(difference_type n) const { return reverse_iterator(this->_base.operator-(n)); };
-				reverse_iterator& 	operator++(void) { this->_base.operator--(); return *this; };
-				reverse_iterator	operator++(int) { return reverse_iterator(this->_base.operator--(0)); };
-				reverse_iterator&	operator+=(difference_type n) { return reverse_iterator(this->_base.operator-=(n)); };
-				reverse_iterator	operator-(difference_type n) const { return reverse_iterator(this->_base.operator+(n)); };
-				reverse_iterator&	operator--(void) { this->_base.operator++(); return *this; };
-				reverse_iterator	operator--(int) { return reverse_iterator(this->_base.operator++(0)); };
-				reverse_iterator&	operator-=(difference_type n) { this->_base.operator+=(n); return *this; };
-				reference			operator*(void) const { return (--Iterator(this->_base)).operator*(); };
-				pointer				operator->(void) const { return &this->operator*(); };
-				reference			operator[] (difference_type n) const { return *this->operator+(n); };
-				friend reverse_iterator	operator+(difference_type n, const reverse_iterator &rhs) { return rhs.operator+(n); };
-		};
-		template <class Iterator>
-		class const_reverse_iterator
-		{
-			private:
-				typedef	Iterator	_base;
-			public: 
-				typedef Iterator	iterator_type;
-				typedef	value_type&	reference;
-				typedef	value_type&	const_reference;
-				typedef	value_type*	pointer;
-				typedef ptrdiff_t	difference_type;
-				// Need to do iterator_traits<>
-				// typedef typename iterator_traits<Iterator>::difference_type	difference_type;
-				// typedef typename iterator_traits<Iterator>::reference		reference;
-				// typedef typename iterator_traits<Iterator>::pointer			pointer;
-
-				const_reverse_iterator(void);
-				explicit const_reverse_iterator(iterator_type it);
-				template <class Iter>
-				const_reverse_iterator(const const_reverse_iterator<Iter>& rev_it);
-				template <class Iter>
-				const_reverse_iterator	operator=(const const_reverse_iterator<Iter>& rev_it);
-			
-				iterator_type 		base(void) const; // Returns a copy of the base iterator.
-				
-				const_reverse_iterator	operator+(difference_type n) const { return const_reverse_iterator(this->_base.operator-(n)); };
-				const_reverse_iterator& 	operator++(void) { this->_base.operator--(); return *this; };
-				const_reverse_iterator	operator++(int) { return const_reverse_iterator(this->_base.operator--(0)); };
-				const_reverse_iterator&	operator+=(difference_type n) { return const_reverse_iterator(this->_base.operator-=(n)); };
-				const_reverse_iterator	operator-(difference_type n) const { return const_reverse_iterator(this->_base.operator+(n)); };
-				const_reverse_iterator&	operator--(void) { this->_base.operator++(); return *this; };
-				const_reverse_iterator	operator--(int) { return const_reverse_iterator(this->_base.operator++(0)); };
-				const_reverse_iterator&	operator-=(difference_type n) { this->_base.operator+=(n); return *this; };
-				reference			operator*(void) const { return (--Iterator(this->_base)).operator*(); };
-				pointer				operator->(void) const { return &this->operator*(); };
-				reference			operator[] (difference_type n) const { return *this->operator+(n); };
-				friend const_reverse_iterator	operator+(difference_type n, const const_reverse_iterator &rhs) { return rhs.operator+(n); };
-		};
-		// typedef ft::reverse_iterator<const_iterator>		const_reverse_iterator;
-		// typedef ft:::reverse_iterator<iterator>				reverse_iterator;
-		template <class Iter> bool	operator==(const reverse_iterator<Iter> &rhs) const { return this->_base.operator==(rhs.base()); };
-		template <class Iter> bool	operator!=(const reverse_iterator<Iter> &rhs) const { return this->_base.operator!=(rhs.base()); };
-		template <class Iter> bool	operator< (const reverse_iterator<Iter> &rhs) const { return this->_base.operator> (rhs.base()); };
-		template <class Iter> bool	operator<=(const reverse_iterator<Iter> &rhs) const { return this->_base.operator>=(rhs.base()); };
-		template <class Iter> bool	operator> (const reverse_iterator<Iter> &rhs) const { return this->_base.operator< (rhs.base()); };
-		template <class Iter> bool	operator>=(const reverse_iterator<Iter> &rhs) const { return this->_base.operator<=(rhs.base()); };
+		typedef ft::reverse_iterator<const_iterator>		const_reverse_iterator;
+		typedef ft::reverse_iterator<iterator>				reverse_iterator;
+		// template <class Iter> bool	operator==(const reverse_iterator<Iter> &rhs) const { return this->_base.operator==(rhs.base()); };
+		// template <class Iter> bool	operator!=(const reverse_iterator<Iter> &rhs) const { return this->_base.operator!=(rhs.base()); };
+		// template <class Iter> bool	operator< (const reverse_iterator<Iter> &rhs) const { return this->_base.operator> (rhs.base()); };
+		// template <class Iter> bool	operator<=(const reverse_iterator<Iter> &rhs) const { return this->_base.operator>=(rhs.base()); };
+		// template <class Iter> bool	operator> (const reverse_iterator<Iter> &rhs) const { return this->_base.operator< (rhs.base()); };
+		// template <class Iter> bool	operator>=(const reverse_iterator<Iter> &rhs) const { return this->_base.operator<=(rhs.base()); };
 
 		// template <class Iterator>
 		// bool operator==(const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs)
@@ -286,6 +173,7 @@ class	vector
 		vector(typename ft::enable_if<!std::numeric_limits<InputIterator>::is_integer, InputIterator>::type first,
 		InputIterator last, const allocator_type& alloc = allocator_type());
 		virtual ~vector(void);
+		vector &operator=(const vector& x);
 
 		/*
 		**	Iterators
@@ -325,38 +213,24 @@ class	vector
 		**	Modifiers
 		*/
 		template <class InputIterator>
-  			void assign(typename ft::enable_if<!std::numeric_limits<InputIterator>::is_integer, InputIterator>::type first, InputIterator last);
-		void assign(size_type n, const value_type& val);
-		void push_back(const value_type& val);
-		void pop_back();
+  		void 		assign(typename ft::enable_if<!std::numeric_limits<InputIterator>::is_integer, InputIterator>::type first, InputIterator last);
+		void 		assign(size_type n, const value_type& val);
+		void 		push_back(const value_type& val);
+		void 		pop_back();
 		iterator	insert(iterator position, const value_type& val);
 		void		insert(iterator position, size_type n, const value_type &val);
 		template <class InputIterator>
-			void insert(iterator position, InputIterator first, typename ft::enable_if<!std::numeric_limits<InputIterator>::is_integer, InputIterator>::type last);
-		iterator erase (iterator position);
-		iterator erase (iterator first, iterator last);
-		void swap (vector& x);
-		void clear();
+		void 		insert(iterator position, InputIterator first, typename ft::enable_if<!std::numeric_limits<InputIterator>::is_integer, InputIterator>::type last);
+		iterator 	erase (iterator position);
+		iterator	erase (iterator first, iterator last);
+		void 		swap (vector& x);
+		void 		clear();
 
 		/*
 		**	Allocator
 		*/
 		allocator_type get_allocator() const;
 
-		/*
-		** 	TO COMPLETE
-		*/
-		vector &operator=(const vector& x);
-
-		//?
-		class	OutOfRangeException : public std::exception
-		{
-			public:
-				virtual const char * what() const throw()
-				{
-					return "Terminating with uncaught exception of type std::out_of_range: vector.";
-				}
-		};
 	private:
 		value_type											*_tab;
 		size_type											_size;
@@ -383,11 +257,7 @@ class	vector
 	template <class T, class Alloc>
 	bool operator>= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs);
 	template <class Iterator>
-	Iterator	operator+(int n, const Iterator& it) { return Iterator(n + it.getValue()); }
-
-	/*
-	**	TO COMPLETE
-	*/
+	Iterator operator+(int n, const Iterator& it) { return Iterator(n + it.base().getValue()); }
 	template <class T, class Alloc>
 	void swap (vector<T,Alloc>& x, vector<T,Alloc>& y);
 

@@ -32,7 +32,6 @@ _max_size(alloc.max_size()), _alloc(alloc), _capacity(0) { return ; };
 ** Fill constructor
 */
 
-// prbl ici
 template <typename T, typename Alloc>
 vector<T, Alloc>::vector(size_type n, const value_type& val,
 const allocator_type& alloc) : _size(n), _max_size(alloc.max_size()), 

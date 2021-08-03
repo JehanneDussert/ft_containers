@@ -1,7 +1,7 @@
 #ifndef REVERSEITERATOR_HPP
 # define REVERSEITERATOR_HPP
 
-# include "Vector_functions.hpp"
+# include "RandomIterator.hpp"
 
 namespace ft {
 
@@ -17,8 +17,8 @@ class reverse_iterator {
 
 		reverse_iterator(void);
 		explicit reverse_iterator(iterator_type x);
-		template <class Iter> reverse_iterator(const reverse_iterator<Iter> &u);
-		template <class Iter> reverse_iterator &operator=(const reverse_iterator<Iter> &u);
+		template <class Iter> reverse_iterator(const reverse_iterator<Iter> &x);
+		template <class Iter> reverse_iterator &operator=(const reverse_iterator<Iter> &x);
 		Iterator base(void) const { return this->_base; };
 
 		reference			operator*(void) const { return (--Iterator(this->_base)).operator*(); };
@@ -30,11 +30,11 @@ class reverse_iterator {
 		reverse_iterator	operator--(int) { return reverse_iterator(this->_base.operator++(0)); };
 
 		template <class Iter>
-		difference_type		operator-(const reverse_iterator<Iter> &u) { return u.base().operator-(this->_base); };
+		difference_type		operator-(const reverse_iterator<Iter> &x) { return x.base().operator-(this->_base); };
 		reverse_iterator	operator+(difference_type n) const { return reverse_iterator(this->_base.getValue() - n); };
 		reverse_iterator	&operator+=(difference_type n) { this->_base.operator-=(n); return *this; };
 		reverse_iterator	operator-(difference_type n) const { return reverse_iterator(this->_base.getValue() + n); };
-		reverse_iterator	&operator-=(difference_type n) { this->_base.operator+=(n); /*std::cout << "lol\n" ; */return *this; };
+		reverse_iterator	&operator-=(difference_type n) { this->_base.operator+=(n); return *this; };
 		reference			operator[](difference_type n) const { return *this->operator+(n); };
 
 		friend reverse_iterator	operator+(difference_type n, const reverse_iterator &rhs)
@@ -62,13 +62,13 @@ template <class Iterator>
 reverse_iterator<Iterator>::reverse_iterator(Iterator x) : _base(x) { };
 
 template <class Iterator> template <class Iter>
-reverse_iterator<Iterator>::reverse_iterator(const reverse_iterator<Iter> &u) : _base(u.base()) { return ; };
+reverse_iterator<Iterator>::reverse_iterator(const reverse_iterator<Iter> &x) : _base(x.base()) { return ; };
 
 template <class Iterator> template <class Iter>
-reverse_iterator<Iterator>	&reverse_iterator<Iterator>::operator=(const reverse_iterator<Iter> &u) {
-	if (reinterpret_cast<const void *>(this) == reinterpret_cast<const void *>(&u))
+reverse_iterator<Iterator>	&reverse_iterator<Iterator>::operator=(const reverse_iterator<Iter> &x) {
+	if (reinterpret_cast<const void *>(this) == reinterpret_cast<const void *>(&x))
 		return (*this);
-	this->_base = u.base();
+	this->_base = x.base();
 	return (*this);
 };
 

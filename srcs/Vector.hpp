@@ -207,8 +207,6 @@ class	vector
 	bool operator>  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& x);
 	template <class T, class Alloc>
 	bool operator>= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& x);
-	template <class Iterator>
-	Iterator operator+(int n, const Iterator& it) { return Iterator(n + it.base().getValue()); }
 	template <class T, class Alloc>
 	void swap (vector<T,Alloc>& x, vector<T,Alloc>& y);
 

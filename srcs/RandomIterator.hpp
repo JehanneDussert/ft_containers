@@ -27,12 +27,12 @@ namespace ft {
 			}
 			
 			value_type		*getValue(void) const { return _value; };
-			bool			operator==(const Random &x) const { return (this->_value == x._value ? true : false);};
-			bool			operator!=(const Random &x) const { return (this->_value != x._value ? true : false);};
-			bool			operator<(const Random &x) const { return (this->_value < x._value ? true : false);};
-			bool			operator<=(const Random &x) const { return (this->_value <= x._value ? true : false);};
-			bool			operator>(const Random &x) const { return (this->_value > x._value ? true : false);};
-			bool			operator>=(const Random &x) const { return (this->_value >= x._value ? true : false);};
+			bool			operator==(const Random &x) const { return this->_value == x._value;};
+			bool			operator!=(const Random &x) const { return this->_value != x._value;};
+			bool			operator<(const Random &x) const { return this->_value < x._value;};
+			bool			operator<=(const Random &x) const { return this->_value <= x._value;};
+			bool			operator>(const Random &x) const { return this->_value > x._value;};
+			bool			operator>=(const Random &x) const { return this->_value >= x._value;};
 
 			Random<type>	&operator++(void) { this->_value++; return *this;};
 			Random<type>	operator++(int) { Random tmp(*this); this->operator++(); return tmp;};

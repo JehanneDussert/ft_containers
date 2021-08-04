@@ -2,11 +2,13 @@
 
 ⭐️ The objective of ft_containers is to implement the various container types of the C++ standard template library (coded in C++98).
 
+## ✅ Completed ⤵️
+- Vector container & tester
+- enable_if, equal/lexicographical compare, reverse_iterator
+
 ## 📈 To be completed ⤵️
-- Containers : Vector, Map, Stack
-- iterator system
-- iterators_traits, reverse_iterator, enable_if, is_integral, equal/lexicographical compare, std::pair, std::make_pair
-- member functions, non-member functions, overloads
+- Containers : Map, Stack
+- iterators_traits, std::pair, std::make_pair
 - one binary with my containers and one with the same testing with STL containers
 
 ## 🔎 Vector ⤵️

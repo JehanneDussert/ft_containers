@@ -1,5 +1,5 @@
-#include "srcs/Vector_functions.hpp"
-#include "srcs/ReverseIterator.hpp"
+#include "srcs/Vector/Vector_functions.hpp"
+#include "srcs/Vector/ReverseIterator.hpp"
 #include <vector>
 
 // DONE : enable_if, is_integral, equal/lexicographical compare,

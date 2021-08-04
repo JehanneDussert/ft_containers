@@ -56,9 +56,9 @@ class	vector
 		class const_iterator : public Random<value_type>
 		{
 			public:
-				typedef	value_type&	reference;
-				typedef	value_type&	const_reference;
-				typedef	value_type*	pointer;
+				typedef	value_type const&	reference;
+				typedef	value_type const&	const_reference;
+				typedef	value_type const*	pointer;
 				typedef ptrdiff_t	difference_type;
 
 				const_iterator(void) : Random<value_type>() { return; };

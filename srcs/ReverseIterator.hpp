@@ -7,7 +7,7 @@ namespace ft {
 
 template <class Iterator>
 class reverse_iterator {
-	private:
+	protected:
 		Iterator _base;
 	public:
 		typedef Iterator								iterator_type;

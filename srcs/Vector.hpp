@@ -32,26 +32,29 @@ class	vector
 				typedef	value_type*	pointer;
 				typedef ptrdiff_t	difference_type;
 
-				iterator(void) : Random<value_type>() { return; };
-				iterator(value_type *x) : Random<value_type>(x) { return ; };
+			private:
 				iterator(const Random<value_type>& x) : Random<value_type>(x) { return ; };
 
-				reference	operator*(void) const;
-				pointer		operator->(void)const;
-				iterator	&operator+=(difference_type);
-				iterator	&operator-=(difference_type);
-				reference	operator[](size_type n);
+			public:
+				iterator(void) : Random<value_type>() { return; };
+				iterator(value_type *x) : Random<value_type>(x) { return ; };
+				iterator(const iterator& x) : Random<value_type>(x) { return ; };
+
+				reference		operator*(void) const;
+				pointer			operator->(void)const;
+				iterator		&operator+=(difference_type);
+				iterator		&operator-=(difference_type);
+				reference		operator[](size_type n);
 				const_reference operator[](size_type n) const;
 				difference_type	operator[](const Random<value_type>&) const;
-				// iterator	&operator=(const iterator& x);
-				iterator	operator-(difference_type n) const;
+				iterator		operator-(difference_type n) const;
 				difference_type	operator-(const Random<value_type>& x) const;
-				iterator	operator+(difference_type n) const;
-				// friend iterator	operator+(difference_type n, const Random<value_type> &x);
-				iterator	&operator++(void);
-				iterator	operator++(int);
-				iterator	&operator--(void);
-				iterator	operator--(int);
+				iterator		operator+(difference_type n) const;
+				friend iterator	operator+(difference_type n, const iterator &x) { return x._value + n; };
+				iterator		&operator++(void);
+				iterator		operator++(int);
+				iterator		&operator--(void);
+				iterator		operator--(int);
 		};
 		class const_iterator : public Random<value_type>
 		{
@@ -61,22 +64,22 @@ class	vector
 				typedef	value_type const*	pointer;
 				typedef ptrdiff_t			difference_type;
 
+			public:
 				const_iterator(void) : Random<value_type>() { return; };
 				const_iterator(value_type *x) : Random<value_type>(x) { return ; };
 				const_iterator(const Random<value_type>& x) : Random<value_type>(x) { return ; };
 
-				reference	operator*(void) const;
-				pointer		operator->(void)const;
+				reference		operator*(void) const;
+				pointer			operator->(void)const;
 				const_iterator	&operator+=(difference_type);
 				const_iterator	&operator-=(difference_type);
-				reference	operator[](size_type n);
+				reference		operator[](size_type n);
 				const_reference operator[](size_type n) const;
 				difference_type	operator[](const Random<value_type>&) const;
-				// iterator	&operator=(const iterator& x);
 				const_iterator	operator-(difference_type) const;
 				difference_type	operator-(const Random<value_type>& x) const;
 				const_iterator	operator+(difference_type n) const;
-				// friend iterator	operator+(difference_type n, const Random<value_type> &x) { return x.operator+(n); };
+				friend iterator	operator+(difference_type n, const const_iterator &x) { return x._value + n; };
 				const_iterator	&operator++(void);
 				const_iterator	operator++(int);
 				const_iterator	&operator--(void);

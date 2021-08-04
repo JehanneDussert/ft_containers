@@ -14,6 +14,7 @@ void	vector<T, Alloc>::_clear_tab(void)
 {
 	clear();
 	_alloc.deallocate(_tab, _capacity);
+	_tab = NULL; _size = 0; _capacity = 0;
 }
 
 /**********************/
@@ -625,18 +626,16 @@ typename vector<T, Alloc>::allocator_type	vector<T, Alloc>::get_allocator() cons
 template <typename T, typename Alloc>
 void	vector<T, Alloc>::swap(vector &x)
 {
-	vector<T, Alloc>	tmp(*this);
+	vector<T, Alloc>	tmp;
 
-	if (this == &x)
-		return ;
-	_clear_tab(); _tab = _alloc.allocate(x.capacity());
-	_size = 0; _capacity = x.capacity();
-	for (; _size < x.size(); _size++)
-		_tab[_size] = x._tab[_size];
-	x._clear_tab(); x._tab = _alloc.allocate(tmp.capacity());
-	x._size = 0; x._capacity = tmp.capacity();
-	for (; x._size < tmp.size(); x._size++)
-		x._tab[x._size] = tmp._tab[x._size];
+	tmp._alloc = x.get_allocator(); tmp._capacity = x.capacity();
+	tmp._size = x.size(); tmp._tab = x._tab;
+
+	x._alloc = get_allocator(); x._capacity = capacity();
+	x._size = size(); x._tab = _tab;
+
+	_alloc = tmp.get_allocator(); _capacity = tmp.capacity();
+	_size = tmp.size(); _tab = tmp._tab;
 }
 
 /*

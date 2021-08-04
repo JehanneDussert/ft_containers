@@ -59,7 +59,7 @@ class	vector
 				typedef	value_type const&	reference;
 				typedef	value_type const&	const_reference;
 				typedef	value_type const*	pointer;
-				typedef ptrdiff_t	difference_type;
+				typedef ptrdiff_t			difference_type;
 
 				const_iterator(void) : Random<value_type>() { return; };
 				const_iterator(value_type *x) : Random<value_type>(x) { return ; };
@@ -188,7 +188,7 @@ class	vector
 		size_type											_max_size;
 		allocator_type										_alloc;
 		size_type											_capacity;
-		void												_clear_tab(void);	
+		void												_clear_tab(void);
 };
 
 	/**************************************/

@@ -8,7 +8,6 @@
 
 ## 📈 To be completed ⤵️
 - Containers : Map, Stack
-- iterator system
 - iterators_traits, std::pair, std::make_pair
 - one binary with my containers and one with the same testing with STL containers
 

@@ -4,10 +4,11 @@
 
 ## ✅ Completed ⤵️
 - Vector container & tester
+- Stack container & tester
 - enable_if, equal/lexicographical compare, reverse_iterator
 
 ## 📈 To be completed ⤵️
-- Containers : Map, Stack
+- Containers : Map
 - iterators_traits, std::pair, std::make_pair
 - one binary with my containers and one with the same testing with STL containers
 
@@ -34,7 +35,13 @@ The std::stack class is a container adapter that gives the programmer the functi
 [Reference](https://en.cppreference.com/w/cpp/container/stack)
 
 ## 💡 Usage
-- This project will have its own main.cpp which tests everything
+
+- Clone my project and its [tester](https://github.com/JehanneDussert/ft_containers_test)
+
+```
+git clone https://github.com/JehanneDussert/ft_containers.git && cd ft_containers ;
+git clone https://github.com/JehanneDussert/ft_containers_test.git && cd ft_containers_test && sh test.sh
+```
 
 
 ## 🖇 Reference

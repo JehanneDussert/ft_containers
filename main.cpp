@@ -1,11 +1,10 @@
 #include "srcs/Vector/Vector_functions.hpp"
 #include "srcs/Vector/ReverseIterator.hpp"
 #include <vector>
-	#include <iostream>     // std::cout
-#include <iterator>     // std::iterator_traits
-#include <typeinfo>     // typeid
-
-// TO DO : std::pair, std::make_pair, must be reimplemented.
+#include <iostream>
+#include <iterator>
+#include <typeinfo>
+#include "srcs/Map/Map_functions.hpp"
 
 int main(void)
 {
@@ -201,16 +200,34 @@ int main(void)
 	// if (typeid(traits1::iterator_category)==typeid(std::random_access_iterator_tag))
 	// 	std::cout << "int* is a random-access iterator";
 
-	std::cout << std::boolalpha;
-	std::cout << "is_integral:" << std::endl;
-	std::cout << "char: " << std::is_integral<char>::value << std::endl;
-	std::cout << "int: " << std::is_integral<int>::value << std::endl;
-	std::cout << "float: " << std::is_integral<float>::value << std::endl;
+	// std::cout << std::boolalpha;
+	// std::cout << "is_integral:" << std::endl;
+	// std::cout << "char: " << std::is_integral<char>::value << std::endl;
+	// std::cout << "int: " << std::is_integral<int>::value << std::endl;
+	// std::cout << "float: " << std::is_integral<float>::value << std::endl;
 
-	std::cout << std::boolalpha;
-	std::cout << "is_integral:" << std::endl;
-	std::cout << "char: " << ft::is_integral<char>::value << std::endl;
-	std::cout << "int: " << ft::is_integral<int>::value << std::endl;
-	std::cout << "float: " << ft::is_integral<float>::value << std::endl;
+	// std::cout << std::boolalpha;
+	// std::cout << "is_integral:" << std::endl;
+	// std::cout << "char: " << ft::is_integral<char>::value << std::endl;
+	// std::cout << "int: " << ft::is_integral<int>::value << std::endl;
+	// std::cout << "float: " << ft::is_integral<float>::value << std::endl;
+
+	// ft::map<int, std::string>	ft_map;
+	// std::map<int, std::string>	std_map;
+	std::pair <int,int> foo;
+  	std::pair <int,int> bar;
+	foo = std::make_pair (10,20);
+  	bar = std::make_pair (10.5,'A'); // ok: implicit conversion from pair<double,char>
+
+  	std::cout << "foo: " << foo.first << ", " << foo.second << '\n';
+  	std::cout << "bar: " << bar.first << ", " << bar.second << '\n';
+
+	ft::pair <int,int> foo1;
+  	ft::pair <int,int> bar1;
+	foo1 = ft::make_pair (10,20);
+  	bar1 = ft::make_pair (10.5,'A'); // ok: implicit conversion from pair<double,char>
+
+  	std::cout << "foo: " << foo.first << ", " << foo.second << '\n';
+  	std::cout << "bar: " << bar.first << ", " << bar.second << '\n';
     return 0;
 }

@@ -16,7 +16,7 @@ namespace ft
 
 template < class Key, class T, class Compare, class Alloc >
 map<Key, T, Compare, Alloc>::map(const key_compare& comp, const allocator_type& alloc) :
-_alloc(alloc), _comp(comp), _size(0), _tab(NULL), _max_size(alloc.max_size()), _capacity(0) { return ; };
+_alloc(alloc), _comp(comp), _size(0), _max_size(alloc.max_size()), _capacity(0) { return ; };
 
 /*
 ** Range constructor

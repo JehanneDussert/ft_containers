@@ -6,13 +6,13 @@ namespace ft {
     class Random
     {
 		protected:
-			type				*_value;
+			type						*_value;
 		public:
-			typedef	type		value_type;
-			typedef	value_type&	reference;
-			typedef	value_type&	const_reference;
-			typedef	value_type*	pointer;
-			typedef ptrdiff_t	difference_type;
+			typedef	type				value_type;
+			typedef	value_type&			reference;
+			typedef	value_type const&	const_reference;
+			typedef	value_type*			pointer;
+			typedef ptrdiff_t			difference_type;
 
 			Random(void) : _value(NULL) { return ; };
 			Random(type *x) : _value(x) { return ; };

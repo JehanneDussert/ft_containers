@@ -6,10 +6,10 @@
 - Vector container & tester
 - Stack container & tester
 - enable_if, equal/lexicographical compare, reverse_iterator, iterators_traits
+- std::pair, std::make_pair
 
 ## 📈 To be completed ⤵️
-- Containers : Map
-- std::pair, std::make_pair
+- Container : Map & tester
 - one binary with my containers and one with the same testing with STL containers
 
 ## 🔎 Vector ⤵️

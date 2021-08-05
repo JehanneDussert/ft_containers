@@ -8,13 +8,13 @@
 namespace ft
 {
 
-template < class Key, class T, class Compare = std::less<Key>, class Alloc = std::allocator<std::pair<const Key,T> > >
+template < class Key, class T, class Compare = std::less<Key>, class Alloc = std::allocator<pair<const Key,T> > >
 class	map
 {
 	public:
 		typedef Key											key_type;
 		typedef T											mapped_type;
-		typedef std::pair<const key_type, mapped_type>		value_type;
+		typedef pair<const key_type, mapped_type>			value_type;
 		typedef Compare										key_compare;
 		// typedef	Nested function class to compare elements	value_compare;
 		typedef	Alloc										allocator_type;
@@ -91,7 +91,7 @@ class	map
   		// void insert(InputIterator first, InputIterator last);
 		// void erase(iterator position);
 		size_type erase(const key_type& k);
-	    // void erase(iterator first, iterator last);
+		// void erase(iterator first, iterator last);
 		void swap(map& x);
 		void clear();
 
@@ -118,11 +118,17 @@ class	map
 		**	Allocator
 		*/
 		allocator_type get_allocator() const;
+
+		// Plus
+		void	addNode(const value_type& pair);
+
 	private:
 		allocator_type	_alloc;
 		key_compare		_comp;
 		size_type		_size;
-		value_type*		_tab;
+		size_type		_max_size;
+		size_type		_capacity;
+		//	var node ?
 };
 }
 

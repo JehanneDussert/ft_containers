@@ -31,6 +31,14 @@ void	stack<T, Container>::push(const T& val) { _ctnr.push_back(val); };
 template <typename T, class Container>
 void	stack<T, Container>::pop() { _ctnr.pop_back(); };
 
+template <class T, class Container>
+stack<T, Container>	&stack<T, Container>::operator=(const stack<T,Container>& x)
+{
+	_ctnr = x._ctnr;
+
+	return *this;
+}
+
 /**************************************/
 /*** NON MEMBER FUNCTIONS OVERLOADS ***/
 /**************************************/

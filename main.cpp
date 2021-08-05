@@ -5,11 +5,7 @@
 #include <iterator>     // std::iterator_traits
 #include <typeinfo>     // typeid
 
-// DONE : enable_if, is_integral, equal/lexicographical compare,
-
-// TO DO : reverse iterator for rbegin rend
-// iterators_traits, reverse_iterator, 
-// std::pair, std::make_pair, must be reimplemented.
+// TO DO : std::pair, std::make_pair, must be reimplemented.
 
 int main(void)
 {

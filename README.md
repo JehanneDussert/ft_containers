@@ -5,11 +5,11 @@
 ## ✅ Completed ⤵️
 - Vector container & tester
 - Stack container & tester
-- enable_if, equal/lexicographical compare, reverse_iterator
+- enable_if, equal/lexicographical compare, reverse_iterator, iterators_traits
 
 ## 📈 To be completed ⤵️
 - Containers : Map
-- iterators_traits, std::pair, std::make_pair
+- std::pair, std::make_pair
 - one binary with my containers and one with the same testing with STL containers
 
 ## 🔎 Vector ⤵️

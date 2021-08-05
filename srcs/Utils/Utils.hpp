@@ -4,7 +4,7 @@
 # include <iostream>
 # include <iterator>
 # include <sstream>
-# include "Vector.hpp"
+# include "../Vector/Vector.hpp"
 
 namespace ft
 {
@@ -18,16 +18,19 @@ namespace ft
 		typedef E type;
 	};
 
-	// ?
-	// template <class I = int>
-	// struct is_integral {};
+	template <class I> struct is_integral { static const bool value = false;};
+	template <> struct is_integral<bool> { static const bool value = true; };
+	template <> struct is_integral<char> { static const bool value = true; };
+	template <> struct is_integral<short int> { static const bool value = true; };
+	template <> struct is_integral<int> { static const bool value = true; };
+	template <> struct is_integral<long int> { static const bool value = true; };
+	template <> struct is_integral<long long int> { static const bool value = true; };
+	template <> struct is_integral<unsigned char> { static const bool value = true; };
+	template <> struct is_integral<unsigned short int> { static const bool value = true; };
+	template <> struct is_integral<unsigned int> { static const bool value = true; };
+	template <> struct is_integral<unsigned long int> { static const bool value = true; };
+	template <> struct is_integral<unsigned long long int> { static const bool value = true; };
 	
-	// template<class I> 
-	// struct is_integral<true, I>
-	// {
-	// 	typedef I type;
-	// };
-
 	template <class InputIterator1, class InputIterator2>
 	bool lexicographical_compare (InputIterator1 first1, InputIterator1 last1,
 		InputIterator2 first2, InputIterator2 last2)

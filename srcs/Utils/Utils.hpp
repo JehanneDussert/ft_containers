@@ -81,7 +81,6 @@ namespace ft
 	}
 
 	typedef size_t										size_type;
-	// template<typename T, typename Alloc>
 	template <class InputIterator>
 	size_type	iterator_len(InputIterator first, InputIterator last)
 	{

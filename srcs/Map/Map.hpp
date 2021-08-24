@@ -12,11 +12,23 @@ template < class Key, class T, class Compare = std::less<Key>, class Alloc = std
 class	map
 {
 	public:
+		class value_compare
+		{
+			friend class map;
+			protected:
+				Compare comp;
+				value_compare (Compare c) : comp(c) {}  // constructed with map's comparison object
+			public:
+				typedef bool	result_type;
+				typedef			value_type first_argument_type;
+				typedef			value_type second_argument_type;
+				bool			operator()(const value_type& x, const value_type& y) const { return comp(x.first, y.first); };
+		};
+
 		typedef Key											key_type;
 		typedef T											mapped_type;
 		typedef pair<const key_type, mapped_type>			value_type;
 		typedef Compare										key_compare;
-		// typedef	Nested function class to compare elements	value_compare;
 		typedef	Alloc										allocator_type;
 		typedef	typename allocator_type::reference			reference;
 		typedef typename allocator_type::const_reference	const_reference;
@@ -98,8 +110,8 @@ class	map
 		/*
 		**	Observers
 		*/
-		key_compare key_comp() const;
-		// value_compare value_comp() const;
+		key_compare		key_comp() const;
+		value_compare	value_comp() const;
 
 		/*
 		**	Operations

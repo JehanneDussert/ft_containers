@@ -112,8 +112,11 @@ bool	map<Key, T, Compare, Alloc>::empty() const
 **	Observers
 */
 
-// key_compare key_comp() const;
-// value_compare value_comp() const;
+template <class Key, class T, class Compare, class Alloc >
+typename map<Key, T, Compare, Alloc>::key_compare key_comp() const { return _comp; };
+
+template <class Key, class T, class Compare, class Alloc >
+typename map<Key, T, Compare, Alloc>::value_compare	value_comp() const { return value_compare(_comp); }
 
 /*
 **	Operations

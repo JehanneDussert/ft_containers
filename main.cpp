@@ -231,5 +231,7 @@ int main(void)
 
   	std::cout << "foo: " << foo.first << ", " << foo.second << '\n';
   	std::cout << "bar: " << bar.first << ", " << bar.second << '\n';
+
+	std::map<int, int> lol;
     return 0;
 }

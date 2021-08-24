@@ -13,7 +13,7 @@ class iterator_traits
 		typedef typename Iterator::value_type				value_type;
 		typedef typename Iterator::pointer					pointer;
 		typedef typename Iterator::reference				reference;
-		typedef typename std::random_access_iterator_tag	iterator_category;	
+		typedef typename std::random_access_iterator_tag	iterator_category;
 };
 
 template <class It> 

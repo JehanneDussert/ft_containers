@@ -85,38 +85,6 @@ class	vector
 				const_iterator	&operator--(void);
 				const_iterator	operator--(int);
 		};
-		template <class Iterator> 
-		class iterator_traits
-		{
-			public:
-				typedef typename Iterator::difference_type	difference_type;
-				typedef typename Iterator::value_type		value_type;
-				typedef typename Iterator::pointer			pointer;
-				typedef typename Iterator::reference		reference;
-				typedef typename Iterator::iterator_category			iterator_category;		
-		};
-		template <class It> 
-		class iterator_traits<It*>
-		{
-			public:
-				typedef It								value_type;
-				typedef	value_type&						reference;
-				typedef	value_type const&				const_reference;
-				typedef	value_type*						pointer;
-				typedef ptrdiff_t						difference_type;
-				typedef typename std::random_access_iterator_tag	iterator_category;
-		};
-		template <class It> 
-		class iterator_traits<const It*>
-		{
-			public:
-				typedef It								value_type;
-				typedef	value_type&						reference;
-				typedef	value_type const&				const_reference;
-				typedef	value_type*						pointer;
-				typedef ptrdiff_t						difference_type;
-				typedef typename std::random_access_iterator_tag	iterator_category;
-		};
 
 		typedef ft::reverse_iterator<const_iterator>		const_reverse_iterator;
 		typedef ft::reverse_iterator<iterator>				reverse_iterator;

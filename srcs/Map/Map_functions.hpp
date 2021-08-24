@@ -139,6 +139,12 @@ typename map<Key, T, Compare, Alloc>::allocator_type	map<Key, T, Compare, Alloc>
 	return this->_alloc;
 }
 
+// template <class Key, class T, class Compare, class Alloc >
+// void	map<Key, T, Compare, Alloc>::addNode(const value_type& pair)
+// {
+// 	;
+// }
+
 };
 
 #endif

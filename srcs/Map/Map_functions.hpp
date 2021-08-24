@@ -45,20 +45,52 @@ map<Key, T, Compare, Alloc>	&map<Key, T, Compare, Alloc>::operator=(const map& x
 };
 
 /*
+**	Iterators
+*/	
+
+template <class Key, class T, class Compare, class Alloc >
+map<Key, T, Compare, Alloc>::iterator map<Key, T, Compare, Alloc>::begin()
+{ return iterator(_tab); }
+
+template <class Key, class T, class Compare, class Alloc >
+map<Key, T, Compare, Alloc>::const_iterator map<Key, T, Compare, Alloc>::begin() const
+{ return const_iterator(_tab); }
+
+template <class Key, class T, class Compare, class Alloc >
+map<Key, T, Compare, Alloc>::iterator map<Key, T, Compare, Alloc>::end()
+{ return iterator(&_tab[_size]); }
+
+template <class Key, class T, class Compare, class Alloc >
+map<Key, T, Compare, Alloc>::const_iterator map<Key, T, Compare, Alloc>::end() const
+{ return const_iterator(&_tab[_size]); }
+
+template <class Key, class T, class Compare, class Alloc >
+map<Key, T, Compare, Alloc>::reverse_iterator map<Key, T, Compare, Alloc>::rbegin()
+{ return reverse_iterator(&_tab[_size]); }
+
+template <class Key, class T, class Compare, class Alloc >
+map<Key, T, Compare, Alloc>::const_reverse_iterator map<Key, T, Compare, Alloc>::rbegin() const
+{ return const_reverse_iterator(&_tab[_size]); }
+
+template <class Key, class T, class Compare, class Alloc >
+map<Key, T, Compare, Alloc>::reverse_iterator map<Key, T, Compare, Alloc>::rend()
+{ return reverse_iterator(_tab); };
+
+template <class Key, class T, class Compare, class Alloc >
+map<Key, T, Compare, Alloc>::const_reverse_iterator map<Key, T, Compare, Alloc>::rend() const 
+{ return const_reverse_iterator(_tab); }
+
+/*
 **	Capacity
 */	
 
 template <class Key, class T, class Compare, class Alloc >
 typename map<Key, T, Compare, Alloc>::size_type	map<Key, T, Compare, Alloc>::size() const
-{
-	return this->_size;
-}
+{ return this->_size; }
 
 template <class Key, class T, class Compare, class Alloc >
 typename map<Key, T, Compare, Alloc>::size_type	map<Key, T, Compare, Alloc>::max_size() const
-{
-	return this->_max_size;
-}
+{ return this->_max_size; }
 
 // template <class Key, class T, class Compare, class Alloc >
 // void	map<Key, T, Compare, Alloc>::resize(size_type n, value_type val)
@@ -68,15 +100,11 @@ typename map<Key, T, Compare, Alloc>::size_type	map<Key, T, Compare, Alloc>::max
 
 template <class Key, class T, class Compare, class Alloc >
 typename map<Key, T, Compare, Alloc>::size_type	map<Key, T, Compare, Alloc>::capacity() const
-{
-	return this->_capacity;
-}
+{ return this->_capacity; }
 
 template <class Key, class T, class Compare, class Alloc >
 bool	map<Key, T, Compare, Alloc>::empty() const
-{
-	return (!(_size) ? true : false);
-}
+{ return (!(_size) ? true : false); }
 
 // template <class Key, class T, class Compare, class Alloc >
 // void	map<Key, T, Compare, Alloc>::reserve(size_type n)
@@ -138,9 +166,7 @@ typename map<Key, T, Compare, Alloc>::value_compare	value_comp() const { return 
 
 template <class Key, class T, class Compare, class Alloc >
 typename map<Key, T, Compare, Alloc>::allocator_type	map<Key, T, Compare, Alloc>::get_allocator() const
-{
-	return this->_alloc;
-}
+{ return this->_alloc; }
 
 // template <class Key, class T, class Compare, class Alloc >
 // void	map<Key, T, Compare, Alloc>::addNode(const value_type& pair)

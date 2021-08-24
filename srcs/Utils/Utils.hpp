@@ -5,6 +5,8 @@
 # include <iterator>
 # include <sstream>
 # include "../Vector/Vector.hpp"
+# include "ReverseIterator.hpp"
+# include "RandomIterator.hpp"
 
 namespace ft
 {

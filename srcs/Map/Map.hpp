@@ -4,6 +4,7 @@
 # include <iostream>
 # include <map>
 # include "../Utils/Utils.hpp"
+# include "MapIterator.hpp"
 
 namespace ft
 {
@@ -34,6 +35,7 @@ class	map
 		typedef typename allocator_type::const_reference	const_reference;
 		typedef typename allocator_type::pointer			pointer;
 		typedef typename allocator_type::const_pointer		const_pointer;
+		// could be iterator_traits<iterator>::difference_type
 		typedef ptrdiff_t									difference_type;
 		typedef size_t										size_type;
 		
@@ -43,12 +45,13 @@ class	map
 			value_type	parent;
 			struct node *left;
 			struct node *right;
-		} node;
+		};
 		
-		// typedef a bidirectional iterator to value_type	iterator;
-		// typedef a bidirectional iterator to const value_type	const_iterator;
-		// typedef reverse_iterator<iterator>	reverse_iterator;
-		// typedef reverse_iterator<const_iterator>	const_reverse_iterator;
+		// TO CHANGE
+		typedef std::iterator							iterator;
+		typedef std::const_iterator						const_iterator;
+		typedef std::reverse_iterator<iterator>			reverse_iterator;
+		typedef std::reverse_iterator<const_iterator>	const_reverse_iterator;
 
 		/*****************/
 		/*** ITERATORS ***/
@@ -70,14 +73,14 @@ class	map
 		/*
 		**	Iterators
 		*/
-		// iterator begin();
-		// const_iterator begin() const;
-		// iterator end();
-		// const_iterator end() const;
-		// reverse_iterator rbegin();
-		// const_reverse_iterator rbegin() const;
-		// reverse_iterator rend();
-		// const_reverse_iterator rend() const;
+		iterator begin();
+		const_iterator begin() const;
+		iterator end();
+		const_iterator end() const;
+		reverse_iterator rbegin();
+		const_reverse_iterator rbegin() const;
+		reverse_iterator rend();
+		const_reverse_iterator rend() const;
 
 		/*
 		**	Capacity
@@ -140,6 +143,7 @@ class	map
 		size_type		_size;
 		size_type		_max_size;
 		size_type		_capacity;
+		value_type		*_tab;
 		//	var node ?
 };
 }

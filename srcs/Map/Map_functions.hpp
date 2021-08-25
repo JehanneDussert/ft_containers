@@ -48,37 +48,37 @@ map<Key, T, Compare, Alloc>	&map<Key, T, Compare, Alloc>::operator=(const map& x
 **	Iterators
 */	
 
-template <class Key, class T, class Compare, class Alloc >
-map<Key, T, Compare, Alloc>::iterator map<Key, T, Compare, Alloc>::begin()
-{ return iterator(_tab); }
+// template <class Key, class T, class Compare, class Alloc >
+// typename map<Key, T, Compare, Alloc>::iterator map<Key, T, Compare, Alloc>::begin()
+// { return iterator(_tab); }
 
-template <class Key, class T, class Compare, class Alloc >
-map<Key, T, Compare, Alloc>::const_iterator map<Key, T, Compare, Alloc>::begin() const
-{ return const_iterator(_tab); }
+// template <class Key, class T, class Compare, class Alloc >
+// typename map<Key, T, Compare, Alloc>::const_iterator map<Key, T, Compare, Alloc>::begin() const
+// { return const_iterator(_tab); }
 
-template <class Key, class T, class Compare, class Alloc >
-map<Key, T, Compare, Alloc>::iterator map<Key, T, Compare, Alloc>::end()
-{ return iterator(&_tab[_size]); }
+// template <class Key, class T, class Compare, class Alloc >
+// typename map<Key, T, Compare, Alloc>::iterator map<Key, T, Compare, Alloc>::end()
+// { return iterator(&_tab[_size]); }
 
-template <class Key, class T, class Compare, class Alloc >
-map<Key, T, Compare, Alloc>::const_iterator map<Key, T, Compare, Alloc>::end() const
-{ return const_iterator(&_tab[_size]); }
+// template <class Key, class T, class Compare, class Alloc >
+// typename map<Key, T, Compare, Alloc>::const_iterator map<Key, T, Compare, Alloc>::end() const
+// { return const_iterator(&_tab[_size]); }
 
-template <class Key, class T, class Compare, class Alloc >
-map<Key, T, Compare, Alloc>::reverse_iterator map<Key, T, Compare, Alloc>::rbegin()
-{ return reverse_iterator(&_tab[_size]); }
+// template <class Key, class T, class Compare, class Alloc >
+// typename map<Key, T, Compare, Alloc>::reverse_iterator map<Key, T, Compare, Alloc>::rbegin()
+// { return reverse_iterator(&_tab[_size]); }
 
-template <class Key, class T, class Compare, class Alloc >
-map<Key, T, Compare, Alloc>::const_reverse_iterator map<Key, T, Compare, Alloc>::rbegin() const
-{ return const_reverse_iterator(&_tab[_size]); }
+// template <class Key, class T, class Compare, class Alloc >
+// typename map<Key, T, Compare, Alloc>::const_reverse_iterator map<Key, T, Compare, Alloc>::rbegin() const
+// { return const_reverse_iterator(&_tab[_size]); }
 
-template <class Key, class T, class Compare, class Alloc >
-map<Key, T, Compare, Alloc>::reverse_iterator map<Key, T, Compare, Alloc>::rend()
-{ return reverse_iterator(_tab); };
+// template <class Key, class T, class Compare, class Alloc >
+// typename map<Key, T, Compare, Alloc>::reverse_iterator map<Key, T, Compare, Alloc>::rend()
+// { return reverse_iterator(_tab); };
 
-template <class Key, class T, class Compare, class Alloc >
-map<Key, T, Compare, Alloc>::const_reverse_iterator map<Key, T, Compare, Alloc>::rend() const 
-{ return const_reverse_iterator(_tab); }
+// template <class Key, class T, class Compare, class Alloc >
+// typename map<Key, T, Compare, Alloc>::const_reverse_iterator map<Key, T, Compare, Alloc>::rend() const 
+// { return const_reverse_iterator(_tab); }
 
 /*
 **	Capacity
@@ -141,10 +141,10 @@ bool	map<Key, T, Compare, Alloc>::empty() const
 */
 
 template <class Key, class T, class Compare, class Alloc >
-typename map<Key, T, Compare, Alloc>::key_compare key_comp() const { return _comp; };
+typename map<Key, T, Compare, Alloc>::key_compare map<Key, T, Compare, Alloc>::key_comp() const { return _comp; };
 
 template <class Key, class T, class Compare, class Alloc >
-typename map<Key, T, Compare, Alloc>::value_compare	value_comp() const { return value_compare(_comp); }
+typename map<Key, T, Compare, Alloc>::value_compare	map<Key, T, Compare, Alloc>::value_comp() const { return value_compare(_comp); }
 
 /*
 **	Operations

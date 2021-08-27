@@ -1,13 +1,15 @@
 #ifndef MAP_HPP
 # define MAP_HPP
 
-# include <iostream>
-# include <map>
 # include "../Utils/Utils.hpp"
 # include "MapIterator.hpp"
+// # include "BinarySearchTree.hpp"
+
+# include <iostream>
+# include <map>
 # include <iterator>
-#include <iostream>
-#include <algorithm>
+# include <iostream>
+# include <algorithm>
 
 namespace ft
 {
@@ -18,7 +20,7 @@ class	map
 	public:
 		typedef Key											key_type;
 		typedef T											mapped_type;
-		typedef ft::pair<const key_type, mapped_type>			value_type;
+		typedef ft::pair<const key_type, mapped_type>		value_type;
 		typedef Compare										key_compare;
 		typedef	Alloc										allocator_type;
 		typedef	typename allocator_type::reference			reference;
@@ -28,14 +30,11 @@ class	map
 		// could be iterator_traits<iterator>::difference_type
 		typedef ptrdiff_t									difference_type;
 		typedef size_t										size_type;
-		
-		struct node
-		{
-			value_type	value;
-			value_type	parent;
-			struct node *left;
-			struct node *right;
-		};
+
+		typedef ft::map_iterator<value_type, ft::node<value_type> >			iterator;
+		typedef ft::map_iterator<const value_type, ft::node<value_type> >	const_iterator;
+		// typedef ft::reverse_iterator<iterator>			reverse_iterator;
+		// typedef ft::reverse_iterator<const_iterator>	const_reverse_iterator;
 
 		class value_compare
 		{
@@ -103,7 +102,7 @@ class	map
 		/*
 		**	Modifiers
 		*/
-		// pair<iterator,bool> insert(const value_type& val);
+		pair<iterator,bool> insert(const value_type& val);
 		// iterator insert(iterator position, const value_type& val);
 		// template <class InputIterator>
   		// void insert(InputIterator first, InputIterator last);
@@ -141,14 +140,15 @@ class	map
 		void	addNode(const value_type& pair);
 
 	private:
-		allocator_type	_alloc;
-		key_compare		_comp;
-		size_type		_size;
-		size_type		_max_size;
-		size_type		_capacity;
-		node			*_tab;
-		node			*_first;
-		node			*_last;
+		allocator_type		_alloc;
+		key_compare			_comp;
+		size_type			_size;
+		size_type			_max_size;
+		size_type			_capacity;
+		node<value_type>	*_tab;
+		node<value_type>	*_root;
+		node<value_type>	*_last;
+		void				_newNode(value_type value);
 };
 }
 

@@ -6,7 +6,7 @@ OBJECTS = $(SRCS:.cpp=.o)
 
 CXX = clang++
 
-CXXFLAGS += -g3 -Wall -Wextra -Werror -std=c++98 -fsanitize=address -g3
+CXXFLAGS += -Wall -Wextra -Werror -std=c++98 -fsanitize=address -g3
 
 all : $(NAME)
 

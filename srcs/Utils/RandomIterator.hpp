@@ -39,7 +39,7 @@ namespace ft {
 			Random<type>	&operator--(void) { this->_value--; return *this;};
 			Random<type>	operator--(int) { Random tmp(*this); this->operator--(); return tmp;};
 
-			difference_type	operator-(const Random &x) const { return (this->_value - x.getValue()); };
+			difference_type	operator-(const Random &x) const { return (this->_value - x._value); };
 			Random<type>	operator+(difference_type n) const { return Random(this->_value + n); };
 			Random<type>	operator-(difference_type n) const { return Random(this->_value - n); };
 			friend Random<type>	operator+(difference_type n, const Random &x) { return x._value + n; };

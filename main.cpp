@@ -5,6 +5,8 @@
 #include <iterator>
 #include <typeinfo>
 #include "srcs/Map/Map_functions.hpp"
+// #include "srcs/Map/BinarySearchTree.hpp"
+#include "test.hpp"
 
 int main(void)
 {
@@ -212,26 +214,98 @@ int main(void)
 	// std::cout << "int: " << ft::is_integral<int>::value << std::endl;
 	// std::cout << "float: " << ft::is_integral<float>::value << std::endl;
 
-	ft::map<int, std::string>	ft_map;
-	std::map<int, std::string>	std_map;
-	std::pair <int,int> foo;
-  	std::pair <int,int> bar;
-	foo = std::make_pair (10,20);
-  	bar = std::make_pair (10.5,'A'); // ok: implicit conversion from pair<double,char>
+	// ft::map<int, std::string>	ft_map;
+	// std::map<int, std::string>	std_map;
+	// std::pair <int,int> foo;
+  	// std::pair <int,int> bar;
+	// foo = std::make_pair (10,20);
+  	// bar = std::make_pair (10.5,'A'); // ok: implicit conversion from pair<double,char>
 
-	std::cout << "Real\n";
-  	std::cout << "foo: " << foo.first << ", " << foo.second << '\n';
-  	std::cout << "bar: " << bar.first << ", " << bar.second << '\n';
+	// std::cout << "Real\n";
+  	// std::cout << "foo: " << foo.first << ", " << foo.second << '\n';
+  	// std::cout << "bar: " << bar.first << ", " << bar.second << '\n';
 
-	std::cout << "\nMine\n";
-	ft::pair <int,int> foo1;
-  	ft::pair <int,int> bar1;
-	foo1 = ft::make_pair (10,20);
-  	bar1 = ft::make_pair (10.5,'A'); // ok: implicit conversion from pair<double,char>
+	// std::cout << "\nMine\n";
+	// ft::pair <int,int> foo1;
+  	// ft::pair <int,int> bar1;
+	// foo1 = ft::make_pair (10,20);
+  	// bar1 = ft::make_pair (10.5,'A'); // ok: implicit conversion from pair<double,char>
 
-  	std::cout << "foo: " << foo.first << ", " << foo.second << '\n';
-  	std::cout << "bar: " << bar.first << ", " << bar.second << '\n';
+  	// std::cout << "foo: " << foo.first << ", " << foo.second << '\n';
+  	// std::cout << "bar: " << bar.first << ", " << bar.second << '\n';
 
-	std::map<int, int> lol;
+	// std::map<int, int> lol;
+
+	// BST b, *root = NULL;
+    // root = b.Insert(root, 50);
+    // b.Insert(root, 30);
+    // b.Insert(root, 20);
+    // b.Insert(root, 40);
+    // b.Insert(root, 70);
+    // b.Insert(root, 60);
+    // b.Insert(root, 80);
+    // b.Insert(root, 22);
+ 
+    // b.Inorder(root);
+	// ft::map<int, int> lol;
+	// ft::node<int>* root = NULL;
+	// root = lol.insert(root, 50);
+    // root = lol.insert(root, 50);
+    // root = lol.insert(root, 30);
+    // root = lol.insert(root, 20);
+    // root = lol.insert(root, 40);
+    // root = lol.insert(root, 70);
+    // root = lol.insert(root, 60);
+    // root = lol.insert(root, 80);
+ 
+    // std::cout << "Inorder traversal of the given tree \n";
+    // lol.inorder(root);
+ 
+    // std::cout << "\nDelete 20\n";
+    // root = lol.deleteNode(root, 20);
+    // std::cout << "Inorder traversal of the modified tree \n";
+    // lol.inorder(root);
+ 
+    // std::cout << "\nDelete 30\n";
+    // root = lol.deleteNode(root, 30);
+    // std::cout << "Inorder traversal of the modified tree \n";
+    // lol.inorder(root);
+ 
+    // std::cout << "\nDelete 50\n";
+    // root = lol.deleteNode(root, 50);
+    // std::cout << "Inorder traversal of the modified tree \n";
+    // lol.inorder(root);
+
+	struct node* root = NULL;
+    root = insert(root, 50);
+    root = insert(root, 30);
+    root = insert(root, 20);
+    root = insert(root, 40);
+    root = insert(root, 70);
+    root = insert(root, 60);
+    root = insert(root, 80);
+ 
+    cout << "Inorder traversal of the given tree \n";
+    inorder(root);
+ 
+    cout << "\nDelete 20\n";
+    root = deleteNode(root, 20);
+    cout << "Inorder traversal of the modified tree \n";
+    inorder(root);
+ 
+    cout << "\nDelete 30\n";
+    root = deleteNode(root, 30);
+    cout << "Inorder traversal of the modified tree \n";
+    inorder(root);
+ 
+    cout << "\nDelete 50\n";
+    root = deleteNode(root, 50);
+    cout << "Inorder traversal of the modified tree \n";
+    inorder(root);
+
+	ft::map<int, std::string>			ft_map;
+	ft::map<int, std::string>::iterator ft_iterator;
+	// ft_map.insert(10);
+
     return 0;
 }

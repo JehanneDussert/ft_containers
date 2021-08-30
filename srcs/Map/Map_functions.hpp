@@ -140,13 +140,13 @@ void	map<Key, T, Compare, Alloc>::_newNode(value_type value)
 	return tmp;
 }
 
-template<class Key, class T, class Compare, class Alloc>
-ft::pair<typename ft::map<Key, T, Compare, Alloc>::iterator, bool>	map<Key, T, Compare, Alloc>::insert(const value_type& val)
-{
-	_newNode(val);
+// template<class Key, class T, class Compare, class Alloc>
+// ft::pair<typename ft::map<Key, T, Compare, Alloc>::iterator, bool>	map<Key, T, Compare, Alloc>::insert(const value_type& val)
+// {
+// 	_newNode(val);
 
-	return *this;
-}
+// 	return *this;
+// }
 
 // iterator insert(iterator position, const value_type& val);
 // template <class InputIterator>

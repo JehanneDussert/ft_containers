@@ -1,14 +1,12 @@
 #ifndef MAPITERATOR_HPP
 # define MAPITERATOR_HPP
 
-// # include "../Utils/Utils.hpp"
-
 namespace ft
 {
-	template<class T>
+	template<class U>
 	struct node
 	{
-		T		key;
+		U		key;
 		node	*right;
 		node	*left;
 		node	*parent;

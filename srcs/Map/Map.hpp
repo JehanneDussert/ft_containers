@@ -104,7 +104,7 @@ class	map
 		/*
 		**	Modifiers
 		*/
-		pair<iterator,bool> insert(const value_type& val);
+		// pair<iterator,bool> insert(const value_type& val);
 		// iterator insert(iterator position, const value_type& val);
 		// template <class InputIterator>
   		// void insert(InputIterator first, InputIterator last);
@@ -139,7 +139,12 @@ class	map
 		allocator_type get_allocator() const;
 
 		// Plus
-		void	addNode(const value_type& pair);
+		void		addNode(const value_type& pair);
+		void		inorder(node_ptr root);
+		node_ptr	deleteNode(node_ptr root, key_type key);
+		node_ptr	minValueNode(node_ptr node);
+		node_ptr	insert(node_ptr node, key_type key);
+		node_ptr	newNode(key_type value);
 
 	private:
 		allocator_type		_alloc;

@@ -5,7 +5,7 @@
 #include <iterator>
 #include <typeinfo>
 #include "srcs/Map/Map_functions.hpp"
-// #include "srcs/Map/BinarySearchTree.hpp"
+#include "srcs/Map/BinarySearchTree.hpp"
 #include "test.hpp"
 
 int main(void)
@@ -276,36 +276,70 @@ int main(void)
     // std::cout << "Inorder traversal of the modified tree \n";
     // lol.inorder(root);
 
-	struct node* root = NULL;
-    root = insert(root, 50);
-    root = insert(root, 30);
-    root = insert(root, 20);
-    root = insert(root, 40);
-    root = insert(root, 70);
-    root = insert(root, 60);
-    root = insert(root, 80);
+	// struct node* root = NULL;
+	ft::map<int, int>			ft_map;
+	ft::map<int, int>::node_ptr root = NULL;
+	// ft::pair <int,int> foo1;
+  	// ft::pair <int,int> bar1;
+	// foo1 = ft::make_pair (10,20);
+  	// bar1 = ft::make_pair (10.5,'A'); // ok: implicit conversion from pair<double,char>
+	// (void)root;
+    // ft_map.insert(root, bar1);
+    // root = ft_map.insert(root, "lol");
+    root = ft_map.insert(root, 20);
+    // root = ft_map.insert(root, 40);
+    // root = ft_map.insert(root, 70);
+    // root = ft_map.insert(root, 60);
+    // root = ft_map.insert(root, 80);
  
-    cout << "Inorder traversal of the given tree \n";
-    inorder(root);
+    // std::cout << "Inorder traversal of the given tree \n";
+    // ft_map.inorder(root);
  
-    cout << "\nDelete 20\n";
-    root = deleteNode(root, 20);
-    cout << "Inorder traversal of the modified tree \n";
-    inorder(root);
+    // std::cout << "\nDelete 20\n";
+    // root = ft_map.deleteNode(root, 20);
+    // std::cout << "Inorder traversal of the modified tree \n";
+    // ft_map.inorder(root);
  
-    cout << "\nDelete 30\n";
-    root = deleteNode(root, 30);
-    cout << "Inorder traversal of the modified tree \n";
-    inorder(root);
+    // std::cout << "\nDelete 30\n";
+    // root = ft_map.deleteNode(root, 30);
+    // std::cout << "Inorder traversal of the modified tree \n";
+    // ft_map.inorder(root);
  
-    cout << "\nDelete 50\n";
-    root = deleteNode(root, 50);
-    cout << "Inorder traversal of the modified tree \n";
-    inorder(root);
+    // std::cout << "\nDelete 50\n";
+    // root = ft_map.deleteNode(root, 50);
+    // std::cout << "Inorder traversal of the modified tree \n";
+    // ft_map.inorder(root);
 
-	ft::map<int, std::string>			ft_map;
-	ft::map<int, std::string>::iterator ft_iterator;
+	// ft::map<int, std::string>			ft_map;
+	// ft::map<int, std::string>::iterator ft_iterator;
 	// ft_map.insert(10);
+
+	// struct node* root = NULL;
+    // root = insert(root, 50);
+    // root = insert(root, 30);
+    // root = insert(root, 20);
+    // root = insert(root, 40);
+    // root = insert(root, 70);
+    // root = insert(root, 60);
+    // root = insert(root, 80);
+ 
+    // std::cout << "Inorder traversal of the given tree \n";
+    // inorder(root);
+ 
+    // std::cout << "\nDelete 20\n";
+    // root = deleteNode(root, 20);
+    // std::cout << "Inorder traversal of the modified tree \n";
+    // inorder(root);
+ 
+    // std::cout << "\nDelete 30\n";
+    // root = deleteNode(root, 30);
+    // std::cout << "Inorder traversal of the modified tree \n";
+    // inorder(root);
+ 
+    // std::cout << "\nDelete 50\n";
+    // root = deleteNode(root, 50);
+    // std::cout << "Inorder traversal of the modified tree \n";
+    // inorder(root);
 
     return 0;
 }

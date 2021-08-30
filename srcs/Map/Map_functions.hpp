@@ -141,7 +141,7 @@ void	map<Key, T, Compare, Alloc>::_newNode(value_type value)
 }
 
 template<class Key, class T, class Compare, class Alloc>
-ft::pair<iterator, bool>	map<Key, T, Compare, Alloc>::insert(const value_type& val)
+ft::pair<typename ft::map<Key, T, Compare, Alloc>::iterator, bool>	map<Key, T, Compare, Alloc>::insert(const value_type& val)
 {
 	_newNode(val);
 

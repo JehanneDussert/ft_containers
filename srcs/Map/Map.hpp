@@ -31,8 +31,10 @@ class	map
 		typedef ptrdiff_t									difference_type;
 		typedef size_t										size_type;
 
-		typedef ft::map_iterator<value_type, ft::node<value_type> >			iterator;
-		typedef ft::map_iterator<const value_type, ft::node<value_type> >	const_iterator;
+		typedef ft::node<value_type>							node_type;
+		typedef node_type*										node_ptr;
+		typedef ft::map_iterator<value_type, node_type >		iterator;
+		typedef ft::map_iterator<const value_type, node_type >	const_iterator;
 		// typedef ft::reverse_iterator<iterator>			reverse_iterator;
 		// typedef ft::reverse_iterator<const_iterator>	const_reverse_iterator;
 

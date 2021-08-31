@@ -10,10 +10,7 @@ namespace ft
 	{
 		node_ptr tmp = val;
 		
-		// tmp->tab.first = value.first;
-		// tmp->left = NULL; tmp->right = NULL;
-		// pair<key_type, mapped_type> pair; pair = make_pair(value.first, value.second);
-		// tmp->tab = pair;
+		tmp->left = NULL; tmp->right = NULL;
 		return tmp;
 	}
 

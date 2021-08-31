@@ -41,7 +41,7 @@ map<Key, T, Compare, Alloc>	&map<Key, T, Compare, Alloc>::operator=(const map& x
 {
 	this->_size = x.size(); this->_capacity = x.capacity();
 	this->_comp = x._comp; this->_root = x._root; this->_last = x._last;
-	// Need to copy content of _tab
+	this->_tab = x._tab;
 	
 	return ;
 };
@@ -129,24 +129,12 @@ bool	map<Key, T, Compare, Alloc>::empty() const
 */
 
 template<class Key, class T, class Compare, class Alloc>
-void	map<Key, T, Compare, Alloc>::_newNode(value_type value)
+ft::pair<typename ft::map<Key, T, Compare, Alloc>::iterator, bool>	map<Key, T, Compare, Alloc>::insert(const value_type& val)
 {
-	struct node<T>	*tmp = (struct node<T>*)malloc(sizeof(struct node<T>));
-	tmp->key = value;
+	insert(this->_root, val);
 
-	// tmp.key = _alloc.allocate(1);
-	// tmp = _alloc.construct(tmp, value);
-	tmp->left = NULL; tmp->right = NULL;
-	return tmp;
+	return val;
 }
-
-// template<class Key, class T, class Compare, class Alloc>
-// ft::pair<typename ft::map<Key, T, Compare, Alloc>::iterator, bool>	map<Key, T, Compare, Alloc>::insert(const value_type& val)
-// {
-// 	_newNode(val);
-
-// 	return *this;
-// }
 
 // iterator insert(iterator position, const value_type& val);
 // template <class InputIterator>

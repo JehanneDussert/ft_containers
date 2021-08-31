@@ -221,6 +221,7 @@ int main(void)
 	foo1 = ft::make_pair (10,20);
   	bar1 = ft::make_pair (30.5,'A');
 
+	// ft_map.insert(foo1);
     root = ft_map.insert(root, foo1);
     root = ft_map.insert(root, bar1);
 	std::cout << "Inorder BST:\n";
@@ -237,34 +238,34 @@ int main(void)
 	ft_map.inorder(root);
 	std::cout << std::endl;
 
-	std::cout << "\nIt:\n";
-	for (ft::map<int, int>::iterator it = ft_map.begin(); it != ft_map.end(); ++it)
-	{
-    	std::cout << ' ' << it->first;
-    	std::cout << ' ' << it->second;
-	}
-  	std::cout << '\n';
-	std::cout << "\nConst_it:\n";
-	for (ft::map<int, int>::const_iterator it = ft_map.begin(); it != ft_map.end(); ++it)
-	{
-    	std::cout << ' ' << it->first;
-    	std::cout << ' ' << it->second;
-	}
-  	std::cout << '\n';
-	std::cout << "\nRev_it:\n";
-	for (ft::map<int, int>::reverse_iterator it = ft_map.rbegin(); it != ft_map.rend(); ++it)
-	{
-    	std::cout << ' ' << it->first;
-    	std::cout << ' ' << it->second;
-	}
-  	std::cout << '\n';
-	std::cout << "\nConst_rev_it:\n";
-	for (ft::map<int, int>::const_reverse_iterator it = ft_map.rbegin(); it != ft_map.rend(); ++it)
-	{
-    	std::cout << ' ' << it->first;
-    	std::cout << ' ' << it->second;
-	}
-  	std::cout << '\n';
+	// std::cout << "\nIt:\n";
+	// for (ft::map<int, int>::iterator it = ft_map.begin(); it != ft_map.end(); ++it)
+	// {
+    // 	std::cout << ' ' << it->first;
+    // 	std::cout << ' ' << it->second;
+	// }
+  	// std::cout << '\n';
+	// std::cout << "\nConst_it:\n";
+	// for (ft::map<int, int>::const_iterator it = ft_map.begin(); it != ft_map.end(); ++it)
+	// {
+    // 	std::cout << ' ' << it->first;
+    // 	std::cout << ' ' << it->second;
+	// }
+  	// std::cout << '\n';
+	// std::cout << "\nRev_it:\n";
+	// for (ft::map<int, int>::reverse_iterator it = ft_map.rbegin(); it != ft_map.rend(); ++it)
+	// {
+    // 	std::cout << ' ' << it->first;
+    // 	std::cout << ' ' << it->second;
+	// }
+  	// std::cout << '\n';
+	// std::cout << "\nConst_rev_it:\n";
+	// for (ft::map<int, int>::const_reverse_iterator it = ft_map.rbegin(); it != ft_map.rend(); ++it)
+	// {
+    // 	std::cout << ' ' << it->first;
+    // 	std::cout << ' ' << it->second;
+	// }
+  	// std::cout << '\n';
 
 	// ft_map.deleteNode(root, foo1);
 	// std::cout << "Inorder BST:\n";

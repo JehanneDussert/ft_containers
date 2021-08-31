@@ -1,42 +1,62 @@
 #ifndef MAP_HPP
 # define MAP_HPP
 
+# include "../Utils/Utils.hpp"
+# include "MapIterator.hpp"
+// # include "BinarySearchTree.hpp"
+
 # include <iostream>
 # include <map>
-# include "../Utils/Utils.hpp"
+# include <iterator>
+# include <iostream>
+# include <algorithm>
 
 namespace ft
 {
 
-template < class Key, class T, class Compare = std::less<Key>, class Alloc = std::allocator<pair<const Key,T> > >
+template < class Key, class T, class Compare = std::less<Key>, class Alloc = std::allocator<ft::pair<const Key,T> > >
 class	map
 {
 	public:
 		typedef Key											key_type;
 		typedef T											mapped_type;
-		typedef pair<const key_type, mapped_type>			value_type;
+		typedef ft::pair<const key_type, mapped_type>		value_type;
 		typedef Compare										key_compare;
-		// typedef	Nested function class to compare elements	value_compare;
+		// class value_compare;
 		typedef	Alloc										allocator_type;
 		typedef	typename allocator_type::reference			reference;
 		typedef typename allocator_type::const_reference	const_reference;
 		typedef typename allocator_type::pointer			pointer;
 		typedef typename allocator_type::const_pointer		const_pointer;
+		// could be iterator_traits<iterator>::difference_type
 		typedef ptrdiff_t									difference_type;
 		typedef size_t										size_type;
-		
-		typedef struct node
+
+		typedef ft::node<value_type>							node_type;
+		typedef node_type*										node_ptr;
+		typedef ft::map_iterator<value_type, node_type >		iterator;
+		typedef ft::map_iterator<const value_type, node_type >	const_iterator;
+		// typedef ft::reverse_iterator<iterator>			reverse_iterator;
+		// typedef ft::reverse_iterator<const_iterator>	const_reverse_iterator;
+
+		class value_compare
 		{
-			value_type	value;
-			value_type	parent;
-			struct node *left;
-			struct node *right;
-		} node;
+			friend class map;
+			protected:
+				Compare comp;
+				value_compare (Compare c) : comp(c) {}  // constructed with map's comparison object
+			public:
+				typedef bool	result_type;
+				typedef			value_type first_argument_type;
+				typedef			value_type second_argument_type;
+				bool			operator()(const value_type& x, const value_type& y) const { return comp(x.first, y.first); };
+		};
 		
-		// typedef a bidirectional iterator to value_type	iterator;
-		// typedef a bidirectional iterator to const value_type	const_iterator;
-		// typedef reverse_iterator<iterator>	reverse_iterator;
-		// typedef reverse_iterator<const_iterator>	const_reverse_iterator;
+		// TO CHANGE
+		// typedef std::iterator							iterator;
+		// typedef std::const_iterator						const_iterator;
+		// typedef std::reverse_iterator<iterator>			reverse_iterator;
+		// typedef std::reverse_iterator<const_iterator>	const_reverse_iterator;
 
 		/*****************/
 		/*** ITERATORS ***/
@@ -58,10 +78,10 @@ class	map
 		/*
 		**	Iterators
 		*/
-		// iterator begin();
-		// const_iterator begin() const;
-		// iterator end();
-		// const_iterator end() const;
+		iterator begin();
+		const_iterator begin() const;
+		iterator end();
+		const_iterator end() const;
 		// reverse_iterator rbegin();
 		// const_reverse_iterator rbegin() const;
 		// reverse_iterator rend();
@@ -98,8 +118,8 @@ class	map
 		/*
 		**	Observers
 		*/
-		key_compare key_comp() const;
-		// value_compare value_comp() const;
+		key_compare		key_comp() const;
+		value_compare	value_comp() const;
 
 		/*
 		**	Operations
@@ -120,15 +140,23 @@ class	map
 		allocator_type get_allocator() const;
 
 		// Plus
-		void	addNode(const value_type& pair);
+		void		addNode(const value_type& pair);
+		void		inorder(node_ptr root);
+		node_ptr	deleteNode(node_ptr root, value_type val);
+		node_ptr	minValueNode(node_ptr node);
+		node_ptr	insert(node_ptr node, value_type val);
+		node_ptr	newNode(node_ptr val);
 
 	private:
-		allocator_type	_alloc;
-		key_compare		_comp;
-		size_type		_size;
-		size_type		_max_size;
-		size_type		_capacity;
-		//	var node ?
+		allocator_type		_alloc;
+		key_compare			_comp;
+		size_type			_size;
+		size_type			_max_size;
+		size_type			_capacity;
+		node_ptr			_tab;
+		node_ptr			_root;
+		node_ptr			_last;
+		void				_newNode(value_type value);
 };
 }
 

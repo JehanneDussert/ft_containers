@@ -16,7 +16,8 @@ namespace ft
 
 template < class Key, class T, class Compare, class Alloc >
 map<Key, T, Compare, Alloc>::map(const key_compare& comp, const allocator_type& alloc) :
-_alloc(alloc), _comp(comp), _size(0), _max_size(alloc.max_size()), _capacity(0) { return ; };
+_alloc(alloc), _comp(comp), _size(0), _max_size(alloc.max_size()), _capacity(0), _tab(NULL),
+_root(NULL), _last(NULL) { return ; };
 
 /*
 ** Range constructor
@@ -25,7 +26,8 @@ _alloc(alloc), _comp(comp), _size(0), _max_size(alloc.max_size()), _capacity(0) 
 template < class Key, class T, class Compare, class Alloc >
 template <class InputIterator>
 map<Key, T, Compare, Alloc>::map(InputIterator first, InputIterator last, const key_compare& comp,
-const allocator_type& alloc) : _alloc(alloc), _comp(comp) { (void)first; (void)last; return ; };
+const allocator_type& alloc) : _alloc(alloc), _comp(comp), _root(first), _last(last)
+{ /* need to copy first to last in tab */ return ; };
 
 /*
 ** Copy constructor
@@ -38,11 +40,47 @@ template < class Key, class T, class Compare, class Alloc >
 map<Key, T, Compare, Alloc>	&map<Key, T, Compare, Alloc>::operator=(const map& x)
 {
 	this->_size = x.size(); this->_capacity = x.capacity();
-	this->_comp = x._comp;
-	// Need to copy content
+	this->_comp = x._comp; this->_root = x._root; this->_last = x._last;
+	// Need to copy content of _tab
 	
 	return ;
 };
+
+/*
+**	Iterators
+*/	
+
+template <class Key, class T, class Compare, class Alloc >
+typename map<Key, T, Compare, Alloc>::iterator map<Key, T, Compare, Alloc>::begin()
+{ return iterator(_tab); }
+
+template <class Key, class T, class Compare, class Alloc >
+typename map<Key, T, Compare, Alloc>::const_iterator map<Key, T, Compare, Alloc>::begin() const
+{ return const_iterator(_tab); }
+
+template <class Key, class T, class Compare, class Alloc >
+typename map<Key, T, Compare, Alloc>::iterator map<Key, T, Compare, Alloc>::end()
+{ return iterator(&_tab[_size]); }
+
+template <class Key, class T, class Compare, class Alloc >
+typename map<Key, T, Compare, Alloc>::const_iterator map<Key, T, Compare, Alloc>::end() const
+{ return const_iterator(&_tab[_size]); }
+
+// template <class Key, class T, class Compare, class Alloc >
+// typename map<Key, T, Compare, Alloc>::reverse_iterator map<Key, T, Compare, Alloc>::rbegin()
+// { return reverse_iterator(&_tab[_size]); }
+
+// template <class Key, class T, class Compare, class Alloc >
+// typename map<Key, T, Compare, Alloc>::const_reverse_iterator map<Key, T, Compare, Alloc>::rbegin() const
+// { return const_reverse_iterator(&_tab[_size]); }
+
+// template <class Key, class T, class Compare, class Alloc >
+// typename map<Key, T, Compare, Alloc>::reverse_iterator map<Key, T, Compare, Alloc>::rend()
+// { return reverse_iterator(_tab); };
+
+// template <class Key, class T, class Compare, class Alloc >
+// typename map<Key, T, Compare, Alloc>::const_reverse_iterator map<Key, T, Compare, Alloc>::rend() const 
+// { return const_reverse_iterator(_tab); }
 
 /*
 **	Capacity
@@ -50,15 +88,11 @@ map<Key, T, Compare, Alloc>	&map<Key, T, Compare, Alloc>::operator=(const map& x
 
 template <class Key, class T, class Compare, class Alloc >
 typename map<Key, T, Compare, Alloc>::size_type	map<Key, T, Compare, Alloc>::size() const
-{
-	return this->_size;
-}
+{ return this->_size; }
 
 template <class Key, class T, class Compare, class Alloc >
 typename map<Key, T, Compare, Alloc>::size_type	map<Key, T, Compare, Alloc>::max_size() const
-{
-	return this->_max_size;
-}
+{ return this->_max_size; }
 
 // template <class Key, class T, class Compare, class Alloc >
 // void	map<Key, T, Compare, Alloc>::resize(size_type n, value_type val)
@@ -68,15 +102,11 @@ typename map<Key, T, Compare, Alloc>::size_type	map<Key, T, Compare, Alloc>::max
 
 template <class Key, class T, class Compare, class Alloc >
 typename map<Key, T, Compare, Alloc>::size_type	map<Key, T, Compare, Alloc>::capacity() const
-{
-	return this->_capacity;
-}
+{ return this->_capacity; }
 
 template <class Key, class T, class Compare, class Alloc >
 bool	map<Key, T, Compare, Alloc>::empty() const
-{
-	return (!(_size) ? true : false);
-}
+{ return (!(_size) ? true : false); }
 
 // template <class Key, class T, class Compare, class Alloc >
 // void	map<Key, T, Compare, Alloc>::reserve(size_type n)
@@ -98,7 +128,26 @@ bool	map<Key, T, Compare, Alloc>::empty() const
 **	Modifiers
 */
 
-// pair<iterator,bool> insert(const value_type& val);
+template<class Key, class T, class Compare, class Alloc>
+void	map<Key, T, Compare, Alloc>::_newNode(value_type value)
+{
+	struct node<T>	*tmp = (struct node<T>*)malloc(sizeof(struct node<T>));
+	tmp->key = value;
+
+	// tmp.key = _alloc.allocate(1);
+	// tmp = _alloc.construct(tmp, value);
+	tmp->left = NULL; tmp->right = NULL;
+	return tmp;
+}
+
+// template<class Key, class T, class Compare, class Alloc>
+// ft::pair<typename ft::map<Key, T, Compare, Alloc>::iterator, bool>	map<Key, T, Compare, Alloc>::insert(const value_type& val)
+// {
+// 	_newNode(val);
+
+// 	return *this;
+// }
+
 // iterator insert(iterator position, const value_type& val);
 // template <class InputIterator>
 // void insert(InputIterator first, InputIterator last);
@@ -112,8 +161,11 @@ bool	map<Key, T, Compare, Alloc>::empty() const
 **	Observers
 */
 
-// key_compare key_comp() const;
-// value_compare value_comp() const;
+template <class Key, class T, class Compare, class Alloc >
+typename map<Key, T, Compare, Alloc>::key_compare map<Key, T, Compare, Alloc>::key_comp() const { return _comp; };
+
+template <class Key, class T, class Compare, class Alloc >
+typename map<Key, T, Compare, Alloc>::value_compare	map<Key, T, Compare, Alloc>::value_comp() const { return value_compare(_comp); }
 
 /*
 **	Operations
@@ -135,9 +187,7 @@ bool	map<Key, T, Compare, Alloc>::empty() const
 
 template <class Key, class T, class Compare, class Alloc >
 typename map<Key, T, Compare, Alloc>::allocator_type	map<Key, T, Compare, Alloc>::get_allocator() const
-{
-	return this->_alloc;
-}
+{ return this->_alloc; }
 
 // template <class Key, class T, class Compare, class Alloc >
 // void	map<Key, T, Compare, Alloc>::addNode(const value_type& pair)

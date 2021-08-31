@@ -5,6 +5,8 @@
 # include <iterator>
 # include <sstream>
 # include "../Vector/Vector.hpp"
+# include "ReverseIterator.hpp"
+# include "RandomIterator.hpp"
 
 namespace ft
 {
@@ -101,7 +103,7 @@ namespace ft
 		first_type	first;
 		second_type	second;
 
-		pair(void) { return ;};
+		pair(void) : first(), second() { return ;};
 		template<class U, class V>
 		pair(const pair<U,V>& pr) : first(pr.first), second(pr.second) { return ; };
 		pair(const first_type& a, const second_type& b) : first(a), second(b) { return ; };

@@ -2,8 +2,6 @@
 # define VECTOR_HPP
 
 # include "../Utils/Utils.hpp"
-# include "ReverseIterator.hpp"
-# include "RandomIterator.hpp"
 
 namespace ft
 {
@@ -64,7 +62,6 @@ class	vector
 				typedef	value_type const*	pointer;
 				typedef ptrdiff_t			difference_type;
 
-			public:
 				const_iterator(void) : Random<value_type>() { return; };
 				const_iterator(value_type *x) : Random<value_type>(x) { return ; };
 				const_iterator(const Random<value_type>& x) : Random<value_type>(x) { return ; };

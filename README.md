@@ -15,24 +15,25 @@
 ## 🔎 Vector ⤵️
 
 ```
-The std::vector is a sequence container that encapsulates dynamic size arrays.
+Vectors are sequence containers representing arrays that can change in size.
 ```
-[Reference](https://en.cppreference.com/w/cpp/container/vector)
-
-
-## 🔎 Map ⤵️
-
-```
-The std::map is a sorted associative container that contains key-value pairs with unique keys.
-```
-[Reference](https://en.cppreference.com/w/cpp/container/map)
+[Reference](https://www.cplusplus.com/reference/vector/vector/)
 
 ## 🔎 Stack ⤵️
 
 ```
-The std::stack class is a container adapter that gives the programmer the functionality of a stack - specifically, a LIFO (last-in, first-out) data structure.
+Stacks are a type of container adaptor, specifically designed to operate in a LIFO context (last-in first-out), where elements are inserted and extracted only from one end of the container.
 ```
-[Reference](https://en.cppreference.com/w/cpp/container/stack)
+[Reference](https://www.cplusplus.com/reference/stack/stack/)
+
+## 🔎 Map ⤵️
+
+```
+Maps are associative containers that store elements formed by a combination of a key value and a mapped value, following a specific order.
+```
+[Reference](https://www.cplusplus.com/reference/map/map/)
+
+You should look at [this link](https://www.geeksforgeeks.org/binary-search-tree-set-1-search-and-insertion/) and [this other link](https://www.geeksforgeeks.org/binary-search-tree-set-2-delete/) to better understand what a BST (Binary Search Tree) is.
 
 ## 💡 Usage
 
@@ -47,3 +48,5 @@ git clone https://github.com/JehanneDussert/ft_containers_test.git && cd ft_cont
 ## 🖇 Reference
 - [cplusplus](https://www.cplusplus.com/reference/)
 - [cppreference](https://en.cppreference.com/w/)
+- [Map | Search & insertion - BST](https://www.geeksforgeeks.org/binary-search-tree-set-1-search-and-insertion/)
+- [Map | Delete - BST](https://www.geeksforgeeks.org/binary-search-tree-set-2-delete/)

@@ -3,6 +3,7 @@
 
 # include "../Utils/Utils.hpp"
 # include "MapIterator.hpp"
+# include "../Utils/ReverseIterator.hpp"
 // # include "BinarySearchTree.hpp"
 
 # include <iostream>
@@ -22,7 +23,6 @@ class	map
 		typedef T											mapped_type;
 		typedef ft::pair<const key_type, mapped_type>		value_type;
 		typedef Compare										key_compare;
-		// class value_compare;
 		typedef	Alloc										allocator_type;
 		typedef	typename allocator_type::reference			reference;
 		typedef typename allocator_type::const_reference	const_reference;
@@ -31,13 +31,13 @@ class	map
 		// could be iterator_traits<iterator>::difference_type
 		typedef ptrdiff_t									difference_type;
 		typedef size_t										size_type;
-
-		typedef ft::node<value_type>							node_type;
-		typedef node_type*										node_ptr;
+		typedef ft::node<value_type>						node_type;
+		typedef node_type*									node_ptr;
+	
 		typedef ft::map_iterator<value_type, node_type >		iterator;
 		typedef ft::map_iterator<const value_type, node_type >	const_iterator;
-		// typedef ft::reverse_iterator<iterator>			reverse_iterator;
-		// typedef ft::reverse_iterator<const_iterator>	const_reverse_iterator;
+		typedef ft::reverse_iterator<iterator>					reverse_iterator;
+		typedef ft::reverse_iterator<const_iterator>			const_reverse_iterator;
 
 		class value_compare
 		{
@@ -51,18 +51,6 @@ class	map
 				typedef			value_type second_argument_type;
 				bool			operator()(const value_type& x, const value_type& y) const { return comp(x.first, y.first); };
 		};
-		
-		// TO CHANGE
-		// typedef std::iterator							iterator;
-		// typedef std::const_iterator						const_iterator;
-		// typedef std::reverse_iterator<iterator>			reverse_iterator;
-		// typedef std::reverse_iterator<const_iterator>	const_reverse_iterator;
-
-		/*****************/
-		/*** ITERATORS ***/
-		/*****************/
-
-		// TO DO
 
 		/**********************/
 		/**	MEMBER FUNCTIONS **/
@@ -82,10 +70,10 @@ class	map
 		const_iterator begin() const;
 		iterator end();
 		const_iterator end() const;
-		// reverse_iterator rbegin();
-		// const_reverse_iterator rbegin() const;
-		// reverse_iterator rend();
-		// const_reverse_iterator rend() const;
+		reverse_iterator rbegin();
+		const_reverse_iterator rbegin() const;
+		reverse_iterator rend();
+		const_reverse_iterator rend() const;
 
 		/*
 		**	Capacity

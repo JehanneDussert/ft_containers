@@ -251,6 +251,20 @@ int main(void)
     	std::cout << ' ' << it->second;
 	}
   	std::cout << '\n';
+	std::cout << "\nRev_it:\n";
+	for (ft::map<int, int>::reverse_iterator it = ft_map.rbegin(); it != ft_map.rend(); ++it)
+	{
+    	std::cout << ' ' << it->first;
+    	std::cout << ' ' << it->second;
+	}
+  	std::cout << '\n';
+	std::cout << "\nConst_rev_it:\n";
+	for (ft::map<int, int>::const_reverse_iterator it = ft_map.rbegin(); it != ft_map.rend(); ++it)
+	{
+    	std::cout << ' ' << it->first;
+    	std::cout << ' ' << it->second;
+	}
+  	std::cout << '\n';
 
 	// ft_map.deleteNode(root, foo1);
 	// std::cout << "Inorder BST:\n";

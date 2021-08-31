@@ -6,24 +6,26 @@
 namespace ft
 {
 	template<class Key, class T, class Compare, class Alloc>
-	typename map<Key, T, Compare, Alloc>::node_ptr	map<Key, T, Compare, Alloc>::newNode(key_type value)
+	typename map<Key, T, Compare, Alloc>::node_ptr	map<Key, T, Compare, Alloc>::newNode(node_ptr val)
 	{
-		node_ptr tmp;
+		node_ptr tmp = val;
 		
-		tmp->key = value;
-		tmp->left = NULL; tmp->right = NULL;
+		// tmp->tab.first = value.first;
+		// tmp->left = NULL; tmp->right = NULL;
+		// pair<key_type, mapped_type> pair; pair = make_pair(value.first, value.second);
+		// tmp->tab = pair;
 		return tmp;
 	}
 
 	template<class Key, class T, class Compare, class Alloc>
-	typename map<Key, T, Compare, Alloc>::node_ptr    map<Key, T, Compare, Alloc>::insert(node_ptr node, key_type key)
+	typename map<Key, T, Compare, Alloc>::node_ptr    map<Key, T, Compare, Alloc>::insert(node_ptr node, value_type val)
 	{
 		if (node == NULL)
-			return newNode(key);
-		if (key < node->key)
-			node->left = insert(node->left, key);
+			return newNode(new node_type(val));
+		if (_comp(val.first, node->tab.first))
+			node->left = insert(node->left, val);
 		else
-			node->right = insert(node->right, key);
+			node->right = insert(node->right, val);
 
 		return node;
 	}
@@ -40,14 +42,14 @@ namespace ft
 	}
 
 	template<class Key, class T, class Compare, class Alloc>
-	typename map<Key, T, Compare, Alloc>::node_ptr	map<Key, T, Compare, Alloc>::deleteNode(node_ptr root, key_type key)
+	typename map<Key, T, Compare, Alloc>::node_ptr	map<Key, T, Compare, Alloc>::deleteNode(node_ptr root, value_type val)
 	{
 		if (root == NULL)
 			return root;
-		else if (key < root->key)
-			root->left = deleteNode(root->left, key);
-		else if (key > root->key)
-			root->right = deleteNode(root->right, key);
+		else if (_comp(val.first, root->tab.first))
+			root->left = deleteNode(root->left, val);
+		else if (!_comp(val.first, root->tab.first)) // if (val.first > root->tab.first) mais prbl car !_comp si val == root...
+			root->right = deleteNode(root->right, val);
 		else
 		{
 			if (!root->left && !root->right)
@@ -63,8 +65,8 @@ namespace ft
 				return tmp;
 			}
 			node_ptr tmp = minValueNode(root->right);
-			root->key = tmp->key;
-			root->right = deleteNode(root->right, tmp->key);
+			root->tab = tmp->tab;
+			root->right = deleteNode(root->right, tmp->tab);
 		}
 		return root;
 	}
@@ -75,7 +77,7 @@ namespace ft
 		if (root != NULL)
 		{
 			inorder(root->left);
-			std::cout << root->key << ' ';
+			std::cout << root->tab.first << ' ';
 			inorder(root->right);
 		}
 	}

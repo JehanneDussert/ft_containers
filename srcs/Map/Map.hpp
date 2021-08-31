@@ -22,6 +22,7 @@ class	map
 		typedef T											mapped_type;
 		typedef ft::pair<const key_type, mapped_type>		value_type;
 		typedef Compare										key_compare;
+		// class value_compare;
 		typedef	Alloc										allocator_type;
 		typedef	typename allocator_type::reference			reference;
 		typedef typename allocator_type::const_reference	const_reference;
@@ -141,10 +142,10 @@ class	map
 		// Plus
 		void		addNode(const value_type& pair);
 		void		inorder(node_ptr root);
-		node_ptr	deleteNode(node_ptr root, key_type key);
+		node_ptr	deleteNode(node_ptr root, value_type val);
 		node_ptr	minValueNode(node_ptr node);
-		node_ptr	insert(node_ptr node, key_type key);
-		node_ptr	newNode(key_type value);
+		node_ptr	insert(node_ptr node, value_type val);
+		node_ptr	newNode(node_ptr val);
 
 	private:
 		allocator_type		_alloc;
@@ -152,9 +153,9 @@ class	map
 		size_type			_size;
 		size_type			_max_size;
 		size_type			_capacity;
-		node<value_type>	*_tab;
-		node<value_type>	*_root;
-		node<value_type>	*_last;
+		node_ptr			_tab;
+		node_ptr			_root;
+		node_ptr			_last;
 		void				_newNode(value_type value);
 };
 }

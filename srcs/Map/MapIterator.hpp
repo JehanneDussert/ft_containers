@@ -3,14 +3,15 @@
 
 namespace ft
 {
-	template<class U>
+	template<class T>
 	struct node
 	{
-		U		key;
+		T		tab;
 		node	*right;
 		node	*left;
 		node	*parent;
-		node(void) : key(NULL), right(NULL), left(NULL), parent(NULL){ return ; };
+		node(void) : tab(NULL), right(NULL), left(NULL), parent(NULL){ return ; };
+		node(T const &src = T()) : tab(src), right(NULL), left(NULL), parent(NULL){ return ; };
 	};
 
     template<typename T, typename node>
@@ -81,10 +82,10 @@ namespace ft
 	}
 	
 	template<typename T, typename node>
-	typename map_iterator<T, node>::reference	map_iterator<T, node>::operator*(void) { return this->_node->key; }
+	typename map_iterator<T, node>::reference	map_iterator<T, node>::operator*(void) { return this->_node->tab; }
 	
 	template<typename T, typename node>
-	typename map_iterator<T, node>::pointer		map_iterator<T, node>::operator->(void) { return &this->_node->key; }
+	typename map_iterator<T, node>::pointer		map_iterator<T, node>::operator->(void) { return &this->_node->tab; }
 }
 
 #endif

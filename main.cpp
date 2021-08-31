@@ -279,15 +279,16 @@ int main(void)
 	// struct node* root = NULL;
 	ft::map<int, int>			ft_map;
 	ft::map<int, int>::node_ptr root = NULL;
-	// ft::pair <int,int> foo1;
-  	// ft::pair <int,int> bar1;
-	// foo1 = ft::make_pair (10,20);
-  	// bar1 = ft::make_pair (10.5,'A'); // ok: implicit conversion from pair<double,char>
+	ft::pair <int,int> foo1;
+  	ft::pair <int,int> bar1;
+	foo1 = ft::make_pair (10,20);
+  	bar1 = ft::make_pair (30.5,'A'); // ok: implicit conversion from pair<double,char>
 	// (void)root;
     // ft_map.insert(root, bar1);
     // root = ft_map.insert(root, "lol");
-    root = ft_map.insert(root, 20);
-    // root = ft_map.insert(root, 40);
+    root = ft_map.insert(root, foo1);
+    root = ft_map.insert(root, bar1);
+	ft_map.inorder(root);
     // root = ft_map.insert(root, 70);
     // root = ft_map.insert(root, 60);
     // root = ft_map.insert(root, 80);

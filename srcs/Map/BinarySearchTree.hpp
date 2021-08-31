@@ -56,12 +56,12 @@ namespace ft
 				return NULL;
 			else if (!root->left)
 			{
-				node_ptr tmp = root->right; free(root);// _alloc.destroy(root); 
+				node_ptr tmp = root->right; delete root;// _alloc.destroy(root); 
 				return tmp;
 			}
 			else if (root->right == NULL)
 			{
-				node_ptr tmp = root->left; free(root); //_alloc.destroy(root);
+				node_ptr tmp = root->left; delete root; //_alloc.destroy(root);
 				return tmp;
 			}
 			node_ptr tmp = minValueNode(root->right);

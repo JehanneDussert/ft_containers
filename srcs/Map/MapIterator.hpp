@@ -25,15 +25,11 @@ namespace ft
 			typedef ptrdiff_t			difference_type;
 
 			map_iterator(void) : _node(NULL) { return ; };
-			map_iterator(map_iterator const &src)
-			{
-				if (*this == &src)
-					return *this;
-				*this->_node = src._node;
-				return *this;
-			};
+			map_iterator(map_iterator const &src) { *this = src; return ; };
+			map_iterator(node *src) { _node = src; return ;};
 			~map_iterator(void) { return ; };
-			map_iterator&	operator=(map_iterator const &rhs) { _node = rhs._node; return ;};
+			map_iterator&	operator=(map_iterator const &rhs) { _node = rhs._node; return *this;};
+			operator map_iterator<const T, node>(void) const { return map_iterator<const T, node>(this->_node); };
 
 			bool			operator==(const map_iterator &x) const { return this->_node == x._node;};
 			bool			operator!=(const map_iterator &x) const { return this->_node != x._node;};
@@ -44,6 +40,7 @@ namespace ft
 			map_iterator<value_type, node>	operator--(int);
 			reference						operator*(void);
 			pointer							operator->(void);
+
 
 			private:
 				node	*_node;

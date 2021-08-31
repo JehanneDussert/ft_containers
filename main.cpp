@@ -214,133 +214,48 @@ int main(void)
 	// std::cout << "int: " << ft::is_integral<int>::value << std::endl;
 	// std::cout << "float: " << ft::is_integral<float>::value << std::endl;
 
-	// ft::map<int, std::string>	ft_map;
-	// std::map<int, std::string>	std_map;
-	// std::pair <int,int> foo;
-  	// std::pair <int,int> bar;
-	// foo = std::make_pair (10,20);
-  	// bar = std::make_pair (10.5,'A'); // ok: implicit conversion from pair<double,char>
-
-	// std::cout << "Real\n";
-  	// std::cout << "foo: " << foo.first << ", " << foo.second << '\n';
-  	// std::cout << "bar: " << bar.first << ", " << bar.second << '\n';
-
-	// std::cout << "\nMine\n";
-	// ft::pair <int,int> foo1;
-  	// ft::pair <int,int> bar1;
-	// foo1 = ft::make_pair (10,20);
-  	// bar1 = ft::make_pair (10.5,'A'); // ok: implicit conversion from pair<double,char>
-
-  	// std::cout << "foo: " << foo.first << ", " << foo.second << '\n';
-  	// std::cout << "bar: " << bar.first << ", " << bar.second << '\n';
-
-	// std::map<int, int> lol;
-
-	// BST b, *root = NULL;
-    // root = b.Insert(root, 50);
-    // b.Insert(root, 30);
-    // b.Insert(root, 20);
-    // b.Insert(root, 40);
-    // b.Insert(root, 70);
-    // b.Insert(root, 60);
-    // b.Insert(root, 80);
-    // b.Insert(root, 22);
- 
-    // b.Inorder(root);
-	// ft::map<int, int> lol;
-	// ft::node<int>* root = NULL;
-	// root = lol.insert(root, 50);
-    // root = lol.insert(root, 50);
-    // root = lol.insert(root, 30);
-    // root = lol.insert(root, 20);
-    // root = lol.insert(root, 40);
-    // root = lol.insert(root, 70);
-    // root = lol.insert(root, 60);
-    // root = lol.insert(root, 80);
- 
-    // std::cout << "Inorder traversal of the given tree \n";
-    // lol.inorder(root);
- 
-    // std::cout << "\nDelete 20\n";
-    // root = lol.deleteNode(root, 20);
-    // std::cout << "Inorder traversal of the modified tree \n";
-    // lol.inorder(root);
- 
-    // std::cout << "\nDelete 30\n";
-    // root = lol.deleteNode(root, 30);
-    // std::cout << "Inorder traversal of the modified tree \n";
-    // lol.inorder(root);
- 
-    // std::cout << "\nDelete 50\n";
-    // root = lol.deleteNode(root, 50);
-    // std::cout << "Inorder traversal of the modified tree \n";
-    // lol.inorder(root);
-
-	// struct node* root = NULL;
 	ft::map<int, int>			ft_map;
-	ft::map<int, int>::node_ptr root = NULL;
-	ft::pair <int,int> foo1;
-  	ft::pair <int,int> bar1;
+	ft::map<int, int>::node_ptr	root = NULL;
+	ft::pair <int,int>			foo1;
+  	ft::pair <int,int>			bar1;
 	foo1 = ft::make_pair (10,20);
-  	bar1 = ft::make_pair (30.5,'A'); // ok: implicit conversion from pair<double,char>
-	// (void)root;
-    // ft_map.insert(root, bar1);
-    // root = ft_map.insert(root, "lol");
+  	bar1 = ft::make_pair (30.5,'A');
+
     root = ft_map.insert(root, foo1);
     root = ft_map.insert(root, bar1);
+	std::cout << "Inorder BST:\n";
 	ft_map.inorder(root);
-    // root = ft_map.insert(root, 70);
-    // root = ft_map.insert(root, 60);
-    // root = ft_map.insert(root, 80);
- 
-    // std::cout << "Inorder traversal of the given tree \n";
-    // ft_map.inorder(root);
- 
-    // std::cout << "\nDelete 20\n";
-    // root = ft_map.deleteNode(root, 20);
-    // std::cout << "Inorder traversal of the modified tree \n";
-    // ft_map.inorder(root);
- 
-    // std::cout << "\nDelete 30\n";
-    // root = ft_map.deleteNode(root, 30);
-    // std::cout << "Inorder traversal of the modified tree \n";
-    // ft_map.inorder(root);
- 
-    // std::cout << "\nDelete 50\n";
-    // root = ft_map.deleteNode(root, 50);
-    // std::cout << "Inorder traversal of the modified tree \n";
-    // ft_map.inorder(root);
+	std::cout << std::endl;
 
-	// ft::map<int, std::string>			ft_map;
-	// ft::map<int, std::string>::iterator ft_iterator;
-	// ft_map.insert(10);
+	ft::pair <int,int>			foo2;
+  	ft::pair <int,int>			bar2;
+	foo2 = ft::make_pair (60,900);
+  	bar2 = ft::make_pair (1.5,'z');
+    root = ft_map.insert(root, foo2);
+    root = ft_map.insert(root, bar2);
+	std::cout << "Inorder BST:\n";
+	ft_map.inorder(root);
+	std::cout << std::endl;
 
-	// struct node* root = NULL;
-    // root = insert(root, 50);
-    // root = insert(root, 30);
-    // root = insert(root, 20);
-    // root = insert(root, 40);
-    // root = insert(root, 70);
-    // root = insert(root, 60);
-    // root = insert(root, 80);
- 
-    // std::cout << "Inorder traversal of the given tree \n";
-    // inorder(root);
- 
-    // std::cout << "\nDelete 20\n";
-    // root = deleteNode(root, 20);
-    // std::cout << "Inorder traversal of the modified tree \n";
-    // inorder(root);
- 
-    // std::cout << "\nDelete 30\n";
-    // root = deleteNode(root, 30);
-    // std::cout << "Inorder traversal of the modified tree \n";
-    // inorder(root);
- 
-    // std::cout << "\nDelete 50\n";
-    // root = deleteNode(root, 50);
-    // std::cout << "Inorder traversal of the modified tree \n";
-    // inorder(root);
+	std::cout << "\nIt:\n";
+	for (ft::map<int, int>::iterator it = ft_map.begin(); it != ft_map.end(); ++it)
+	{
+    	std::cout << ' ' << it->first;
+    	std::cout << ' ' << it->second;
+	}
+  	std::cout << '\n';
+	std::cout << "\nConst_it:\n";
+	for (ft::map<int, int>::const_iterator it = ft_map.begin(); it != ft_map.end(); ++it)
+	{
+    	std::cout << ' ' << it->first;
+    	std::cout << ' ' << it->second;
+	}
+  	std::cout << '\n';
+
+	// ft_map.deleteNode(root, foo1);
+	// std::cout << "Inorder BST:\n";
+	// ft_map.inorder(root);
+	// std::cout << std::endl;
 
     return 0;
 }

@@ -131,9 +131,10 @@ bool	map<Key, T, Compare, Alloc>::empty() const
 template<class Key, class T, class Compare, class Alloc>
 ft::pair<typename ft::map<Key, T, Compare, Alloc>::iterator, bool>	map<Key, T, Compare, Alloc>::insert(const value_type& val)
 {
+	ft::pair<iterator, bool>	ret;
 	insert(this->_root, val);
 
-	return val;
+	return ret;
 }
 
 // iterator insert(iterator position, const value_type& val);
@@ -159,9 +160,52 @@ typename map<Key, T, Compare, Alloc>::value_compare	map<Key, T, Compare, Alloc>:
 **	Operations
 */
 
-// iterator find(const key_type& k);
-// const_iterator find(const key_type& k) const;
-// size_type count(const key_type& k) const;
+template <class Key, class T, class Compare, class Alloc >
+typename map<Key, T, Compare, Alloc>::iterator map<Key, T, Compare, Alloc>::find(const key_type& k)
+{
+	iterator	it = begin(); iterator	ite = end();
+
+	if (!count(k))
+		return ite;
+	while (it != ite)
+	{
+		++it;
+		if (it.first == k)
+			break;
+	}
+	return it;
+}
+
+template <class Key, class T, class Compare, class Alloc >
+typename map<Key, T, Compare, Alloc>::const_iterator map<Key, T, Compare, Alloc>::find(const key_type& k) const
+{
+	const_iterator	it = begin(); const_iterator	ite = end();
+
+	if (!count(k))
+		return ite;
+	while (it != ite)
+	{
+		++it;
+		if (it.first == k)
+			break;
+	}
+	return it;
+}
+
+template <class Key, class T, class Compare, class Alloc >
+typename map<Key, T, Compare, Alloc>::size_type map<Key, T, Compare, Alloc>::count(const key_type& k) const
+{
+	iterator	it = begin(); iterator	ite = end();
+
+	while (it != ite)
+	{
+		++it;
+		if (it.first == k)
+			return 1;
+	}
+	return 0;
+}
+
 // iterator lower_bound(const key_type& k);
 // const_iterator lower_bound(const key_type& k) const;
 // iterator upper_bound(const key_type& k);

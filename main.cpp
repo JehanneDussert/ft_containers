@@ -238,6 +238,12 @@ int main(void)
 	ft_map.inorder(root);
 	std::cout << std::endl;
 
+	/*
+	ft::map<int, int>			ft_map;
+	ft::pair <int,int>			foo;
+	ft_map.insert(foo);
+	*/
+
 	// std::cout << "\nIt:\n";
 	// for (ft::map<int, int>::iterator it = ft_map.begin(); it != ft_map.end(); ++it)
 	// {

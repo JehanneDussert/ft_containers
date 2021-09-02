@@ -249,7 +249,7 @@ int main(void)
 	std::cout << "Insert\n";
 	ft_map.insert(bar);
 
-	std::cout << "\nIt:\n";
+	std::cout << "\nIt 1st: ";
 	// ft_map.showMeTheTruth();
   	// std::cout << '\n';
 	// std::cout << "\nConst_it:\n";
@@ -257,6 +257,7 @@ int main(void)
 	std::cout << it->first;
     std::cout << ' ' << it->second << std::endl;
 	++it;
+	std::cout << "It 2nd: ";
 	std::cout << it->first;
     std::cout << ' ' << it->second << std::endl;
 	// for (ft::map<int, int>::const_iterator it = ft_map.begin(); it != ft_map.end(); ++it)

@@ -10,25 +10,18 @@ namespace ft
 	{
 		node_ptr tmp = val;
 		
-		tmp->left = NULL; tmp->right = NULL;
+		// tmp->left = NULL; tmp->right = NULL;
 		return tmp;
 	}
 
 	template<class Key, class T, class Compare, class Alloc>
 	typename map<Key, T, Compare, Alloc>::node_ptr    map<Key, T, Compare, Alloc>::insert(node_ptr node, value_type val)
 	{
-		value_type	tmp = val;
 		if (node == NULL)
 		{
 			if (_tab == NULL)
 				_root = newNode(new node_type(val));
-			else
-			{
-				node->parent = newNode(new node_type(val));
-				// node->parent = node;
-				// std::cout << "Parent content: " ;
-				// std::cout << node->parent->tab.first << ' ' << node->parent->tab.second << std::endl;
-			}
+			// parent
 			node = newNode(new node_type(val));
 			_size++;
 		}

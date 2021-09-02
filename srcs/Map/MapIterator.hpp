@@ -10,7 +10,7 @@ namespace ft
 		node	*right;
 		node	*left;
 		node	*parent;
-		node(void) : tab(NULL), right(NULL), left(NULL), parent(NULL){ return ; };
+		// node(void) : tab(NULL), right(NULL), left(NULL), parent(NULL){ return ; };
 		node(T const &src = T()) : tab(src), right(NULL), left(NULL), parent(NULL){ return ; };
 	};
 
@@ -61,7 +61,7 @@ namespace ft
 			_node = _node->parent;
 			std::cout << "enter\n";
 		}
-		std::cout << "mdr\n";
+		// std::cout << "first: " << _node->tab.first << std::endl;
 
 		return *this;
 	}

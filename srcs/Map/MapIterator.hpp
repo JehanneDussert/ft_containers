@@ -50,9 +50,18 @@ namespace ft
 	map_iterator<T, node>	&map_iterator<T, node>::operator++(void)
 	{
 		if (_node->right)
+		{
+			std::cout << "wtf\n";
 			_node = _node->right;
+			while (_node && _node->left)
+				_node = _node->left;
+		}
 		else if (_node->parent)
+		{
 			_node = _node->parent;
+			std::cout << "enter\n";
+		}
+		std::cout << "mdr\n";
 
 		return *this;
 	}
@@ -60,6 +69,7 @@ namespace ft
 	template<typename T, typename node>
 	map_iterator<T, node>	map_iterator<T, node>::operator++(int)
 	{
+		std::cout << "enter again\n";
 		map_iterator tmp(*this); this->operator++(); return tmp;
 	}
 	

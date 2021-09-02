@@ -131,9 +131,11 @@ class	map
 		void		addNode(const value_type& pair);
 		void		inorder(node_ptr root);
 		node_ptr	deleteNode(node_ptr root, value_type val);
-		node_ptr	minValueNode(node_ptr node);
+		node_ptr	minValueNode(node_ptr node) const;
+		node_ptr	maxValueNode(node_ptr node) const;
 		node_ptr	insert(node_ptr node, value_type val);
 		node_ptr	newNode(node_ptr val);
+		void		showMeTheTruth();
 
 	private:
 		allocator_type		_alloc;

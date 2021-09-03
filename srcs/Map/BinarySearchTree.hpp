@@ -10,7 +10,7 @@ namespace ft
 	{
 		node_ptr tmp = val;
 		
-		// tmp->left = NULL; tmp->right = NULL;
+		tmp->left = NULL; tmp->right = NULL;
 		return tmp;
 	}
 
@@ -19,37 +19,57 @@ namespace ft
 	{
 		if (node == NULL)
 		{
-			if (_tab == NULL)
-				_root = newNode(new node_type(val));
-			// parent
 			node = newNode(new node_type(val));
+			_root = node;
 			_size++;
+			node->parent = NULL;
 		}
-		else if (_comp(val.first, node->tab.first))
-			node->left = insert(node->left, val);
+		else if (_comp(val.first,node->tab.first))
+		{
+			if (!node->left)
+			{
+				node->left = newNode(new node_type(val));
+				node->left->parent = node;
+				_size++;
+			}
+			else
+				insert(node->left, val);
+		}
 		else
-			node->right = insert(node->right, val);
+		{
+			if (!node->right)
+			{
+				node->right = newNode(new node_type(val));
+				node->right->parent = node;
+				_size++;
+			}
+			else
+				insert(node->right, val);
+		}
 
 		std::cout << "Size: " << _size << std::endl;
-		std::cout << "Node content: " << node->tab.first << ' ' << node->tab.second << '\n';
-		if (node->parent)
-			std::cout << "Parent content: " << node->parent->tab.first << ' ' << node->parent->tab.second << std::endl;
+		// std::cout << "Node content: " << _tab->tab.first << ' ' << _tab->tab.second << '\n';
+		
 		return node;
 	}
 
 	template<class Key, class T, class Compare, class Alloc>
 	typename map<Key, T, Compare, Alloc>::node_ptr map<Key, T, Compare, Alloc>::minValueNode(node_ptr node) const
 	{
-		while (node && node->left != NULL)
+		while (node->left != NULL)	
+		{
+			std::cout << "1 | minVal: " << node->tab.first << "\n";
 			node = node->left;
+		}
 
+		std::cout << "2 | minVal: " << node->tab.first << "\n";
 		return node;
 	}
 
 	template<class Key, class T, class Compare, class Alloc>
 	typename map<Key, T, Compare, Alloc>::node_ptr map<Key, T, Compare, Alloc>::maxValueNode(node_ptr node) const
 	{
-		while (node && node->right != NULL)
+		while (node->right != NULL)
 			node = node->right;
 
 		return node;
@@ -98,7 +118,7 @@ namespace ft
 		{
 			inorder(root->left);
 			std::cout << root->tab.first << ' ';
-			std::cout << root->tab.second << ' ';
+			// std::cout << root->tab.second << ' ';
 			inorder(root->right);
 		}
 	}

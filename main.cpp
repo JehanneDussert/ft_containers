@@ -240,31 +240,44 @@ int main(void)
 
 	ft::map<int, int>			ft_map;
 	ft::pair <int,int>			foo;
-	std::cout << "Insert\n";
+	// std::cout << "Insert\n";
 	foo = ft::make_pair(5, 10);
 	ft_map.insert(foo);
 
 	ft::pair <int,int>			bar;
 	bar = ft::make_pair(2, 7);
-	std::cout << "Insert\n";
+	// std::cout << "Insert\n";
 	ft_map.insert(bar);
 
-	std::cout << "\nIt 1st: ";
+	ft::pair <int,int>			kikoo;
+	kikoo = ft::make_pair(90, 7);
+	// std::cout << "Insert\n";
+	ft_map.insert(kikoo);
+	ft::pair <int,int>			lol;
+	kikoo = ft::make_pair(10, 2);
+	std::cout << "New insert\n";
+	ft_map.insert(lol);
+
+	// std::cout << "\nIt 1st: ";
 	// ft_map.showMeTheTruth();
   	// std::cout << '\n';
 	// std::cout << "\nConst_it:\n";
+	// ft::map<int, int>::const_iterator it = ft_map.begin();
+	// std::cout << it->first;
+    // std::cout << ' ' << it->second << std::endl;
+	// ++it;
+	// std::cout << "It 2nd: ";
+	// std::cout << it->first;
+    // std::cout << ' ' << it->second << std::endl;
+	std::cout << "\n-- Print --\n\n";
 	ft::map<int, int>::const_iterator it = ft_map.begin();
-	std::cout << it->first;
-    std::cout << ' ' << it->second << std::endl;
 	++it;
-	std::cout << "It 2nd: ";
-	std::cout << it->first;
-    std::cout << ' ' << it->second << std::endl;
-	// for (ft::map<int, int>::const_iterator it = ft_map.begin(); it != ft_map.end(); ++it)
-	// {
-    // 	std::cout << it->first;
-    // 	std::cout << ' ' << it->second << std::endl;
-	// }
+	for (; it != ft_map.end(); ++it)
+	{
+    	std::cout << it->first;
+    	std::cout << ' ' << it->second << std::endl;
+		// ft_map.showMeTheTruth();
+	}
   	// std::cout << '\n';
 	// std::cout << "\nRev_it:\n";
 	// for (ft::map<int, int>::reverse_iterator it = ft_map.rbegin(); it != ft_map.rend(); ++it)

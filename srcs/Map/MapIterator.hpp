@@ -51,17 +51,17 @@ namespace ft
 	{
 		if (_node->right)
 		{
-			std::cout << "wtf\n";
+			std::cout << "right\n";
 			_node = _node->right;
 			while (_node && _node->left)
 				_node = _node->left;
 		}
 		else if (_node->parent)
 		{
+			std::cout << "parent\n";
 			_node = _node->parent;
-			std::cout << "enter\n";
 		}
-		// std::cout << "first: " << _node->tab.first << std::endl;
+		std::cout << "Nothing: " << _node->tab.first << std::endl;
 
 		return *this;
 	}
@@ -69,7 +69,6 @@ namespace ft
 	template<typename T, typename node>
 	map_iterator<T, node>	map_iterator<T, node>::operator++(int)
 	{
-		std::cout << "enter again\n";
 		map_iterator tmp(*this); this->operator++(); return tmp;
 	}
 	

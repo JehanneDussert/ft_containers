@@ -118,11 +118,11 @@ bool	map<Key, T, Compare, Alloc>::empty() const
 **	Element access
 */
 
-// template <class Key, class T, class Compare, class Alloc >
-// mapped_type&	map<Key, T, Compare, Alloc>::operator[](const key_type& k)
-// {
-// 	;
-// }
+template <class Key, class T, class Compare, class Alloc >
+typename map<Key, T, Compare, Alloc>::mapped_type&	map<Key, T, Compare, Alloc>::operator[](const key_type& k)
+{
+	return (*((this->insert(make_pair(k,mapped_type()))).first)).second;
+}
 
 /*
 **	Modifiers
@@ -144,7 +144,14 @@ ft::pair<typename ft::map<Key, T, Compare, Alloc>::iterator, bool>	map<Key, T, C
 	return ret;
 }
 
-// iterator insert(iterator position, const value_type& val);
+// template<class Key, class T, class Compare, class Alloc>
+// typename map<Key, T, Compare, Alloc>::iterator map<Key, T, Compare, Alloc>::insert(iterator position, const value_type& val)
+// {
+// 	iterator it;
+// 	for(; it != position; ++it)
+
+// }
+
 // template <class InputIterator>
 // void insert(InputIterator first, InputIterator last);
 // void erase(iterator position);

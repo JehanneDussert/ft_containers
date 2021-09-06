@@ -286,7 +286,20 @@ int main(void)
     	std::cout << "Key: " << it->first;
     	std::cout << "\t\tVal: " << it->second << std::endl;
 		// ft_map.showMeTheTruth();
+		std::cout << "map['" << it->first << "']\t is " << ft_map[it->first] << '\n';
 	}
+	// ft::map<char,std::string> mymap;
+
+	// mymap['a']="an element";
+	// mymap['b']="another element";
+	// mymap['c']=mymap['b'];
+
+	// std::cout << "mymap['a'] is " << mymap['a'] << '\n';
+	// std::cout << "mymap['b'] is " << mymap['b'] << '\n';
+	// std::cout << "mymap['c'] is " << mymap['c'] << '\n';
+	// std::cout << "mymap['d'] is " << mymap['d'] << '\n';
+
+	// std::cout << "mymap now contains " << mymap.size() << " elements.\n";
   	// std::cout << '\n';
 	// std::cout << "\nRev_it:\n";
 	// for (ft::map<int, int>::reverse_iterator it = ft_map.rbegin(); it != ft_map.rend(); ++it)

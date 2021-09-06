@@ -134,17 +134,13 @@ ft::pair<typename ft::map<Key, T, Compare, Alloc>::iterator, bool>	map<Key, T, C
 {
 	ft::pair<iterator, bool>	ret;
 
-	// if (count(val.first))
-	// 	return make_pair(find(val.first), false);
-	// else
-	// {
-	// 	_tab = insert(this->_tab, val);
-	// 	return make_pair(find(val.first), true);
-	// }
 	if (count(val.first))
 		ret.second = false;
 	else
+	{
 		_tab = insert(_tab, val);
+		ret.second = true;
+	}
 	ret.first = find(val.first);
 
 	return ret;

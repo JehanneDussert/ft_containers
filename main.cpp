@@ -254,9 +254,19 @@ int main(void)
 	std::cout << "Insert 3\n";
 	ft_map.insert(kikoo);
 	ft::pair <int,int>			lol;
-	kikoo = ft::make_pair(1, 2);
+	lol = ft::make_pair(1, 8);
 	std::cout << "Insert 4\n";
 	ft_map.insert(lol);
+
+	ft::pair <int,int>			xd;
+	xd = ft::make_pair(90, 4);
+	std::cout << "Insert 5\n";
+	ft_map.insert(xd);
+
+	ft::pair <int,int>			mdlol;
+	mdlol = ft::make_pair(9, 4);
+	std::cout << "Insert 6\n";
+	ft_map.insert(mdlol);
 
 	// std::cout << "\nIt 1st: ";
 	// ft_map.showMeTheTruth();
@@ -271,11 +281,10 @@ int main(void)
     // std::cout << ' ' << it->second << std::endl;
 	std::cout << "\n-- Print --\n\n";
 	ft::map<int, int>::const_iterator it = ft_map.begin();
-	++it;
 	for (; it != ft_map.end(); ++it)
 	{
-    	std::cout << it->first;
-    	std::cout << ' ' << it->second << std::endl;
+    	std::cout << "Key: " << it->first;
+    	std::cout << "\t\tVal: " << it->second << std::endl;
 		// ft_map.showMeTheTruth();
 	}
   	// std::cout << '\n';

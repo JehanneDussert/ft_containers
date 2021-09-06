@@ -24,7 +24,7 @@ namespace ft
 			_size++;
 			node->parent = NULL;
 		}
-		else if (_comp(val.first,node->tab.first))
+		else if (_comp(val.first, node->tab.first))
 		{
 			if (!node->left)
 			{
@@ -47,22 +47,15 @@ namespace ft
 				insert(node->right, val);
 		}
 
-		std::cout << "Size: " << _size << std::endl;
-		// std::cout << "Node content: " << _tab->tab.first << ' ' << _tab->tab.second << '\n';
-		
 		return node;
 	}
 
 	template<class Key, class T, class Compare, class Alloc>
 	typename map<Key, T, Compare, Alloc>::node_ptr map<Key, T, Compare, Alloc>::minValueNode(node_ptr node) const
 	{
-		while (node->left != NULL)	
-		{
-			// std::cout << "1 | minVal: " << node->tab.first << "\n";
+		while (node->left != NULL)
 			node = node->left;
-		}
 
-		// std::cout << "2 | minVal: " << node->tab.first << "\n";
 		return node;
 	}
 

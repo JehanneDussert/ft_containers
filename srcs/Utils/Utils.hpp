@@ -4,7 +4,8 @@
 # include <iostream>
 # include <iterator>
 # include <sstream>
-# include "../Vector/Vector.hpp"
+// # include "../Vector/Vector.hpp"
+// #include "../Map/BinarySearchTree.hpp"
 # include "ReverseIterator.hpp"
 # include "RandomIterator.hpp"
 
@@ -107,7 +108,7 @@ namespace ft
 		template<class U, class V>
 		pair(const pair<U,V>& pr) : first(pr.first), second(pr.second) { return ; };
 		pair(const first_type& a, const second_type& b) : first(a), second(b) { return ; };
-		~pair(void) { return ; };
+		// ~pair(void) { return ; };
 		pair& operator=(const pair& pr) { first = pr.first; second = pr.second; return *this; };
 	};
 

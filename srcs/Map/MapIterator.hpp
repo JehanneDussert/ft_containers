@@ -39,7 +39,7 @@ namespace ft
 			map_iterator<value_type, node>	&operator--(void);
 			map_iterator<value_type, node>	operator--(int);
 			reference						operator*(void);
-			pointer							operator->(void);
+			pointer							operator->(void) const;
 
 
 			private:
@@ -112,7 +112,7 @@ namespace ft
 	typename map_iterator<T, node>::reference	map_iterator<T, node>::operator*(void) { return this->_node->tab; }
 	
 	template<typename T, typename node>
-	typename map_iterator<T, node>::pointer		map_iterator<T, node>::operator->(void) { return &this->_node->tab; }
+	typename map_iterator<T, node>::pointer		map_iterator<T, node>::operator->(void) const { return &this->_node->tab; }
 }
 
 #endif

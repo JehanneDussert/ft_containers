@@ -26,15 +26,15 @@ _root(NULL), _last(NULL) { return ; };
 template < class Key, class T, class Compare, class Alloc >
 template <class InputIterator>
 map<Key, T, Compare, Alloc>::map(InputIterator first, InputIterator last, const key_compare& comp,
-const allocator_type& alloc) : _alloc(alloc), _comp(comp), _root(first), _last(last)
-{ /* need to copy first to last in tab */ return ; };
+const allocator_type& alloc) : _alloc(alloc), _comp(comp) //, _root(first), _last(last)
+{ (void)first; (void)last;/* need to copy first to last in tab */ return ; };
 
 /*
 ** Copy constructor
 */
 
 template < class Key, class T, class Compare, class Alloc >
-map<Key, T, Compare, Alloc>::map(const map& x) { *this = x; return *this; };
+map<Key, T, Compare, Alloc>::map(const map& x) { *this = x; return; };
 
 template < class Key, class T, class Compare, class Alloc >
 map<Key, T, Compare, Alloc>	&map<Key, T, Compare, Alloc>::operator=(const map& x)
@@ -43,7 +43,7 @@ map<Key, T, Compare, Alloc>	&map<Key, T, Compare, Alloc>::operator=(const map& x
 	this->_comp = x._comp; this->_root = x._root; this->_last = x._last;
 	this->_tab = x._tab;
 	
-	return ;
+	return *this;
 };
 
 /*
@@ -121,7 +121,8 @@ bool	map<Key, T, Compare, Alloc>::empty() const
 template <class Key, class T, class Compare, class Alloc >
 typename map<Key, T, Compare, Alloc>::mapped_type&	map<Key, T, Compare, Alloc>::operator[](const key_type& k)
 {
-	return (*((this->insert(make_pair(k,mapped_type()))).first)).second;
+	// std::cout << "\nRes: " << (*((this->insert(value_type(k, mapped_type()))).first)).second << std::endl;
+	return (*((this->insert(value_type(k,mapped_type()))).first)).second;
 }
 
 /*
@@ -133,32 +134,67 @@ ft::pair<typename ft::map<Key, T, Compare, Alloc>::iterator, bool>	map<Key, T, C
 {
 	ft::pair<iterator, bool>	ret;
 
+	// if (count(val.first))
+	// 	return make_pair(find(val.first), false);
+	// else
+	// {
+	// 	_tab = insert(this->_tab, val);
+	// 	return make_pair(find(val.first), true);
+	// }
 	if (count(val.first))
-		return make_pair(find(val.first), false);
+		ret.second = false;
 	else
-	{
-		_tab = insert(this->_tab, val);
-		return make_pair(find(val.first), true);
-	}
+		_tab = insert(_tab, val);
+	ret.first = find(val.first);
 
 	return ret;
 }
 
-// template<class Key, class T, class Compare, class Alloc>
-// typename map<Key, T, Compare, Alloc>::iterator map<Key, T, Compare, Alloc>::insert(iterator position, const value_type& val)
-// {
-// 	iterator it;
-// 	for(; it != position; ++it)
+template<class Key, class T, class Compare, class Alloc>
+typename map<Key, T, Compare, Alloc>::iterator map<Key, T, Compare, Alloc>::insert(iterator position, const value_type& val)
+{
+	difference_type	i = position - begin();
+	insert(position, 1, val);
 
-// }
+	return iterator(begin() + i);
+}
 
-// template <class InputIterator>
-// void insert(InputIterator first, InputIterator last);
+
+template<class Key, class T, class Compare, class Alloc>
+template <class InputIterator>
+void map<Key, T, Compare, Alloc>::insert(InputIterator first, InputIterator last)
+{
+	while (first != last)
+		insert(*first++);
+}
+
 // void erase(iterator position);
 // size_type erase(const key_type& k);
 // void erase(iterator first, iterator last);
-// void swap(map& x);
-// void clear();
+
+template<class Key, class T, class Compare, class Alloc>
+void map<Key, T, Compare, Alloc>::swap(map& x)
+{
+	map<Key, T, Compare, Alloc>	tmp;
+
+	tmp._alloc = get_allocator(); tmp._comp = key_comp();
+	tmp._size = size(); tmp._max_size = max_size();
+	tmp._capacity = capacity(); tmp._tab = _tab; tmp._root = _root;
+
+	_alloc = x.get_allocator(); _comp = x.key_comp();
+	_size = x.size(); _max_size = x.max_size();
+	_capacity = x.capacity(); _tab = x._tab; _root = x._root;
+
+	x._alloc = tmp.get_allocator(); x._comp = tmp.key_comp();
+	x._size = tmp.size(); x._max_size = tmp.max_size();
+	x._capacity = tmp.capacity(); x._tab = tmp._tab; x._root = tmp._root;
+}
+
+template <class Key, class T, class Compare, class Alloc >
+void map<Key, T, Compare, Alloc>::clear()
+{
+	return ;
+}
 
 /*
 **	Observers
@@ -242,6 +278,117 @@ typename map<Key, T, Compare, Alloc>::allocator_type	map<Key, T, Compare, Alloc>
 // {
 // 	;
 // }
+
+template<class Key, class T, class Compare, class Alloc>
+typename map<Key, T, Compare, Alloc>::node_ptr	map<Key, T, Compare, Alloc>::newNode(node_ptr val)
+	{
+		node_ptr tmp = val;
+		
+		tmp->left = NULL; tmp->right = NULL;
+		return tmp;
+	}
+
+	template<class Key, class T, class Compare, class Alloc>
+	typename map<Key, T, Compare, Alloc>::node_ptr    map<Key, T, Compare, Alloc>::insert(node_ptr node, value_type val)
+	{
+		if (node == NULL)
+		{
+			node = newNode(new node_type(val));
+			_root = node;
+			_size++;
+			node->parent = NULL;
+		}
+		else if (_comp(val.first, node->tab.first))
+		{
+			if (!node->left)
+			{
+				node->left = newNode(new node_type(val));
+				node->left->parent = node;
+				_size++;
+			}
+			else
+				insert(node->left, val);
+		}
+		else
+		{
+			if (!node->right)
+			{
+				node->right = newNode(new node_type(val));
+				node->right->parent = node;
+				_size++;
+			}
+			else
+				insert(node->right, val);
+		}
+
+		return node;
+	}
+
+	template<class Key, class T, class Compare, class Alloc>
+	typename map<Key, T, Compare, Alloc>::node_ptr map<Key, T, Compare, Alloc>::minValueNode(node_ptr node) const
+	{
+		while (node->left != NULL)
+			node = node->left;
+
+		return node;
+	}
+
+	template<class Key, class T, class Compare, class Alloc>
+	typename map<Key, T, Compare, Alloc>::node_ptr map<Key, T, Compare, Alloc>::maxValueNode(node_ptr node) const
+	{
+		while (node->right != NULL)
+			node = node->right;
+
+		return node;
+	}
+
+	template<class Key, class T, class Compare, class Alloc>
+	typename map<Key, T, Compare, Alloc>::node_ptr	map<Key, T, Compare, Alloc>::deleteNode(node_ptr root, value_type val)
+	{
+		if (root == NULL)
+			return root;
+		else if (_comp(val.first, root->tab.first))
+			root->left = deleteNode(root->left, val);
+		else if (!_comp(val.first, root->tab.first)) // if (val.first > root->tab.first) mais prbl car !_comp si val == root...
+			root->right = deleteNode(root->right, val);
+		else
+		{
+			if (!root->left && !root->right)
+				return NULL;
+			else if (!root->left)
+			{
+				node_ptr tmp = root->right; delete root;// _alloc.destroy(root); 
+				return tmp;
+			}
+			else if (root->right == NULL)
+			{
+				node_ptr tmp = root->left; delete root; //_alloc.destroy(root);
+				return tmp;
+			}
+			node_ptr tmp = minValueNode(root->right);
+			root->tab = tmp->tab;
+			root->right = deleteNode(root->right, tmp->tab);
+		}
+		return root;
+	}
+
+	template<class Key, class T, class Compare, class Alloc>
+	void map<Key, T, Compare, Alloc>::showMeTheTruth()
+	{
+		inorder(_tab);
+	}
+
+	template<class Key, class T, class Compare, class Alloc>
+	void map<Key, T, Compare, Alloc>::inorder(node_ptr root)
+	{
+		if (root != NULL)
+		{
+			inorder(root->left);
+			// std::cout << root->tab.first << ' ';
+			// std::cout << root->tab.second << ' ';
+			inorder(root->right);
+		}
+	}
 
 };
 

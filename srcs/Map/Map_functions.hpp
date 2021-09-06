@@ -180,6 +180,7 @@ typename map<Key, T, Compare, Alloc>::iterator map<Key, T, Compare, Alloc>::find
 		if (it->first == k)
 			break;
 	}
+	
 	return it;
 }
 

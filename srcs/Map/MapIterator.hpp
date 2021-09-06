@@ -51,17 +51,20 @@ namespace ft
 	{
 		if (_node->right)
 		{
-			std::cout << "right\n";
 			_node = _node->right;
 			while (_node && _node->left)
 				_node = _node->left;
 		}
 		else if (_node->parent)
 		{
-			std::cout << "parent\n";
+			node	*tmp = _node;
 			_node = _node->parent;
+			while (_node && tmp == _node->right)
+			{
+				tmp = _node;
+				_node = _node->parent;
+			}
 		}
-		std::cout << "Nothing: " << _node->tab.first << std::endl;
 
 		return *this;
 	}
@@ -69,14 +72,30 @@ namespace ft
 	template<typename T, typename node>
 	map_iterator<T, node>	map_iterator<T, node>::operator++(int)
 	{
-		map_iterator tmp(*this); this->operator++(); return tmp;
+		map_iterator tmp(*this); this->operator++();
+		
+		return tmp;
 	}
 	
 	template<typename T, typename node>
 	map_iterator<T, node>	&map_iterator<T, node>::operator--(void)
 	{
 		if (_node->left)
+		{
 			_node = _node->left;
+			while (_node && _node->right)
+				_node = _node->right;
+		}
+		else if (_node->parent)
+		{
+			node	*tmp = _node;
+			_node = _node->parent;
+			while (_node && tmp == _node->left)
+			{
+				tmp = _node;
+				_node = _node->parent;
+			}
+		}
 
 		return *this;
 	}
@@ -84,7 +103,9 @@ namespace ft
 	template<typename T, typename node>
 	map_iterator<T, node>	map_iterator<T, node>::operator--(int) 
 	{
-		map_iterator tmp(*this); this->operator--(); return tmp;
+		map_iterator tmp(*this); this->operator--();
+		
+		return tmp;
 	}
 	
 	template<typename T, typename node>

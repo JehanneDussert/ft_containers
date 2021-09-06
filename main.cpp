@@ -240,22 +240,22 @@ int main(void)
 
 	ft::map<int, int>			ft_map;
 	ft::pair <int,int>			foo;
-	// std::cout << "Insert\n";
+	std::cout << "Insert 1\n";
 	foo = ft::make_pair(5, 10);
 	ft_map.insert(foo);
 
 	ft::pair <int,int>			bar;
 	bar = ft::make_pair(2, 7);
-	// std::cout << "Insert\n";
+	std::cout << "Insert 2\n";
 	ft_map.insert(bar);
 
 	ft::pair <int,int>			kikoo;
-	kikoo = ft::make_pair(90, 7);
-	// std::cout << "Insert\n";
+	kikoo = ft::make_pair(90, 4);
+	std::cout << "Insert 3\n";
 	ft_map.insert(kikoo);
 	ft::pair <int,int>			lol;
-	kikoo = ft::make_pair(10, 2);
-	std::cout << "New insert\n";
+	kikoo = ft::make_pair(1, 2);
+	std::cout << "Insert 4\n";
 	ft_map.insert(lol);
 
 	// std::cout << "\nIt 1st: ";

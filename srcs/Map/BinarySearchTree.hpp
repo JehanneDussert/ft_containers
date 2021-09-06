@@ -58,11 +58,11 @@ namespace ft
 	{
 		while (node->left != NULL)	
 		{
-			std::cout << "1 | minVal: " << node->tab.first << "\n";
+			// std::cout << "1 | minVal: " << node->tab.first << "\n";
 			node = node->left;
 		}
 
-		std::cout << "2 | minVal: " << node->tab.first << "\n";
+		// std::cout << "2 | minVal: " << node->tab.first << "\n";
 		return node;
 	}
 
@@ -117,7 +117,7 @@ namespace ft
 		if (root != NULL)
 		{
 			inorder(root->left);
-			std::cout << root->tab.first << ' ';
+			// std::cout << root->tab.first << ' ';
 			// std::cout << root->tab.second << ' ';
 			inorder(root->right);
 		}

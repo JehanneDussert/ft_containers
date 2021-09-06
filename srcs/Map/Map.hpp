@@ -3,7 +3,7 @@
 
 # include "../Utils/Utils.hpp"
 # include "MapIterator.hpp"
-# include "../Utils/ReverseIterator.hpp"
+// # include "../Utils/ReverseIterator.hpp"
 // # include "BinarySearchTree.hpp"
 
 # include <iostream>
@@ -15,13 +15,13 @@
 namespace ft
 {
 
-template < class Key, class T, class Compare = std::less<Key>, class Alloc = std::allocator<ft::pair<const Key,T> > >
+template < class Key, class T, class Compare = std::less<Key>, class Alloc = std::allocator<pair<const Key,T> > >
 class	map
 {
 	public:
 		typedef Key											key_type;
 		typedef T											mapped_type;
-		typedef ft::pair<const key_type, mapped_type>		value_type;
+		typedef pair<const key_type, mapped_type>			value_type;
 		typedef Compare										key_compare;
 		typedef	Alloc										allocator_type;
 		typedef	typename allocator_type::reference			reference;
@@ -29,6 +29,7 @@ class	map
 		typedef typename allocator_type::pointer			pointer;
 		typedef typename allocator_type::const_pointer		const_pointer;
 		// could be iterator_traits<iterator>::difference_type
+		class value_compare;
 		typedef ptrdiff_t									difference_type;
 		typedef size_t										size_type;
 		typedef ft::node<value_type>						node_type;
@@ -94,9 +95,9 @@ class	map
 		**	Modifiers
 		*/
 		pair<iterator,bool> insert(const value_type& val);
-		// iterator insert(iterator position, const value_type& val);
-		// template <class InputIterator>
-  		// void insert(InputIterator first, InputIterator last);
+		iterator insert(iterator position, const value_type& val);
+		template <class InputIterator>
+  		void insert(InputIterator first, InputIterator last);
 		// void erase(iterator position);
 		size_type erase(const key_type& k);
 		// void erase(iterator first, iterator last);
@@ -112,9 +113,9 @@ class	map
 		/*
 		**	Operations
 		*/
-		iterator find(const key_type& k);
-		const_iterator find(const key_type& k) const;
-		size_type count(const key_type& k) const;
+		iterator		find(const key_type& k);
+		const_iterator	find(const key_type& k) const;
+		size_type		count(const key_type& k) const;
 		// iterator lower_bound(const key_type& k);
 		// const_iterator lower_bound(const key_type& k) const;
 		// iterator upper_bound(const key_type& k);
@@ -146,7 +147,6 @@ class	map
 		node_ptr			_tab;
 		node_ptr			_root;
 		node_ptr			_last;
-		void				_newNode(value_type value);
 };
 }
 

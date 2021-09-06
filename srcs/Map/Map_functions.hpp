@@ -26,8 +26,8 @@ _root(NULL), _last(NULL) { return ; };
 template < class Key, class T, class Compare, class Alloc >
 template <class InputIterator>
 map<Key, T, Compare, Alloc>::map(InputIterator first, InputIterator last, const key_compare& comp,
-const allocator_type& alloc) : _alloc(alloc), _comp(comp) //, _root(first), _last(last)
-{ (void)first; (void)last;/* need to copy first to last in tab */ return ; };
+const allocator_type& alloc) : _alloc(alloc), _comp(comp), _max_size(alloc.max_size())
+{ insert(first, last); return ; };
 
 /*
 ** Copy constructor
@@ -121,7 +121,6 @@ bool	map<Key, T, Compare, Alloc>::empty() const
 template <class Key, class T, class Compare, class Alloc >
 typename map<Key, T, Compare, Alloc>::mapped_type&	map<Key, T, Compare, Alloc>::operator[](const key_type& k)
 {
-	// std::cout << "\nRes: " << (*((this->insert(value_type(k, mapped_type()))).first)).second << std::endl;
 	return (*((this->insert(value_type(k,mapped_type()))).first)).second;
 }
 
@@ -149,12 +148,11 @@ ft::pair<typename ft::map<Key, T, Compare, Alloc>::iterator, bool>	map<Key, T, C
 template<class Key, class T, class Compare, class Alloc>
 typename map<Key, T, Compare, Alloc>::iterator map<Key, T, Compare, Alloc>::insert(iterator position, const value_type& val)
 {
-	difference_type	i = position - begin();
-	insert(position, 1, val);
+	(void)position;
+	return insert(val).first;
 
-	return iterator(begin() + i);
+	// return iterator(position);
 }
-
 
 template<class Key, class T, class Compare, class Alloc>
 template <class InputIterator>

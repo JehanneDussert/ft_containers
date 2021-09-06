@@ -41,7 +41,7 @@ map<Key, T, Compare, Alloc>	&map<Key, T, Compare, Alloc>::operator=(const map& x
 {
 	this->_size = x.size(); this->_capacity = x.capacity();
 	this->_comp = x._comp; this->_root = x._root; this->_last = x._last;
-	// Need to copy content of _tab
+	this->_tab = x._tab;
 	
 	return ;
 };
@@ -52,35 +52,35 @@ map<Key, T, Compare, Alloc>	&map<Key, T, Compare, Alloc>::operator=(const map& x
 
 template <class Key, class T, class Compare, class Alloc >
 typename map<Key, T, Compare, Alloc>::iterator map<Key, T, Compare, Alloc>::begin()
-{ return iterator(_tab); }
+{ return iterator(minValueNode(_tab)); }
 
 template <class Key, class T, class Compare, class Alloc >
 typename map<Key, T, Compare, Alloc>::const_iterator map<Key, T, Compare, Alloc>::begin() const
-{ return const_iterator(_tab); }
+{ return const_iterator(minValueNode(_tab)); }
 
 template <class Key, class T, class Compare, class Alloc >
 typename map<Key, T, Compare, Alloc>::iterator map<Key, T, Compare, Alloc>::end()
-{ return iterator(&_tab[_size]); }
+{ return iterator(maxValueNode(_tab)); }
 
 template <class Key, class T, class Compare, class Alloc >
 typename map<Key, T, Compare, Alloc>::const_iterator map<Key, T, Compare, Alloc>::end() const
-{ return const_iterator(&_tab[_size]); }
+{ return const_iterator(maxValueNode(_tab)); }
 
 template <class Key, class T, class Compare, class Alloc >
 typename map<Key, T, Compare, Alloc>::reverse_iterator map<Key, T, Compare, Alloc>::rbegin()
-{ return reverse_iterator(&_tab[_size]); }
+{ return reverse_iterator(maxValueNode(_tab)); }
 
 template <class Key, class T, class Compare, class Alloc >
 typename map<Key, T, Compare, Alloc>::const_reverse_iterator map<Key, T, Compare, Alloc>::rbegin() const
-{ return const_reverse_iterator(&_tab[_size]); }
+{ return const_reverse_iterator(maxValueNode(_tab)); }
 
 template <class Key, class T, class Compare, class Alloc >
 typename map<Key, T, Compare, Alloc>::reverse_iterator map<Key, T, Compare, Alloc>::rend()
-{ return reverse_iterator(_tab); };
+{ return reverse_iterator(minValueNode(_tab)); };
 
 template <class Key, class T, class Compare, class Alloc >
 typename map<Key, T, Compare, Alloc>::const_reverse_iterator map<Key, T, Compare, Alloc>::rend() const 
-{ return const_reverse_iterator(_tab); }
+{ return const_reverse_iterator(minValueNode(_tab)); }
 
 /*
 **	Capacity
@@ -129,24 +129,20 @@ bool	map<Key, T, Compare, Alloc>::empty() const
 */
 
 template<class Key, class T, class Compare, class Alloc>
-void	map<Key, T, Compare, Alloc>::_newNode(value_type value)
+ft::pair<typename ft::map<Key, T, Compare, Alloc>::iterator, bool>	map<Key, T, Compare, Alloc>::insert(const value_type& val)
 {
-	struct node<T>	*tmp = (struct node<T>*)malloc(sizeof(struct node<T>));
-	tmp->key = value;
+	ft::pair<iterator, bool>	ret;
 
-	// tmp.key = _alloc.allocate(1);
-	// tmp = _alloc.construct(tmp, value);
-	tmp->left = NULL; tmp->right = NULL;
-	return tmp;
+	if (count(val.first))
+		return make_pair(find(val.first), false);
+	else
+	{
+		_tab = insert(this->_tab, val);
+		return make_pair(find(val.first), true);
+	}
+
+	return ret;
 }
-
-// template<class Key, class T, class Compare, class Alloc>
-// ft::pair<typename ft::map<Key, T, Compare, Alloc>::iterator, bool>	map<Key, T, Compare, Alloc>::insert(const value_type& val)
-// {
-// 	_newNode(val);
-
-// 	return *this;
-// }
 
 // iterator insert(iterator position, const value_type& val);
 // template <class InputIterator>
@@ -171,9 +167,54 @@ typename map<Key, T, Compare, Alloc>::value_compare	map<Key, T, Compare, Alloc>:
 **	Operations
 */
 
-// iterator find(const key_type& k);
-// const_iterator find(const key_type& k) const;
-// size_type count(const key_type& k) const;
+template <class Key, class T, class Compare, class Alloc >
+typename map<Key, T, Compare, Alloc>::iterator map<Key, T, Compare, Alloc>::find(const key_type& k)
+{
+	iterator	it = begin(); iterator	ite = end();
+
+	if (!count(k))
+		return ite;
+	while (it != ite)
+	{
+		++it;
+		if (it->first == k)
+			break;
+	}
+	
+	return it;
+}
+
+template <class Key, class T, class Compare, class Alloc >
+typename map<Key, T, Compare, Alloc>::const_iterator map<Key, T, Compare, Alloc>::find(const key_type& k) const
+{
+	const_iterator	it = begin(); const_iterator	ite = end();
+
+	if (!count(k))
+		return ite;
+	while (it != ite)
+	{
+		++it;
+		if (it->first == k)
+			break;
+	}
+	return it;
+}
+
+template <class Key, class T, class Compare, class Alloc >
+typename map<Key, T, Compare, Alloc>::size_type map<Key, T, Compare, Alloc>::count(const key_type& k) const
+{
+	if (!_tab)
+		return 0;
+	const_iterator	it = begin(); const_iterator	ite = end();
+	while (it != ite)
+	{
+		if (!_comp(k, it->first) && !_comp(it->first, k))
+			return 1;
+		++it;
+	}
+	return 0;
+}
+
 // iterator lower_bound(const key_type& k);
 // const_iterator lower_bound(const key_type& k) const;
 // iterator upper_bound(const key_type& k);

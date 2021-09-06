@@ -10,10 +10,7 @@ namespace ft
 	{
 		node_ptr tmp = val;
 		
-		// tmp->tab.first = value.first;
-		// tmp->left = NULL; tmp->right = NULL;
-		// pair<key_type, mapped_type> pair; pair = make_pair(value.first, value.second);
-		// tmp->tab = pair;
+		tmp->left = NULL; tmp->right = NULL;
 		return tmp;
 	}
 
@@ -21,24 +18,61 @@ namespace ft
 	typename map<Key, T, Compare, Alloc>::node_ptr    map<Key, T, Compare, Alloc>::insert(node_ptr node, value_type val)
 	{
 		if (node == NULL)
-			return newNode(new node_type(val));
-		if (_comp(val.first, node->tab.first))
-			node->left = insert(node->left, val);
+		{
+			node = newNode(new node_type(val));
+			_root = node;
+			_size++;
+			node->parent = NULL;
+		}
+		else if (_comp(val.first,node->tab.first))
+		{
+			if (!node->left)
+			{
+				node->left = newNode(new node_type(val));
+				node->left->parent = node;
+				_size++;
+			}
+			else
+				insert(node->left, val);
+		}
 		else
-			node->right = insert(node->right, val);
+		{
+			if (!node->right)
+			{
+				node->right = newNode(new node_type(val));
+				node->right->parent = node;
+				_size++;
+			}
+			else
+				insert(node->right, val);
+		}
 
+		std::cout << "Size: " << _size << std::endl;
+		// std::cout << "Node content: " << _tab->tab.first << ' ' << _tab->tab.second << '\n';
+		
 		return node;
 	}
 
 	template<class Key, class T, class Compare, class Alloc>
-	typename map<Key, T, Compare, Alloc>::node_ptr	map<Key, T, Compare, Alloc>::minValueNode(node_ptr node)
+	typename map<Key, T, Compare, Alloc>::node_ptr map<Key, T, Compare, Alloc>::minValueNode(node_ptr node) const
 	{
-		node_ptr tmp = node;
-	
-		while (tmp && tmp->left != NULL)
-			tmp = tmp->left;
-	
-		return tmp;
+		while (node->left != NULL)	
+		{
+			// std::cout << "1 | minVal: " << node->tab.first << "\n";
+			node = node->left;
+		}
+
+		// std::cout << "2 | minVal: " << node->tab.first << "\n";
+		return node;
+	}
+
+	template<class Key, class T, class Compare, class Alloc>
+	typename map<Key, T, Compare, Alloc>::node_ptr map<Key, T, Compare, Alloc>::maxValueNode(node_ptr node) const
+	{
+		while (node->right != NULL)
+			node = node->right;
+
+		return node;
 	}
 
 	template<class Key, class T, class Compare, class Alloc>
@@ -72,12 +106,19 @@ namespace ft
 	}
 
 	template<class Key, class T, class Compare, class Alloc>
+	void map<Key, T, Compare, Alloc>::showMeTheTruth()
+	{
+		inorder(_tab);
+	}
+
+	template<class Key, class T, class Compare, class Alloc>
 	void map<Key, T, Compare, Alloc>::inorder(node_ptr root)
 	{
 		if (root != NULL)
 		{
 			inorder(root->left);
-			std::cout << root->tab.first << ' ';
+			// std::cout << root->tab.first << ' ';
+			// std::cout << root->tab.second << ' ';
 			inorder(root->right);
 		}
 	}

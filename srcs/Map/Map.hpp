@@ -93,7 +93,7 @@ class	map
 		/*
 		**	Modifiers
 		*/
-		// pair<iterator,bool> insert(const value_type& val);
+		pair<iterator,bool> insert(const value_type& val);
 		// iterator insert(iterator position, const value_type& val);
 		// template <class InputIterator>
   		// void insert(InputIterator first, InputIterator last);
@@ -112,8 +112,8 @@ class	map
 		/*
 		**	Operations
 		*/
-		// iterator find(const key_type& k);
-		// const_iterator find(const key_type& k) const;
+		iterator find(const key_type& k);
+		const_iterator find(const key_type& k) const;
 		size_type count(const key_type& k) const;
 		// iterator lower_bound(const key_type& k);
 		// const_iterator lower_bound(const key_type& k) const;
@@ -131,9 +131,11 @@ class	map
 		void		addNode(const value_type& pair);
 		void		inorder(node_ptr root);
 		node_ptr	deleteNode(node_ptr root, value_type val);
-		node_ptr	minValueNode(node_ptr node);
+		node_ptr	minValueNode(node_ptr node) const;
+		node_ptr	maxValueNode(node_ptr node) const;
 		node_ptr	insert(node_ptr node, value_type val);
 		node_ptr	newNode(node_ptr val);
+		void		showMeTheTruth();
 
 	private:
 		allocator_type		_alloc;

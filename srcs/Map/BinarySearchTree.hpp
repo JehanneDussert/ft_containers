@@ -99,19 +99,13 @@ namespace ft
 	}
 
 	template<class Key, class T, class Compare, class Alloc>
-	void map<Key, T, Compare, Alloc>::showMeTheTruth()
-	{
-		inorder(_tab);
-	}
-
-	template<class Key, class T, class Compare, class Alloc>
 	void map<Key, T, Compare, Alloc>::inorder(node_ptr root)
 	{
 		if (root != NULL)
 		{
 			inorder(root->left);
-			// std::cout << root->tab.first << ' ';
-			// std::cout << root->tab.second << ' ';
+			std::cout << root->tab.first << ' ';
+			std::cout << root->tab.second << ' ';
 			inorder(root->right);
 		}
 	}

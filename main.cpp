@@ -238,40 +238,40 @@ int main(void)
 	// ft_map.inorder(root);
 	// std::cout << std::endl;
 
-	// ft::map<int, int>			ft_map;
-	// ft::pair <int,int>			foo;
-	// std::cout << "Insert 1\n";
-	// foo = ft::make_pair(5, 10);
-	// ft_map.insert(foo);
+	ft::map<int, int>			ft_map;
+	ft::pair <int,int>			foo;
+	std::cout << "Insert 1\n";
+	foo = ft::make_pair(5, 10);
+	ft_map.insert(foo);
 
-	// ft::pair <int,int>			bar;
-	// bar = ft::make_pair(2, 7);
-	// std::cout << "Insert 2\n";
-	// ft_map.insert(bar);
+	ft::pair <int,int>			bar;
+	bar = ft::make_pair(2, 7);
+	std::cout << "Insert 2\n";
+	ft_map.insert(bar);
 
-	// ft::pair <int,int>			kikoo;
-	// kikoo = ft::make_pair(90, 4);
-	// std::cout << "Insert 3\n";
-	// ft_map.insert(kikoo);
-	// ft::pair <int,int>			lol;
-	// lol = ft::make_pair(1, 8);
-	// std::cout << "Insert 4\n";
-	// ft_map.insert(lol);
+	ft::pair <int,int>			kikoo;
+	kikoo = ft::make_pair(90, 4);
+	std::cout << "Insert 3\n";
+	ft_map.insert(kikoo);
+	ft::pair <int,int>			lol;
+	lol = ft::make_pair(1, 8);
+	std::cout << "Insert 4\n";
+	ft_map.insert(lol);
 
-	// ft::pair <int,int>			xd;
-	// xd = ft::make_pair(90, 3);
-	// std::cout << "Insert 5\n";
-	// ft_map.insert(xd);
+	ft::pair <int,int>			xd;
+	xd = ft::make_pair(90, 3);
+	std::cout << "Insert 5\n";
+	ft_map.insert(xd);
 
-	// ft::pair <int,int>			mdlol;
-	// mdlol = ft::make_pair(9, 6);
-	// std::cout << "Insert 6\n";
-	// ft_map.insert(mdlol);
+	ft::pair <int,int>			mdlol;
+	mdlol = ft::make_pair(9, 6);
+	std::cout << "Insert 6\n";
+	ft_map.insert(mdlol);
 
-	// ft::pair <int,int>			test;
-	// test = ft::make_pair(0, 2);
-	// std::cout << "Insert 7\n";
-	// ft_map.insert(test);
+	ft::pair <int,int>			test;
+	test = ft::make_pair(0, 2);
+	std::cout << "Insert 7\n";
+	ft_map.insert(test);
 
 	// std::cout << "\nIt 1st: ";
 	// ft_map.showMeTheTruth();
@@ -285,40 +285,62 @@ int main(void)
 	// std::cout << it->first;
     // std::cout << ' ' << it->second << std::endl;
 	// std::cout << "\n-- Print --\n\n";
+	std::cout << "-- Before erase --\n";
+	for (ft::map<int, int>::const_iterator it = ft_map.begin(); it != ft_map.end(); ++it)
+	{
+    	std::cout << "Key: " << it->first;
+    	std::cout << "\t\tVal: " << it->second << std::endl;
+	}
 	// ft::map<int, int>::const_iterator it = ft_map.begin();
-	// for (; it != ft_map.end(); ++it)
+	std::cout << "-- After erase --\n";
+	ft_map.erase(ft_map.begin());
+	for (ft::map<int, int>::const_iterator it = ft_map.begin(); it != ft_map.end(); ++it)
+	{
+    	std::cout << "Key: " << it->first;
+    	std::cout << "\t\tVal: " << it->second << std::endl;
+	}
+	ft::map<int, int>::const_iterator it = ft_map.lower_bound(test);
+	// for (ft::map<int, int>::const_iterator it = ft_map.lower_bound(test); it != ft_map.end(); ++it)
 	// {
     // 	std::cout << "Key: " << it->first;
     // 	std::cout << "\t\tVal: " << it->second << std::endl;
-	// 	// ft_map.showMeTheTruth();
-	// 	std::cout << "map['" << it->first << "']\t is " << ft_map[it->first] << '\n';
 	// }
 
-	ft::map<std::string, std::string>			map_str;
-	ft::pair <std::string, std::string>			str;
-	std::cout << "Insert 1\n";
-	str = ft::make_pair("Key", "Value");
-	map_str.insert(str);
-	ft::pair <std::string, std::string>			str0;
-	std::cout << "Insert 2\n";
-	str0 = ft::make_pair("Key1", "Value1");
-	map_str.insert(str0);
-	ft::pair <std::string, std::string>			str10;
-	std::cout << "Insert 3\n";
-	str10 = ft::make_pair("Key2", "Value2");
-	map_str.insert(str10);
-	ft::map<std::string, std::string>::const_iterator it = map_str.begin();
-	for (; it != map_str.end(); ++it)
-	{
-		std::cout << "map['" << it->first << "']\t\t is " << map_str[it->first] << '\n';
-    	std::cout << "Key: " << it->first;
-    	std::cout << "\t\tVal: " << it->second << std::endl;
-		// ft_map.showMeTheTruth();
-	}
-	std::cout << "map['" << it->first << "']\t\t is " << map_str[it->first] << '\n';
-    std::cout << "Key: " << it->first;
-    std::cout << "\t\tVal: " << it->second << std::endl;
+	// ft::map<std::string, std::string>			map_str;
+	// ft::pair <std::string, std::string>			str;
+	// std::cout << "Insert 1\n";
+	// str = ft::make_pair("Key", "Value");
+	// map_str.insert(str);
+	// ft::pair <std::string, std::string>			str0;
+	// std::cout << "Insert 2\n";
+	// str0 = ft::make_pair("Key1", "Value1");
+	// map_str.insert(str0);
+	// ft::pair <std::string, std::string>			str10;
+	// std::cout << "Insert 3\n";
+	// str10 = ft::make_pair("Key2", "Value2");
+	// map_str.insert(str10);
+	
+	// for (ft::map<std::string, std::string>::const_iterator it = map_str.begin(); it != map_str.end(); ++it)
+	// {
+	// 	std::cout << "map['" << it->first << "']\t\t is " << map_str[it->first] << '\n';
+    // 	// std::cout << "Key: " << it->first;
+    // 	// std::cout << "\t\tVal: " << it->second << std::endl;
+	// 	// ft_map.showMeTheTruth();
+	// }
+	// // std::cout << "map['" << it->first << "']\t\t is " << map_str[it->first] << '\n';
+    // // std::cout << "Key: " << it->first;
+    // // std::cout << "\t\tVal: " << it->second << std::endl;
 
+	// std::cout << (map_str.find("Key1"))->first << '\t' << (map_str.find("Key1"))->second << std::endl;
+
+	// std::cout << "Erase: " << map_str.erase(str0.first) << std::endl;
+	// for (ft::map<std::string, std::string>::const_iterator it = map_str.begin(); it != map_str.end(); ++it)
+	// {
+	// 	std::cout << "map['" << it->first << "']\t\t is " << map_str[it->first] << '\n';
+    // 	// std::cout << "Key: " << it->first;
+    // 	// std::cout << "\t\tVal: " << it->second << std::endl;
+	// 	// ft_map.showMeTheTruth();
+	// }
 	// ft::map<char,std::string> 	mymap;
 	// mymap['a']="an element";
 	// mymap['b']="another element";

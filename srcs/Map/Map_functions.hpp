@@ -334,7 +334,8 @@ template <class Key, class T, class Compare, class Alloc >
 ft::pair<typename ft::map<Key, T, Compare, Alloc>::iterator, typename ft::map<Key, T, Compare, Alloc>::iterator>
 map<Key, T, Compare, Alloc>::equal_range(const key_type& k)
 {
-	ft::pair<iterator, iterator>	ret = value_type(lower_bound(k), lower_bound(k));
+	ft::pair<iterator, iterator>	ret; 
+	ret.first = lower_bound(k), ret.second = lower_bound(k);
 	
 	return ret;
 }
@@ -343,7 +344,8 @@ template <class Key, class T, class Compare, class Alloc >
 ft::pair<typename ft::map<Key, T, Compare, Alloc>::const_iterator, typename ft::map<Key, T, Compare, Alloc>::const_iterator> 
 map<Key, T, Compare, Alloc>::equal_range(const key_type& k) const
 {
-	ft::pair<const_iterator, const_iterator>	ret = value_type(lower_bound(k), lower_bound(k));
+	ft::pair<const_iterator, const_iterator>	ret;
+	ret.first = lower_bound(k), ret.second = lower_bound(k);
 
 	return ret;
 }

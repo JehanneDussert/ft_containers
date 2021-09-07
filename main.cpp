@@ -299,7 +299,7 @@ int main(void)
     	std::cout << "Key: " << it->first;
     	std::cout << "\t\tVal: " << it->second << std::endl;
 	}
-	ft::map<int, int>::const_iterator it = ft_map.lower_bound(test);
+	ft::map<int, int>::const_iterator it = ft_map.lower_bound(test.first);
 	// for (ft::map<int, int>::const_iterator it = ft_map.lower_bound(test); it != ft_map.end(); ++it)
 	// {
     // 	std::cout << "Key: " << it->first;

@@ -98,9 +98,9 @@ class	map
 		iterator insert(iterator position, const value_type& val);
 		template <class InputIterator>
   		void insert(InputIterator first, InputIterator last);
-		// void erase(iterator position);
+		void erase(iterator position);
 		size_type erase(const key_type& k);
-		// void erase(iterator first, iterator last);
+		void erase(iterator first, iterator last);
 		void swap(map& x);
 		void clear();
 
@@ -116,12 +116,12 @@ class	map
 		iterator		find(const key_type& k);
 		const_iterator	find(const key_type& k) const;
 		size_type		count(const key_type& k) const;
-		// iterator lower_bound(const key_type& k);
-		// const_iterator lower_bound(const key_type& k) const;
-		// iterator upper_bound(const key_type& k);
-		// const_iterator upper_bound(const key_type& k) const;
-		// pair<const_iterator,const_iterator> equal_range(const key_type& k) const;
-		// pair<iterator,iterator>             equal_range(const key_type& k);
+		iterator		lower_bound(const key_type& k);
+		const_iterator	lower_bound(const key_type& k) const;
+		iterator		upper_bound(const key_type& k);
+		const_iterator	upper_bound(const key_type& k) const;
+		pair<const_iterator,const_iterator>	equal_range(const key_type& k) const;
+		pair<iterator,iterator>             equal_range(const key_type& k);
 
 		/*
 		**	Allocator
@@ -136,7 +136,6 @@ class	map
 		node_ptr	maxValueNode(node_ptr node) const;
 		node_ptr	insert(node_ptr node, value_type val);
 		node_ptr	newNode(node_ptr val);
-		void		showMeTheTruth();
 
 	private:
 		allocator_type		_alloc;

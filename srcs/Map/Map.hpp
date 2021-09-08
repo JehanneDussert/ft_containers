@@ -142,8 +142,6 @@ class	map
 		key_compare			_comp;
 		size_type			_size;
 		size_type			_max_size;
-		size_type			_capacity;
-		node_ptr			_tab;
 		node_ptr			_root;
 		node_ptr			_last;
 };

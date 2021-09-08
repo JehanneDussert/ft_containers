@@ -20,7 +20,6 @@ namespace ft
 		if (node == NULL)
 		{
 			node = newNode(new node_type(val));
-			_root = node;
 			_size++;
 			node->parent = NULL;
 		}

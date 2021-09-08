@@ -17,7 +17,7 @@ namespace ft
 template < class Key, class T, class Compare, class Alloc >
 map<Key, T, Compare, Alloc>::map(const key_compare& comp, const allocator_type& alloc) :
 _alloc(alloc), _comp(comp), _size(0), _max_size(alloc.max_size()), _root(NULL),
- _last(NULL) { return ; };
+ _ghost(NULL) { return ; };
 
 /*
 ** Range constructor
@@ -40,7 +40,7 @@ template < class Key, class T, class Compare, class Alloc >
 map<Key, T, Compare, Alloc>	&map<Key, T, Compare, Alloc>::operator=(const map& x)
 {
 	this->_size = x.size(); this->_comp = x._comp;
-	this->_last = x._last; this->_root = x._root;
+	this->_ghost = x._ghost; this->_root = x._root;
 	
 	return *this;
 };
@@ -355,108 +355,108 @@ typename map<Key, T, Compare, Alloc>::allocator_type	map<Key, T, Compare, Alloc>
 
 template<class Key, class T, class Compare, class Alloc>
 typename map<Key, T, Compare, Alloc>::node_ptr	map<Key, T, Compare, Alloc>::newNode(node_ptr val)
-	{
-		node_ptr tmp = val;
+{
+	node_ptr tmp = val;
 		
-		tmp->left = NULL; tmp->right = NULL;
-		return tmp;
-	}
+	tmp->left = NULL; tmp->right = NULL;
+	return tmp;
+}
 
-	template<class Key, class T, class Compare, class Alloc>
-	typename map<Key, T, Compare, Alloc>::node_ptr    map<Key, T, Compare, Alloc>::insert(node_ptr node, value_type val)
+template<class Key, class T, class Compare, class Alloc>
+typename map<Key, T, Compare, Alloc>::node_ptr    map<Key, T, Compare, Alloc>::insert(node_ptr node, value_type val)
+{
+	if (node == NULL)
 	{
-		if (node == NULL)
+		node = newNode(new node_type(val));
+		_size++;
+		node->parent = NULL;
+		node->right = _ghost;
+	}
+	else if (_comp(val.first, node->tab.first))
+	{
+		if (!node->left)
 		{
-			node = newNode(new node_type(val));
+			node->left = newNode(new node_type(val));
+			node->left->parent = node;
 			_size++;
-			node->parent = NULL;
-		}
-		else if (_comp(val.first, node->tab.first))
-		{
-			if (!node->left)
-			{
-				node->left = newNode(new node_type(val));
-				node->left->parent = node;
-				_size++;
-			}
-			else
-				insert(node->left, val);
 		}
 		else
+			insert(node->left, val);
+	}
+	else
+	{
+		if (!node->right)
 		{
-			if (!node->right)
-			{
-				node->right = newNode(new node_type(val));
-				node->right->parent = node;
-				_size++;
-			}
-			else
-				insert(node->right, val);
+			node->right = newNode(new node_type(val));
+			node->right->parent = node;
+			_size++;
+			if (node->right == maxValueNode(node))
+				node->right->right = _ghost;
 		}
-
-		return node;
-	}
-
-	template<class Key, class T, class Compare, class Alloc>
-	typename map<Key, T, Compare, Alloc>::node_ptr map<Key, T, Compare, Alloc>::minValueNode(node_ptr node) const
-	{
-		while (node->left != NULL)
-			node = node->left;
-
-		return node;
-	}
-
-	template<class Key, class T, class Compare, class Alloc>
-	typename map<Key, T, Compare, Alloc>::node_ptr map<Key, T, Compare, Alloc>::maxValueNode(node_ptr node) const
-	{
-		while (node->right != NULL)
-			node = node->right;
-
-		return node;
-	}
-
-	template<class Key, class T, class Compare, class Alloc>
-	typename map<Key, T, Compare, Alloc>::node_ptr	map<Key, T, Compare, Alloc>::deleteNode(node_ptr root, value_type val)
-	{
-		if (root == NULL)
-			return root;
-		else if (_comp(val.first, root->tab.first) && !(!_comp(val.first, root->tab.first) && !_comp(root->tab.first, val.first)))
-			root->left = deleteNode(root->left, val);
-		else if (!_comp(val.first, root->tab.first)&& !(!_comp(val.first, root->tab.first) && !_comp(root->tab.first, val.first))) // if (val.first > root->tab.first) mais prbl car !_comp si val == root...
-			root->right = deleteNode(root->right, val);
 		else
-		{
-			if (!root->left && !root->right)
-				return NULL;
-			else if (!root->left)
-			{
-				node_ptr tmp = root->right; delete root;// _alloc.destroy(root); 
-				return tmp;
-			}
-			else if (root->right == NULL)
-			{
-				node_ptr tmp = root->left; delete root; //_alloc.destroy(root);
-				return tmp;
-			}
-			node_ptr tmp = minValueNode(root->right);
-			root = tmp;
-			root->right = deleteNode(root->right, tmp->tab);
-		}
+			insert(node->right, val);
+	}
+	return node;
+}
+
+template<class Key, class T, class Compare, class Alloc>
+typename map<Key, T, Compare, Alloc>::node_ptr map<Key, T, Compare, Alloc>::minValueNode(node_ptr node) const
+{
+	while (node->left != NULL)
+		node = node->left;
+	return node;
+}
+
+template<class Key, class T, class Compare, class Alloc>
+typename map<Key, T, Compare, Alloc>::node_ptr map<Key, T, Compare, Alloc>::maxValueNode(node_ptr node) const
+{
+	while (node->right != NULL)
+		node = node->right;
+
+	return node;
+}
+
+template<class Key, class T, class Compare, class Alloc>
+typename map<Key, T, Compare, Alloc>::node_ptr	map<Key, T, Compare, Alloc>::deleteNode(node_ptr root, value_type val)
+{
+	if (root == NULL)
 		return root;
-	}
-
-	template<class Key, class T, class Compare, class Alloc>
-	void map<Key, T, Compare, Alloc>::inorder(node_ptr root)
+	else if (_comp(val.first, root->tab.first) && !(!_comp(val.first, root->tab.first) && !_comp(root->tab.first, val.first)))
+		root->left = deleteNode(root->left, val);
+	else if (!_comp(val.first, root->tab.first)&& !(!_comp(val.first, root->tab.first) && !_comp(root->tab.first, val.first))) // if (val.first > root->tab.first) mais prbl car !_comp si val == root...
+		root->right = deleteNode(root->right, val);
+	else
 	{
-		if (root != NULL)
+		if (!root->left && !root->right)
+			return NULL;
+		else if (!root->left)
 		{
-			inorder(root->left);
-			std::cout << root->tab.first << ' ';
-			std::cout << root->tab.second << ' ';
-			inorder(root->right);
+			node_ptr tmp = root->right; delete root;// _alloc.destroy(root); 
+				return tmp;
 		}
+		else if (root->right == NULL)
+		{
+			node_ptr tmp = root->left; delete root; //_alloc.destroy(root);
+				return tmp;
+		}
+		node_ptr tmp = minValueNode(root->right);
+		root = tmp;
+		root->right = deleteNode(root->right, tmp->tab);
 	}
+	return root;
+}
 
+template<class Key, class T, class Compare, class Alloc>
+void map<Key, T, Compare, Alloc>::inorder(node_ptr root)
+{
+	if (root != NULL)
+	{
+		inorder(root->left);
+		std::cout << root->tab.first << ' ';
+		std::cout << root->tab.second << ' ';
+		inorder(root->right);
+	}
+}
 };
 
 #endif

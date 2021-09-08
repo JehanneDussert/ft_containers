@@ -26,7 +26,7 @@ _alloc(alloc), _comp(comp), _size(0), _max_size(alloc.max_size()), _root(NULL),
 template < class Key, class T, class Compare, class Alloc >
 template <class InputIterator>
 map<Key, T, Compare, Alloc>::map(InputIterator first, InputIterator last, const key_compare& comp,
-const allocator_type& alloc) : _alloc(alloc), _comp(comp), _max_size(alloc.max_size())
+const allocator_type& alloc) : _alloc(alloc), _comp(comp), _size(0), _max_size(alloc.max_size())
 { insert(first, last); return ; };
 
 /*
@@ -39,7 +39,7 @@ map<Key, T, Compare, Alloc>::map(const map& x) { *this = x; return; };
 template < class Key, class T, class Compare, class Alloc >
 map<Key, T, Compare, Alloc>	&map<Key, T, Compare, Alloc>::operator=(const map& x)
 {
-	this->_size = x.size(); this->_comp = x._comp;
+	this->_size = x.size(); this->_comp = x._comp; this->_max_size = x.max_size();
 	this->_ghost = x._ghost; this->_root = x._root;
 	
 	return *this;
@@ -279,9 +279,9 @@ typename map<Key, T, Compare, Alloc>::iterator map<Key, T, Compare, Alloc>::lowe
 	iterator it = begin(), ite = end();
 	while (it != ite)
 	{
-		++it;
 		if (!_comp(it->first, k))
 			break;
+		++it;
 	}
 	return it;
 }
@@ -292,9 +292,9 @@ typename map<Key, T, Compare, Alloc>::const_iterator map<Key, T, Compare, Alloc>
 	const_iterator it = begin(), ite = end();
 	while (it != ite)
 	{
-		++it;
 		if (!_comp(it->first, k))
 			break;
+		++it;
 	}
 	return it;
 }
@@ -305,9 +305,9 @@ typename map<Key, T, Compare, Alloc>::iterator map<Key, T, Compare, Alloc>::uppe
 	iterator it = begin(), ite = end();
 	while (it != ite)
 	{
-		++it;
 		if (_comp(k, it->first))
 			break;
+		++it;
 	}
 	return it;
 }
@@ -318,9 +318,9 @@ typename map<Key, T, Compare, Alloc>::const_iterator map<Key, T, Compare, Alloc>
 	const_iterator it = begin(), ite = end();
 	while (it != ite)
 	{
-		++it;
 		if (_comp(k, it->first))
 			break;
+		++it;
 	}
 	return it;
 }

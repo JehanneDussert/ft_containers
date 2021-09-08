@@ -60,7 +60,7 @@ class	map
 		template <class InputIterator>
 		map(InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type());
 		map(const map& x);
-		~map() { return ; };
+		~map();
 		map& operator=(const map& x);
 
 		/*
@@ -128,21 +128,23 @@ class	map
 		allocator_type get_allocator() const;
 
 		// Plus
-		void		addNode(const value_type& pair);
 		void		inorder(node_ptr root);
-		node_ptr	deleteNode(node_ptr root, value_type val);
 		node_ptr	minValueNode(node_ptr node) const;
 		node_ptr	maxValueNode(node_ptr node) const;
 		node_ptr	insert(node_ptr node, value_type val);
-		node_ptr	newNode(node_ptr val);
+		node_ptr	_newNode(value_type& val);
+		node_ptr	_deleteNode(node_ptr root, value_type val);
+		void		_delete(node_ptr node);
 
 	private:
-		allocator_type		_alloc;
-		key_compare			_comp;
-		size_type			_size;
-		size_type			_max_size;
-		node_ptr			_root;
-		node_ptr			_ghost;
+		allocator_type							_pairAlloc;
+		std::allocator<ft::node<value_type> >	_nodeAlloc;
+		key_compare								_comp;
+		size_type								_size;
+		size_type								_max_size;
+		node_ptr								_root;
+		node_ptr								_ghost;
+		void									_deleteNode(node<value_type> *node);
 };
 }
 

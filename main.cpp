@@ -5,7 +5,6 @@
 #include <iterator>
 #include <typeinfo>
 #include "srcs/Map/Map_functions.hpp"
-// #include "srcs/Map/BinarySearchTree.hpp"
 #include "test.hpp"
 
 int main(void)
@@ -300,6 +299,56 @@ int main(void)
     	std::cout << "\t\tVal: " << it->second << std::endl;
 	}
 	ft::map<int, int>::const_iterator it = ft_map.lower_bound(test.first);
+
+	std::map<int, int>			std_map;
+	std::pair <int,int>			foo1;
+	std::cout << "Insert 1\n";
+	foo1 = std::make_pair(5, 10);
+	std_map.insert(foo1);
+
+	std::pair <int,int>			bar1;
+	bar1 = std::make_pair(2, 7);
+	std::cout << "Insert 2\n";
+	std_map.insert(bar1);
+
+	std::pair <int,int>			kikoo1;
+	kikoo1 = std::make_pair(90, 4);
+	std::cout << "Insert 3\n";
+	std_map.insert(kikoo1);
+	std::pair <int,int>			lol1;
+	lol1 = std::make_pair(1, 8);
+	std::cout << "Insert 4\n";
+	std_map.insert(lol1);
+
+	std::pair <int,int>			xd1;
+	xd1 = std::make_pair(90, 3);
+	std::cout << "Insert 5\n";
+	std_map.insert(xd1);
+
+	std::pair <int,int>			mdlol1;
+	mdlol1 = std::make_pair(9, 6);
+	std::cout << "Insert 6\n";
+	std_map.insert(mdlol1);
+
+	std::pair <int,int>			test1;
+	test1 = std::make_pair(0, 2);
+	std::cout << "Insert 7\n";
+	std_map.insert(test1);
+	std::cout << "-- Before erase --\n";
+	for (std::map<int, int>::const_iterator it = std_map.begin(); it != std_map.end(); ++it)
+	{
+    	std::cout << "Key: " << it->first;
+    	std::cout << "\t\tVal: " << it->second << std::endl;
+	}
+	// ft::map<int, int>::const_iterator it = ft_map.begin();
+	std::cout << "-- After erase --\n";
+	std_map.erase(std_map.begin());
+	for (std::map<int, int>::const_iterator it = std_map.begin(); it != std_map.end(); ++it)
+	{
+    	std::cout << "Key: " << it->first;
+    	std::cout << "\t\tVal: " << it->second << std::endl;
+	}
+	// std::map<int, int>::const_iterator it1 = std_map.lower_bound(test.first);
 	// for (ft::map<int, int>::const_iterator it = ft_map.lower_bound(test); it != ft_map.end(); ++it)
 	// {
     // 	std::cout << "Key: " << it->first;

@@ -4,7 +4,6 @@
 # include "../Utils/Utils.hpp"
 # include "MapIterator.hpp"
 // # include "../Utils/ReverseIterator.hpp"
-// # include "BinarySearchTree.hpp"
 
 # include <iostream>
 # include <map>
@@ -143,7 +142,7 @@ class	map
 		size_type			_size;
 		size_type			_max_size;
 		node_ptr			_root;
-		node_ptr			_last;
+		node_ptr			_ghost;
 };
 }
 

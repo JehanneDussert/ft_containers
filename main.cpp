@@ -280,7 +280,7 @@ int main(void)
 	// std::cout << "Map: " << it->first << "\t\tVal: " << ft_map[it->first] << "\n\n";
 	
 	std::cout << "-- After erase --\n";
-	ft_map.erase(ft_map.begin());
+	// ft_map.erase(ft_map.begin());
 	for (ft::map<int, int>::const_iterator it = ft_map.begin(); it != ft_map.end(); ++it)
 	{
     	std::cout << "Key: " << it->first;

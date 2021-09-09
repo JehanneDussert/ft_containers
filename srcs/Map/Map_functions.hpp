@@ -11,9 +11,8 @@ typename map<Key, T, Compare, Alloc>::node_ptr	map<Key, T, Compare, Alloc>::_new
 {
 	node_ptr tmp = _nodeAlloc.allocate(1);
 	_pairAlloc.construct(&tmp->tab, val);
-	// std::cout << "newNode: " << val.first << ' ' << val.second << std::endl;
 
-	tmp->left = NULL; tmp->right = NULL;
+	tmp->left = NULL; tmp->right = NULL; tmp->parent = NULL;
 	return tmp;
 }
 
@@ -203,7 +202,6 @@ typename map<Key, T, Compare, Alloc>::mapped_type&	map<Key, T, Compare, Alloc>::
 template<class Key, class T, class Compare, class Alloc>
 ft::pair<typename ft::map<Key, T, Compare, Alloc>::iterator, bool>	map<Key, T, Compare, Alloc>::insert(const value_type& val)
 {
-	// std::cout << "Enter\t" << val.first << ' ' << val.second << std::endl;
 	ft::pair<iterator, bool>	ret;
 
 	if (count(val.first))
@@ -213,9 +211,7 @@ ft::pair<typename ft::map<Key, T, Compare, Alloc>::iterator, bool>	map<Key, T, C
 		_root = _insert(_root, val);
 		ret.second = true;
 	}
-	// std::cout << "Find\t" << val.first << ' ' << val.second << std::endl;
 	ret.first = find(val.first);
-	// std::cout << "After\t" << val.first << ' ' << val.second << std::endl;
 
 	return ret;
 }
@@ -347,13 +343,15 @@ typename map<Key, T, Compare, Alloc>::size_type map<Key, T, Compare, Alloc>::cou
 {
 	if (!_root)
 		return 0;
+
 	const_iterator	it = begin(); const_iterator	ite = end();
 	while (it != ite)
 	{
-		if (!_comp(k, it->first) && !_comp(it->first, k))
-			return 1;
 		++it;
+		if (!key_comp()(k, it->first) && !key_comp()(it->first, k))
+			return 1;
 	}
+
 	return 0;
 }
 
@@ -442,35 +440,20 @@ typename map<Key, T, Compare, Alloc>::node_ptr    map<Key, T, Compare, Alloc>::_
 {
 	if (node == NULL)
 	{
-		node = _newNode(val);
 		_size++;
-		node->parent = NULL;
+		node = _newNode(val);
 	}
-	else if (_comp(val.first, node->tab.first))
+	else if (key_comp()(val.first, node->tab.first))
 	{
-		if (!node->left)
-		{
-			// std::cout << "Before _newNode\n";
-			node->left = _newNode(val);
-			node->left->parent = node;
-			_size++;
-		}
-		else
-			_insert(node->left, val);
+		node->left = _insert(node->left, val);
+		node->left->parent = node;
 	}
 	else
 	{
-		if (!node->right)
-		{
-			node->right = _newNode(val);
-			node->right->parent = node;
-			// node->right->right = _newNode(val);
-			_size++;
-		}
-		else
-			_insert(node->right, val);
+		node->right = _insert(node->right, val);
+		node->right->parent = node;
 	}
-	// std::cout << "node before return: " << node->tab.first << ' ' << node->tab.second << std::endl;
+
 	return node;
 }
 

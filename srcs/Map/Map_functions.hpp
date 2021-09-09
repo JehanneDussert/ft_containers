@@ -262,7 +262,8 @@ void map<Key, T, Compare, Alloc>::erase(iterator first, iterator last)
 {
 	while (first != last)
 	{
-		deleteNode(*first++);
+		++first;
+		_deleteNode(_root, value_type(first->first, first->second));
 		--_size;
 	}
 }
@@ -299,10 +300,10 @@ void map<Key, T, Compare, Alloc>::clear()
 */
 
 template <class Key, class T, class Compare, class Alloc >
-typename map<Key, T, Compare, Alloc>::key_compare map<Key, T, Compare, Alloc>::key_comp() const { return _comp; };
+typename map<Key, T, Compare, Alloc>::key_compare map<Key, T, Compare, Alloc>::key_comp() const { return key_compare(); };
 
 template <class Key, class T, class Compare, class Alloc >
-typename map<Key, T, Compare, Alloc>::value_compare	map<Key, T, Compare, Alloc>::value_comp() const { return value_compare(_comp); }
+typename map<Key, T, Compare, Alloc>::value_compare	map<Key, T, Compare, Alloc>::value_comp() const { return value_compare(key_compare()); }
 
 /*
 **	Operations
@@ -463,7 +464,7 @@ typename map<Key, T, Compare, Alloc>::node_ptr    map<Key, T, Compare, Alloc>::_
 		{
 			node->right = _newNode(val);
 			node->right->parent = node;
-			node->right->right = _newNode(val);
+			// node->right->right = _newNode(val);
 			_size++;
 		}
 		else

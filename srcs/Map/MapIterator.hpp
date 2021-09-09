@@ -44,6 +44,7 @@ namespace ft
 
 			private:
 				node	*_node;
+				node	*_ghost;
     };
     
 	template<typename T, typename node>

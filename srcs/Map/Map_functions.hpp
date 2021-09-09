@@ -11,7 +11,7 @@ typename map<Key, T, Compare, Alloc>::node_ptr	map<Key, T, Compare, Alloc>::_new
 {
 	node_ptr tmp = _nodeAlloc.allocate(1);
 	_pairAlloc.construct(&tmp->tab, val);
-	std::cout << "newNode: " << val.first << ' ' << val.second << std::endl;
+	// std::cout << "newNode: " << val.first << ' ' << val.second << std::endl;
 
 	tmp->left = NULL; tmp->right = NULL;
 	return tmp;
@@ -193,8 +193,6 @@ bool	map<Key, T, Compare, Alloc>::empty() const
 template <class Key, class T, class Compare, class Alloc >
 typename map<Key, T, Compare, Alloc>::mapped_type&	map<Key, T, Compare, Alloc>::operator[](const key_type& k)
 {
-	std::cout << "\nKey is: " << (*((this->insert(value_type(k,mapped_type()))).first)).first << std::endl;
-	std::cout << "My value is: " << (*((this->insert(value_type(k,mapped_type()))).first)).second << std::endl;
 	return (*((this->insert(value_type(k,mapped_type()))).first)).second;
 }
 
@@ -438,12 +436,6 @@ template <class Key, class T, class Compare, class Alloc >
 typename map<Key, T, Compare, Alloc>::allocator_type	map<Key, T, Compare, Alloc>::get_allocator() const
 { return this->_pairAlloc; }
 
-/*
-** Two prbl :
-** 1 - Ghost
-** 2 - _root->first & _root->second == max
-*/
-
 template<class Key, class T, class Compare, class Alloc>
 typename map<Key, T, Compare, Alloc>::node_ptr    map<Key, T, Compare, Alloc>::_insert(node_ptr node, value_type val)
 {
@@ -457,7 +449,7 @@ typename map<Key, T, Compare, Alloc>::node_ptr    map<Key, T, Compare, Alloc>::_
 	{
 		if (!node->left)
 		{
-			std::cout << "Before _newNode\n";
+			// std::cout << "Before _newNode\n";
 			node->left = _newNode(val);
 			node->left->parent = node;
 			_size++;
@@ -471,12 +463,13 @@ typename map<Key, T, Compare, Alloc>::node_ptr    map<Key, T, Compare, Alloc>::_
 		{
 			node->right = _newNode(val);
 			node->right->parent = node;
+			node->right->right = _newNode(val);
 			_size++;
 		}
 		else
 			_insert(node->right, val);
 	}
-	std::cout << "node before return: " << node->tab.first << ' ' << node->tab.second << std::endl;
+	// std::cout << "node before return: " << node->tab.first << ' ' << node->tab.second << std::endl;
 	return node;
 }
 

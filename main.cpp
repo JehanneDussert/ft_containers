@@ -275,9 +275,9 @@ int main(void)
     	std::cout << "\t\tVal: " << it->second << std::endl;
 		std::cout << "Map: " << it->first << "\t\tVal: " << ft_map[it->first] << "\n\n";
 	}
-	std::cout << "Key: " << it->first;
-    std::cout << "\t\tVal: " << it->second << std::endl;
-	std::cout << "Map: " << it->first << "\t\tVal: " << ft_map[it->first] << "\n\n";
+	// std::cout << "Key: " << it->first;
+    // std::cout << "\t\tVal: " << it->second << std::endl;
+	// std::cout << "Map: " << it->first << "\t\tVal: " << ft_map[it->first] << "\n\n";
 	
 	std::cout << "-- After erase --\n";
 	ft_map.erase(ft_map.begin());
@@ -287,6 +287,10 @@ int main(void)
     	std::cout << "\t\tVal: " << it->second << std::endl;
 		std::cout << "Map: " << it->first << "\t\tVal: " << ft_map[it->first] << "\n\n";
 	}
+	// std::cout << "Key: " << it->first;
+    // std::cout << "\t\tVal: " << it->second << std::endl;
+	// std::cout << "Map: " << it->first << "\t\tVal: " << ft_map[it->first] << "\n\n";
+	
 
 	/* begin */
 

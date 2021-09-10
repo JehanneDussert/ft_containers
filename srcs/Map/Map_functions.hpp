@@ -442,6 +442,8 @@ typename map<Key, T, Compare, Alloc>::node_ptr    map<Key, T, Compare, Alloc>::_
 		node = _newNode(val);
 		if (!_root)
 			_ghost = _nodeAlloc.allocate(1);
+		// else
+		// 	node->parent = _root; // node->parent = node--
 		node->right = _ghost;
 		node->_ghost = _ghost;
 		_ghost->parent = node;
@@ -451,6 +453,7 @@ typename map<Key, T, Compare, Alloc>::node_ptr    map<Key, T, Compare, Alloc>::_
 	{
 		node->left = _insert(node->left, val);
 		node->left->parent = node;
+		std::cout << "Node parent: " << node->left->parent << std::endl;
 	}
 	else
 	{

@@ -12,7 +12,7 @@ typename map<Key, T, Compare, Alloc>::node_ptr	map<Key, T, Compare, Alloc>::_new
 	node_ptr tmp = _nodeAlloc.allocate(1);
 	_pairAlloc.construct(&tmp->tab, val);
 
-	tmp->left = NULL; tmp->right = NULL; tmp->parent = NULL;
+	tmp->left = NULL; tmp->right = NULL; //tmp->parent = NULL;
 	return tmp;
 }
 
@@ -192,7 +192,8 @@ bool	map<Key, T, Compare, Alloc>::empty() const
 template <class Key, class T, class Compare, class Alloc >
 typename map<Key, T, Compare, Alloc>::mapped_type&	map<Key, T, Compare, Alloc>::operator[](const key_type& k)
 {
-	return (*((this->insert(value_type(k,mapped_type()))).first)).second;
+	// std::cout << "OPERATOR[] |\nMap: " << (*((this->insert(value_type(k,mapped_type()))).first)).first << "\t\tVal: " << (*((this->insert(value_type(k,mapped_type()))).first)).second << "\n\n";
+	return (*((this->insert(value_type(k, mapped_type()))).first)).second;
 }
 
 /*
@@ -202,6 +203,7 @@ typename map<Key, T, Compare, Alloc>::mapped_type&	map<Key, T, Compare, Alloc>::
 template<class Key, class T, class Compare, class Alloc>
 ft::pair<typename ft::map<Key, T, Compare, Alloc>::iterator, bool>	map<Key, T, Compare, Alloc>::insert(const value_type& val)
 {
+	// std::cout << "here : " << val.first << std::endl;
 	ft::pair<iterator, bool>	ret;
 
 	if (count(val.first))
@@ -343,15 +345,15 @@ typename map<Key, T, Compare, Alloc>::size_type map<Key, T, Compare, Alloc>::cou
 {
 	if (!_root)
 		return 0;
-
+	// std::cout << "Count : " << k << "\n";
 	const_iterator	it = begin(); const_iterator	ite = end();
 	while (it != ite)
 	{
-		++it;
 		if (!key_comp()(k, it->first) && !key_comp()(it->first, k))
 			return 1;
+		++it;
 	}
-
+	// std::cout << "end of count\n";
 	return 0;
 }
 
@@ -438,18 +440,25 @@ typename map<Key, T, Compare, Alloc>::allocator_type	map<Key, T, Compare, Alloc>
 template<class Key, class T, class Compare, class Alloc>
 typename map<Key, T, Compare, Alloc>::node_ptr    map<Key, T, Compare, Alloc>::_insert(node_ptr node, value_type val)
 {
+	// std::cout << "Key _insert: " << val.first << "\tVal :" << val.second << std::endl;
 	if (node == NULL)
 	{
+		// if (val.first == 0 && val.second == 2)
+		// 	std::cout << "1\n";
 		_size++;
 		node = _newNode(val);
 	}
 	else if (key_comp()(val.first, node->tab.first))
 	{
+		// if (val.first == 0 && val.second == 2)
+		// 	std::cout << "2\n";
 		node->left = _insert(node->left, val);
 		node->left->parent = node;
 	}
 	else
 	{
+		// if (val.first == 0 && val.second == 2)
+		// 	std::cout << "3\n";
 		node->right = _insert(node->right, val);
 		node->right->parent = node;
 	}

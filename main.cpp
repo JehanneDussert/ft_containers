@@ -276,6 +276,9 @@ int main(void)
 		ft_map[it->first];
 		// std::cout << "Map: " << ft_map[it->second] << "\t\tVal: " << ft_map[it->first] << "\n\n";
 	}
+    // std::cout << "Key: " << it->first;
+    // std::cout << "\t\tVal: " << it->second << std::endl;
+	// ft_map[it->first];
 	// std::cout << "Key: " << it->first;
     // std::cout << "\t\tVal: " << it->second << std::endl;
 	// std::cout << "Map: " << it->first << "\t\tVal: " << ft_map[it->first] << "\n\n";
@@ -287,8 +290,10 @@ int main(void)
     	std::cout << "Key: " << it->first;
     	std::cout << "\t\tVal: " << it->second << std::endl;
 		ft_map[it->first];
-		// std::cout << "Map: " << it->first << "\t\tVal: " << ft_map[it->first] << "\n\n";
+		// std::cout << "Map: " << ft_map[it->second] << "\t\tVal: " << ft_map[it->first] << "\n\n";
 	}
+	// std::cout << "Key: " << it->first;
+    // std::cout << "\t\tVal: " << it->second << std::endl;
 	// std::cout << "Key: " << it->first;
     // std::cout << "\t\tVal: " << it->second << std::endl;
 	// std::cout << "Map: " << it->first << "\t\tVal: " << ft_map[it->first] << "\n\n";

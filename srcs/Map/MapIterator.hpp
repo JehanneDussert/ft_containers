@@ -10,7 +10,7 @@ namespace ft
 		node	*right;
 		node	*left;
 		node	*parent;
-		// node(void) : tab(NULL), right(NULL), left(NULL), parent(NULL){ return ; };
+		node	*_ghost;
 		node(T const &src = T()) : tab(src), right(NULL), left(NULL), parent(NULL){ return ; };
 	};
 
@@ -44,16 +44,15 @@ namespace ft
 
 			private:
 				node	*_node;
-				node	*_ghost;
     };
     
 	template<typename T, typename node>
 	map_iterator<T, node>	&map_iterator<T, node>::operator++(void)
 	{
-		if (_node->right)
+		if (_node->right && _node != _node->_ghost)
 		{
 			_node = _node->right;
-			while (_node && _node->left)
+			while (_node && _node->left && _node == _node->_ghost)
 				_node = _node->left;
 		}
 		else if (_node->parent)

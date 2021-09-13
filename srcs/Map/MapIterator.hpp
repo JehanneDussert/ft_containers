@@ -87,7 +87,8 @@ namespace ft
 	template<typename T, typename node>
 	map_iterator<T, node>	map_iterator<T, node>::operator++(int)
 	{
-		map_iterator tmp(*this); this->operator++();
+		map_iterator tmp(*this);
+		this->operator++();
 		
 		return tmp;
 	}
@@ -113,7 +114,8 @@ namespace ft
 	template<typename T, typename node>
 	map_iterator<T, node>	map_iterator<T, node>::operator--(int) 
 	{
-		map_iterator tmp(*this); this->operator--();
+		map_iterator tmp(*this);
+		this->operator--();
 		
 		return tmp;
 	}

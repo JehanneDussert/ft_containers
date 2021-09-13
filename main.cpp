@@ -266,7 +266,17 @@ int main(void)
 	std::cout << "\n\n-- insert key\n";
 	test = ft::make_pair(0, 2);
 	ft_map.insert(test);
-	std::cout << "\nEND\n";
+
+
+	// ft::pair <int,int>			right;
+	// right = ft::make_pair(100, 66);
+	// ft_map.insert(right);
+
+	// ft::pair <int,int>			right1;
+	// right1 = ft::make_pair(3, 28);
+	// ft_map.insert(right1);
+	// std::cout << "\nEND\n";
+
 	std::cout << "-- Before erase --\n";
 	ft::map<int, int>::const_iterator it = ft_map.begin();
 	for (; it != ft_map.end(); ++it)
@@ -278,13 +288,12 @@ int main(void)
 	}
     // std::cout << "Key: " << it->first;
     // std::cout << "\t\tVal: " << it->second << std::endl;
-	// ft_map[it->first];
 	// std::cout << "Key: " << it->first;
     // std::cout << "\t\tVal: " << it->second << std::endl;
-	// std::cout << "Map: " << it->first << "\t\tVal: " << ft_map[it->first] << "\n\n";
+	// std::cout << "Map: " << it->first << "\t\tVal: " << ft_map[0] << "\n\n";
 	
 	std::cout << "-- After erase --\n";
-	// ft_map.erase(ft_map.begin());
+	ft_map.erase(ft_map.begin());
 	for (ft::map<int, int>::const_iterator it = ft_map.begin(); it != ft_map.end(); ++it)
 	{
     	std::cout << "Key: " << it->first;

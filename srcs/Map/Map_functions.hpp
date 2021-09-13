@@ -12,7 +12,7 @@ typename map<Key, T, Compare, Alloc>::node_ptr	map<Key, T, Compare, Alloc>::_new
 	node_ptr tmp = _nodeAlloc.allocate(1);
 	_pairAlloc.construct(&tmp->tab, val);
 
-	tmp->left = NULL; tmp->right = NULL; //tmp->parent = NULL;
+	tmp->left = NULL; tmp->right = NULL; tmp->parent = NULL;
 	return tmp;
 }
 
@@ -192,7 +192,6 @@ bool	map<Key, T, Compare, Alloc>::empty() const
 template <class Key, class T, class Compare, class Alloc >
 typename map<Key, T, Compare, Alloc>::mapped_type&	map<Key, T, Compare, Alloc>::operator[](const key_type& k)
 {
-	std::cout << "Map: " << (*((this->insert(value_type(k,mapped_type()))).first)).first << "\t\tValue: " << (*((this->insert(value_type(k,mapped_type()))).first)).second << "\n\n";
 	return (*((this->insert(value_type(k, mapped_type()))).first)).second;
 }
 
@@ -437,23 +436,27 @@ typename map<Key, T, Compare, Alloc>::allocator_type	map<Key, T, Compare, Alloc>
 template<class Key, class T, class Compare, class Alloc>
 typename map<Key, T, Compare, Alloc>::node_ptr    map<Key, T, Compare, Alloc>::_insert(node_ptr node, value_type val)
 {
-	if (node == NULL || node == _ghost)
+	if (node == NULL)
 	{
 		node = _newNode(val);
 		if (!_root)
+		{
 			_ghost = _nodeAlloc.allocate(1);
-		// else
-		// 	node->parent = _root; // node->parent = node--
+			node->right = _ghost;
+		}
+		_size++;
+	}
+	else if (_ghost && node == _ghost)
+	{
+		node = _newNode(val);
+		node->parent = _ghost->parent;
 		node->right = _ghost;
-		node->_ghost = _ghost;
-		_ghost->parent = node;
 		_size++;
 	}
 	else if (key_comp()(val.first, node->tab.first))
 	{
 		node->left = _insert(node->left, val);
 		node->left->parent = node;
-		std::cout << "Node parent: " << node->left->parent << std::endl;
 	}
 	else
 	{
@@ -462,6 +465,35 @@ typename map<Key, T, Compare, Alloc>::node_ptr    map<Key, T, Compare, Alloc>::_
 	}
 	return node;
 }
+
+// template<class Key, class T, class Compare, class Alloc>
+// typename map<Key, T, Compare, Alloc>::node_ptr    map<Key, T, Compare, Alloc>::_insert(node_ptr node, value_type val)
+// {
+// 	if (node == NULL || node == _ghost)
+// 	{
+// 		node = _newNode(val);
+// 		if (!_root)
+// 			_ghost = _nodeAlloc.allocate(1);
+// 		// else
+// 		// 	node->parent = _root; // node->parent = node--
+// 		node->right = _ghost;
+// 		node->_ghost = _ghost;
+// 		// _ghost->parent = node;
+// 		_size++;
+// 	}
+// 	else if (key_comp()(val.first, node->tab.first))
+// 	{
+// 		node->left = _insert(node->left, val);
+// 		node->left->parent = node;
+// 		// std::cout << "Node parent: " << node->left->parent << std::endl;
+// 	}
+// 	else
+// 	{
+// 		node->right = _insert(node->right, val);
+// 		node->right->parent = node;
+// 	}
+// 	return node;
+// }
 
 template<class Key, class T, class Compare, class Alloc>
 typename map<Key, T, Compare, Alloc>::node_ptr map<Key, T, Compare, Alloc>::minValueNode(node_ptr node) const

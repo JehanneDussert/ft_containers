@@ -116,7 +116,7 @@ template < class Key, class T, class Compare, class Alloc >
 map<Key, T, Compare, Alloc>::~map(void)
 {
 	clear();
-	_nodeAlloc.deallocate(_root, _size);
+	// _nodeAlloc.deallocate(_root, _size);
 
 	return ;
 };
@@ -143,11 +143,11 @@ typename map<Key, T, Compare, Alloc>::const_iterator map<Key, T, Compare, Alloc>
 
 template <class Key, class T, class Compare, class Alloc >
 typename map<Key, T, Compare, Alloc>::reverse_iterator map<Key, T, Compare, Alloc>::rbegin()
-{ return reverse_iterator(maxValueNode(_root)); }
+{ return reverse_iterator(_ghost); }
 
 template <class Key, class T, class Compare, class Alloc >
 typename map<Key, T, Compare, Alloc>::const_reverse_iterator map<Key, T, Compare, Alloc>::rbegin() const
-{ return const_reverse_iterator(maxValueNode(_root)); }
+{ return const_reverse_iterator(_ghost); }
 
 template <class Key, class T, class Compare, class Alloc >
 typename map<Key, T, Compare, Alloc>::reverse_iterator map<Key, T, Compare, Alloc>::rend()
@@ -469,7 +469,7 @@ typename map<Key, T, Compare, Alloc>::node_ptr    map<Key, T, Compare, Alloc>::_
 template<class Key, class T, class Compare, class Alloc>
 typename map<Key, T, Compare, Alloc>::node_ptr map<Key, T, Compare, Alloc>::minValueNode(node_ptr node) const
 {
-	while (node->left != NULL && node->left != _ghost)
+	while (node && node->left != NULL)
 		node = node->left;
 	return node;
 }
@@ -477,7 +477,7 @@ typename map<Key, T, Compare, Alloc>::node_ptr map<Key, T, Compare, Alloc>::minV
 template<class Key, class T, class Compare, class Alloc>
 typename map<Key, T, Compare, Alloc>::node_ptr map<Key, T, Compare, Alloc>::maxValueNode(node_ptr node) const
 {
-	while (node->right != NULL && node->right != _ghost)
+	while (node && node->right != NULL && node->right != _ghost)
 		node = node->right;
 
 	return node;

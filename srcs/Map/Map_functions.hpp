@@ -12,7 +12,10 @@ typename map<Key, T, Compare, Alloc>::node_ptr	map<Key, T, Compare, Alloc>::_new
 	node_ptr tmp = _nodeAlloc.allocate(1);
 	_pairAlloc.construct(&tmp->tab, val);
 
-	tmp->left = NULL; tmp->right = NULL; tmp->parent = NULL;
+	tmp->left = NULL;
+	tmp->right = NULL;
+	tmp->parent = NULL;
+
 	return tmp;
 }
 
@@ -115,8 +118,8 @@ map<Key, T, Compare, Alloc>	&map<Key, T, Compare, Alloc>::operator=(const map& x
 template < class Key, class T, class Compare, class Alloc >
 map<Key, T, Compare, Alloc>::~map(void)
 {
-	clear();
-	// _nodeAlloc.deallocate(_root, _size);
+	// clear();
+	_nodeAlloc.deallocate(_root, _size);
 
 	return ;
 };
@@ -269,24 +272,33 @@ void map<Key, T, Compare, Alloc>::swap(map& x)
 {
 	map<Key, T, Compare, Alloc>	tmp;
 
-	tmp._pairAlloc = get_allocator(); tmp._comp = key_comp();
-	tmp._size = size(); tmp._max_size = max_size();
+	tmp._pairAlloc = get_allocator();
+	tmp._comp = key_comp();
+	tmp._size = size();
 	tmp._root = _root;
+	tmp._ghost = _ghost;
 
-	_pairAlloc = x.get_allocator(); _comp = x.key_comp();
-	_size = x.size(); _max_size = x.max_size();
+	_pairAlloc = x.get_allocator();
+	_comp = x.key_comp();
+	_size = x.size();
 	_root = x._root;
+	_ghost = x._ghost;
 
-	x._pairAlloc = tmp.get_allocator(); x._comp = tmp.key_comp();
-	x._size = tmp.size(); x._max_size = tmp.max_size();
+	x._pairAlloc = tmp.get_allocator();
+	x._comp = tmp.key_comp();
+	x._size = tmp.size();
 	x._root = tmp._root;
+	x._ghost = tmp._ghost;
 }
 
 template <class Key, class T, class Compare, class Alloc >
 void map<Key, T, Compare, Alloc>::clear()
 {
-	// while (_size)
-	// 	_pairAlloc.destroy(&_root->tab[_size--]);
+	if (_root)
+		_pairAlloc.destroy(&_root->tab);
+	_size = 0;
+	_root = NULL;
+	_ghost = NULL;
 
 	return ;
 }

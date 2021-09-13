@@ -52,7 +52,7 @@ namespace ft
 	template<typename T, typename node>
 	typename map_iterator<T, node>::node_ptr	map_iterator<T, node>::minValueNode(node_ptr new_node) const
 	{
-		while (new_node->left != NULL && new_node->left != new_node->_ghost)
+		while (new_node && new_node->left != NULL && new_node->left != new_node->_ghost)
 			new_node = new_node->left;
 		return new_node;
 	}
@@ -60,7 +60,7 @@ namespace ft
 	template<typename T, typename node>
 	typename map_iterator<T, node>::node_ptr	map_iterator<T, node>::maxValueNode(node_ptr new_node) const
 	{
-		while (new_node->right != NULL && new_node->right != new_node->_ghost)
+		while (new_node && new_node->right != NULL && new_node->right != new_node->_ghost)
 			new_node = new_node->right;
 
 		return new_node;

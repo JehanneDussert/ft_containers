@@ -466,35 +466,6 @@ typename map<Key, T, Compare, Alloc>::node_ptr    map<Key, T, Compare, Alloc>::_
 	return node;
 }
 
-// template<class Key, class T, class Compare, class Alloc>
-// typename map<Key, T, Compare, Alloc>::node_ptr    map<Key, T, Compare, Alloc>::_insert(node_ptr node, value_type val)
-// {
-// 	if (node == NULL || node == _ghost)
-// 	{
-// 		node = _newNode(val);
-// 		if (!_root)
-// 			_ghost = _nodeAlloc.allocate(1);
-// 		// else
-// 		// 	node->parent = _root; // node->parent = node--
-// 		node->right = _ghost;
-// 		node->_ghost = _ghost;
-// 		// _ghost->parent = node;
-// 		_size++;
-// 	}
-// 	else if (key_comp()(val.first, node->tab.first))
-// 	{
-// 		node->left = _insert(node->left, val);
-// 		node->left->parent = node;
-// 		// std::cout << "Node parent: " << node->left->parent << std::endl;
-// 	}
-// 	else
-// 	{
-// 		node->right = _insert(node->right, val);
-// 		node->right->parent = node;
-// 	}
-// 	return node;
-// }
-
 template<class Key, class T, class Compare, class Alloc>
 typename map<Key, T, Compare, Alloc>::node_ptr map<Key, T, Compare, Alloc>::minValueNode(node_ptr node) const
 {

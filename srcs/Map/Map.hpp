@@ -141,7 +141,7 @@ class	map
 		std::allocator<ft::node<value_type> >	_nodeAlloc;
 		key_compare								_comp;
 		size_type								_size;
-		size_type								_max_size;
+		static size_type						_max_size;
 		node_ptr								_root;
 		node_ptr								_ghost;
 		void									_deleteNode(node<value_type> *node);

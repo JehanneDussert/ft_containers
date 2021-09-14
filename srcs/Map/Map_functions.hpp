@@ -22,14 +22,17 @@ typename map<Key, T, Compare, Alloc>::node_ptr	map<Key, T, Compare, Alloc>::_new
 template < class Key, class T, class Compare, class Alloc >
 void	map<Key, T, Compare, Alloc>::_delete(node_ptr node)
 {
-	_pairAlloc.destroy(&node->tab);
-	_nodeAlloc.deallocate(node, 1);
+	if (node)
+	{
+		_pairAlloc.destroy(&node->tab);
+		// _nodeAlloc.deallocate(node, 1);
+	}
 }
 
 template<class Key, class T, class Compare, class Alloc>
 typename map<Key, T, Compare, Alloc>::node_ptr	map<Key, T, Compare, Alloc>::_deleteNode(node_ptr root, value_type val)
 {
-	if (root == NULL)
+	if (!root || root == _ghost)
 		return root;
 	else if (_comp(val.first, root->tab.first) && !(!_comp(val.first, root->tab.first) && !_comp(root->tab.first, val.first)))
 		root->left = _deleteNode(root->left, val);
@@ -41,11 +44,16 @@ typename map<Key, T, Compare, Alloc>::node_ptr	map<Key, T, Compare, Alloc>::_del
 			return NULL;
 		else if (!root->left)
 		{
+			if (root->right == _ghost)
+			{
+				root->parent->right = root->_ghost;
+				root->right = root->parent->right;
+			}
 			node_ptr tmp = root->right;
 			_delete(root);
 			return tmp;
 		}
-		else if (root->right == NULL)
+		else if (!root->right)
 		{
 			node_ptr tmp = root->left;
 			_delete(root);
@@ -68,12 +76,10 @@ typename map<Key, T, Compare, Alloc>::node_ptr	map<Key, T, Compare, Alloc>::_del
 
 template < class Key, class T, class Compare, class Alloc >
 map<Key, T, Compare, Alloc>::map(const key_compare& comp, const allocator_type& alloc) :
-_pairAlloc(alloc), _comp(comp), _size(0), /*_max_size(alloc.max_size()), */_root(NULL),
-_ghost(NULL)
+_pairAlloc(alloc), _comp(comp), _size(0), _root(NULL), _ghost(NULL)
 {
-	_max_size = std::numeric_limits<map<Key, T, Compare, Alloc>::size_type>::max()/ sizeof(node_type);
-	
-	return ; };
+	return ;
+};
 
 /*
 ** Range constructor
@@ -82,9 +88,8 @@ _ghost(NULL)
 template < class Key, class T, class Compare, class Alloc >
 template <class InputIterator>
 map<Key, T, Compare, Alloc>::map(InputIterator first, InputIterator last, const key_compare& comp,
-const allocator_type& alloc) : _pairAlloc(alloc), _comp(comp), _size(0), _max_size(alloc.max_size())
+const allocator_type& alloc) : _pairAlloc(alloc), _comp(comp), _size(0), _root(NULL), _ghost(NULL)
 {
-	_max_size = _max_size = std::numeric_limits<map<Key, T, Compare, Alloc>::size_type>::max()/ sizeof(node_type);
 	insert(first, last);
 
 	return ;
@@ -95,14 +100,18 @@ const allocator_type& alloc) : _pairAlloc(alloc), _comp(comp), _size(0), _max_si
 */
 
 template < class Key, class T, class Compare, class Alloc >
-map<Key, T, Compare, Alloc>::map(const map& x) { *this = x; return; };
+map<Key, T, Compare, Alloc>::map(const map& x) : _size(0), _root(NULL), _ghost(NULL)
+{
+	*this = x;
+	return;
+};
 
 template < class Key, class T, class Compare, class Alloc >
 map<Key, T, Compare, Alloc>	&map<Key, T, Compare, Alloc>::operator=(const map& x)
 {
 	this->_size = x.size();
 	this->_comp = x._comp;
-	this->_max_size = x.max_size();
+	// this->_max_size = x.max_size();
 	this->_ghost = x._ghost;
 	this->_root = x._root;
 	this->_nodeAlloc = x._nodeAlloc;
@@ -118,7 +127,7 @@ map<Key, T, Compare, Alloc>	&map<Key, T, Compare, Alloc>::operator=(const map& x
 template < class Key, class T, class Compare, class Alloc >
 map<Key, T, Compare, Alloc>::~map(void)
 {
-	// clear();
+	clear();
 	_nodeAlloc.deallocate(_root, _size);
 
 	return ;
@@ -138,11 +147,11 @@ typename map<Key, T, Compare, Alloc>::const_iterator map<Key, T, Compare, Alloc>
 
 template <class Key, class T, class Compare, class Alloc >
 typename map<Key, T, Compare, Alloc>::iterator map<Key, T, Compare, Alloc>::end()
-{ return iterator(_ghost); }
+{ return iterator(maxValueNode(_root)); }
 
 template <class Key, class T, class Compare, class Alloc >
 typename map<Key, T, Compare, Alloc>::const_iterator map<Key, T, Compare, Alloc>::end() const
-{ return const_iterator(_ghost); }
+{ return const_iterator(maxValueNode(_root)); }
 
 template <class Key, class T, class Compare, class Alloc >
 typename map<Key, T, Compare, Alloc>::reverse_iterator map<Key, T, Compare, Alloc>::rbegin()
@@ -170,7 +179,9 @@ typename map<Key, T, Compare, Alloc>::size_type	map<Key, T, Compare, Alloc>::siz
 
 template <class Key, class T, class Compare, class Alloc >
 typename map<Key, T, Compare, Alloc>::size_type	map<Key, T, Compare, Alloc>::max_size() const
-{ return this->_max_size; }
+{
+	return std::numeric_limits<difference_type>::max() / (sizeof(node_type) / 2 ?: 1);
+}
 
 // template <class Key, class T, class Compare, class Alloc >
 // void	map<Key, T, Compare, Alloc>::resize(size_type n, value_type val)
@@ -491,7 +502,6 @@ typename map<Key, T, Compare, Alloc>::node_ptr map<Key, T, Compare, Alloc>::maxV
 {
 	while (node && node->right != NULL && node->right != _ghost)
 		node = node->right;
-
 	return node;
 }
 

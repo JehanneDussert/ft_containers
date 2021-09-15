@@ -222,6 +222,7 @@ ft::pair<typename ft::map<Key, T, Compare, Alloc>::iterator, bool>	map<Key, T, C
 		ret.second = false;
 	else
 	{
+		std::cout << "Insert\n";
 		_root = _insert(_root, val);
 		ret.second = true;
 	}
@@ -367,6 +368,8 @@ typename map<Key, T, Compare, Alloc>::size_type map<Key, T, Compare, Alloc>::cou
 	if (!_root)
 		return 0;
 	const_iterator	it = begin(); const_iterator	ite = end();
+	if (!key_comp()(k, it->first) && !key_comp()(it->first, k))
+		return 1;
 	while (it != ite)
 	{
 		if (!key_comp()(k, it->first) && !key_comp()(it->first, k))

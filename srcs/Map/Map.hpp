@@ -129,8 +129,6 @@ class	map
 
 		// Plus
 		void		inorder(node_ptr root);
-		node_ptr	minValueNode(node_ptr node) const;
-		node_ptr	maxValueNode(node_ptr node) const;
 		node_ptr	_insert(node_ptr node, value_type val);
 		node_ptr	_newNode(value_type& val);
 		node_ptr	_deleteNode(node_ptr root, value_type val);
@@ -141,7 +139,6 @@ class	map
 		std::allocator<ft::node<value_type> >	_nodeAlloc;
 		key_compare								_comp;
 		size_type								_size;
-		static size_type						_max_size;
 		node_ptr								_root;
 		node_ptr								_ghost;
 		void									_deleteNode(node<value_type> *node);

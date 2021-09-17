@@ -8,6 +8,7 @@
 // #include "../Map/BinarySearchTree.hpp"
 # include "ReverseIterator.hpp"
 # include "RandomIterator.hpp"
+// # include "../Map/Map.hpp"
 
 namespace ft
 {
@@ -94,6 +95,32 @@ namespace ft
 			i++;
 		}
 		return i;
+	}
+	template<class T>
+	struct node
+	{
+		T		tab;
+		node	*right;
+		node	*left;
+		node	*parent;
+		node(T const &src = T()) : tab(src), right(NULL), left(NULL), parent(NULL) { return ; };
+		std::allocator<ft::node<T> >	_nodeAlloc;
+	};
+
+	template<typename T>
+	node<T>	*minValueNode(node<T>	*node)
+	{
+		while (node->left != NULL)
+			node = node->left;
+		return node;
+	}
+
+	template<typename T>
+	node<T>	*maxValueNode(node<T>	*node)
+	{
+		while (node->right != NULL)
+			node = node->right;
+		return node;
 	}
 
 	template <class T1, class T2> struct pair

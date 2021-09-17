@@ -1,19 +1,10 @@
 #ifndef MAPITERATOR_HPP
 # define MAPITERATOR_HPP
 
+# include "../Utils/Utils.hpp"
+
 namespace ft
 {
-	template<class T>
-	struct node
-	{
-		T		tab;
-		node	*right;
-		node	*left;
-		node	*parent;
-		node	*_ghost;
-		node(T const &src = T()) : tab(src), right(NULL), left(NULL), parent(NULL), _ghost(NULL) { return ; };
-	};
-
     template<typename T, typename node>
     class map_iterator
     {
@@ -41,30 +32,11 @@ namespace ft
 			map_iterator<value_type, node>	operator--(int);
 			reference						operator*(void);
 			pointer							operator->(void) const;
-			node *minValueNode(node_ptr new_node) const;
-			node *maxValueNode(node_ptr new_node) const;
 
 
 			private:
 				node	*_node;
     };
-
-	template<typename T, typename node>
-	typename map_iterator<T, node>::node_ptr	map_iterator<T, node>::minValueNode(node_ptr new_node) const
-	{
-		while (new_node->left != NULL)
-			new_node = new_node->left;
-		return new_node;
-	}
-
-	template<typename T, typename node>
-	typename map_iterator<T, node>::node_ptr	map_iterator<T, node>::maxValueNode(node_ptr new_node) const
-	{
-		// while (new_node && new_node->right && new_node->right != new_node->_ghost)
-		while (new_node->right)
-			new_node = new_node->right;
-		return new_node;
-	}
     
 	template<typename T, typename node>
 	map_iterator<T, node>	&map_iterator<T, node>::operator++(void)

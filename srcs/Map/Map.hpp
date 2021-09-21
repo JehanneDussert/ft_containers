@@ -133,6 +133,7 @@ class	map
 		node_ptr	_newNode(value_type& val);
 		node_ptr	_deleteNode(node_ptr root, value_type val);
 		void		_delete(node_ptr node);
+		void		_setGhost(void);
 
 	private:
 		allocator_type							_pairAlloc;

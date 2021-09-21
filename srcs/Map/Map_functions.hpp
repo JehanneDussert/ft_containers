@@ -226,7 +226,6 @@ ft::pair<typename ft::map<Key, T, Compare, Alloc>::iterator, bool>	map<Key, T, C
 		ret.second = false;
 	else
 	{
-		std::cout << "\n\nInsert\n\n";
 		_root = _insert(_root, val);
 		ret.second = true;
 	}
@@ -461,43 +460,41 @@ map<Key, T, Compare, Alloc>::equal_range(const key_type& k) const
 
 template <class Key, class T, class Compare, class Alloc >
 typename map<Key, T, Compare, Alloc>::allocator_type	map<Key, T, Compare, Alloc>::get_allocator() const
-{ return this->_pairAlloc; }
+{
+	return this->_pairAlloc;
+}
+
+template<class Key, class T, class Compare, class Alloc>
+void    map<Key, T, Compare, Alloc>::_setGhost(void)
+{
+	if (!_ghost)
+		_ghost = _nodeAlloc.allocate(1);
+	maxValueNode(_root)->right = _ghost;
+	_ghost->right = NULL;
+	_ghost->left = NULL;
+}
 
 template<class Key, class T, class Compare, class Alloc>
 typename map<Key, T, Compare, Alloc>::node_ptr    map<Key, T, Compare, Alloc>::_insert(node_ptr node, value_type val)
 {
-	std::cout << "** _insert function **\n";
-	if (node == NULL)
+	if (!_root || !node || node == _ghost)
 	{
-		std::cout << "_insert node NULL\n";
 		node = _newNode(val);
-		// if (!_root)
-		// {
-		// 	_ghost = _nodeAlloc.allocate(1);
-		// 	node->right = _ghost;
-		// }
+		if (!_root)
+			_root = node;
 		_size++;
 	}
-	// else if (_ghost && node == _ghost)
-	// {
-	// 	std::cout << "_insert node ghost\n";
-	// 	node = _newNode(val);
-	// 	node->parent = _ghost->parent;
-	// 	node->right = _ghost;
-	// 	_size++;
-	// }
 	else if (key_comp()(val.first, node->tab.first))
 	{
-		std::cout << "_insert node left\n";
 		node->left = _insert(node->left, val);
 		node->left->parent = node;
 	}
 	else
 	{
-		std::cout << "_insert node right\n";
 		node->right = _insert(node->right, val);
 		node->right->parent = node;
 	}
+	_setGhost();
 	return node;
 }
 

@@ -501,7 +501,7 @@ void	ft_insert(MAP &mp, U param)
 
 	std::cout << "\t-- [" << iter++ << "] --" << std::endl;
 	tmp = mp.insert(param);
-	std::cout << "insert return: " << printPair(tmp.first);
+	// std::cout << "insert return: " << printPair(tmp.first);
 	std::cout << "Created new node: " << tmp.second << std::endl;
 	printSize(mp);
 }
@@ -525,11 +525,11 @@ int		main(void)
 	ft_insert(mp, T3(42, "mdr"));
 
 	ft_insert(mp, T3(50, "mdr"));
-	// ft_insert(mp, T3(35, "funny"));
+	ft_insert(mp, T3(35, "funny"));
 
-	// ft_insert(mp, T3(45, "bunny"));
-	// ft_insert(mp, T3(21, "fizz"));
-	// ft_insert(mp, T3(38, "buzz"));
+	ft_insert(mp, T3(45, "bunny"));
+	ft_insert(mp, T3(21, "fizz"));
+	ft_insert(mp, T3(38, "buzz"));
 
 	// ft_insert(mp, mp.begin(), T3(55, "fuzzy"));
 

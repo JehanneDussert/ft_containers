@@ -463,46 +463,46 @@ T	dec(T it, int n)
 	return (it);
 }
 #include <list>
-
 #define T1 char
 #define T2 int
 typedef _pair<const T1, T2> T3;
 
-template <class T>
-void	is_empty(T const &mp)
+template <class MAP>
+void	cmp(const MAP &lhs, const MAP &rhs)
 {
-	std::cout << "is_empty: " << mp.empty() << std::endl;
+	static int i = 0;
+
+	std::cout << "############### [" << i++ << "] ###############"  << std::endl;
+	std::cout << "eq: " << (lhs == rhs) << " | ne: " << (lhs != rhs) << std::endl;
+	std::cout << "lt: " << (lhs <  rhs) << " | le: " << (lhs <= rhs) << std::endl;
+	std::cout << "gt: " << (lhs >  rhs) << " | ge: " << (lhs >= rhs) << std::endl;
 }
 
 int		main(void)
 {
-	std::list<T3> lst;
-	unsigned int lst_size = 7;
-	for (unsigned int i = 0; i < lst_size; ++i)
-		lst.push_back(T3('a' + i, lst_size - i));
+	TESTED_NAMESPACE::map<T1, T2> mp1;
+	TESTED_NAMESPACE::map<T1, T2> mp2;
 
-	TESTED_NAMESPACE::map<T1, T2> mp(lst.begin(), lst.end()), mp2;
-	TESTED_NAMESPACE::map<T1, T2>::iterator it;
+	mp1['a'] = 2; mp1['b'] = 3; mp1['c'] = 4; mp1['d'] = 5;
+	mp2['a'] = 2; mp2['b'] = 3; mp2['c'] = 4; mp2['d'] = 5;
 
-	lst.clear();
-	// is_empty(mp);
-	// printSize(mp);
+	cmp(mp1, mp1); // 0
+	cmp(mp1, mp2); // 1
 
-	// is_empty(mp2);
-	mp2 = mp;
-	std::cout << "is empty mp2\n";
-	// is_empty(mp2);
+	mp2['e'] = 6; mp2['f'] = 7; mp2['h'] = 8; mp2['h'] = 9;
 
-	it = mp.begin();
-	for (unsigned long int i = 3; i < mp.size(); ++i)
-		it++->second = i * 7;
+	cmp(mp1, mp2); // 2
+	cmp(mp2, mp1); // 3
 
-	// printSize(mp);
-	std::cout << "here\n";
-	printSize(mp2);
+	(++(++mp1.begin()))->second = 42;
 
-	mp2.clear();
-	// is_empty(mp2);
-	// printSize(mp2);
+	cmp(mp1, mp2); // 4
+	cmp(mp2, mp1); // 5
+
+	swap(mp1, mp2);
+
+	cmp(mp1, mp2); // 6
+	cmp(mp2, mp1); // 7
+
 	return (0);
 }

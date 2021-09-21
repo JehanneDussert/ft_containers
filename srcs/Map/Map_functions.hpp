@@ -181,7 +181,9 @@ typename map<Key, T, Compare, Alloc>::const_reverse_iterator map<Key, T, Compare
 
 template <class Key, class T, class Compare, class Alloc >
 typename map<Key, T, Compare, Alloc>::size_type	map<Key, T, Compare, Alloc>::size() const
-{ return this->_size; }
+{
+	return this->_size;
+}
 
 template <class Key, class T, class Compare, class Alloc >
 typename map<Key, T, Compare, Alloc>::size_type	map<Key, T, Compare, Alloc>::max_size() const
@@ -197,7 +199,9 @@ typename map<Key, T, Compare, Alloc>::size_type	map<Key, T, Compare, Alloc>::max
 
 template <class Key, class T, class Compare, class Alloc >
 bool	map<Key, T, Compare, Alloc>::empty() const
-{ return (!(_size) ? true : false); }
+{
+	return (!(_size) ? true : false);
+}
 
 // template <class Key, class T, class Compare, class Alloc >
 // void	map<Key, T, Compare, Alloc>::reserve(size_type n)
@@ -511,6 +515,59 @@ void map<Key, T, Compare, Alloc>::inorder(node_ptr root)
 		inorder(root->right);
 	}
 }
+
+/**************************************/
+/*** NON MEMBER FUNCTIONS OVERLOADS ***/
+/**************************************/
+
+/*
+** RELATIONAL OPERATORS
+*/
+
+template<class Key, class T, class Compare, class Alloc>
+bool operator==(const map<Key, T, Compare, Alloc>& lhs, const map<Key, T, Compare, Alloc>& rhs)
+{
+	if (lhs.size() != rhs.size())
+		return false;
+	return (ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
+}
+
+template<class Key, class T, class Compare, class Alloc>
+bool operator!=(const map<Key, T, Compare, Alloc>& lhs, const map<Key, T, Compare, Alloc>& rhs)
+{
+    return (lhs == rhs ? false : true);
+}
+
+template<class Key, class T, class Compare, class Alloc>
+bool operator<(const map<Key, T, Compare, Alloc>& lhs, const map<Key, T, Compare, Alloc>& rhs)
+{
+	return lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
+}
+
+template<class Key, class T, class Compare, class Alloc>
+bool operator<=(const map<Key, T, Compare, Alloc>& lhs, const map<Key, T, Compare, Alloc>& rhs)
+{
+	return (rhs < lhs ? false : true);
+}
+
+template<class Key, class T, class Compare, class Alloc>
+bool operator>(const map<Key, T, Compare, Alloc>& lhs, const map<Key, T, Compare, Alloc>& rhs)
+{
+	return (rhs < lhs ? true : false);
+}
+
+template<class Key, class T, class Compare, class Alloc>
+bool operator>=(const map<Key, T, Compare, Alloc>& lhs, const map<Key, T, Compare, Alloc>& rhs)
+{
+	return (lhs < rhs ? false : true);
+}
+
+template<class Key, class T, class Compare, class Alloc>
+void	swap(map<Key, T, Compare, Alloc>& lhs, map<Key, T, Compare, Alloc>& rhs)
+{
+	lhs.swap(rhs);
+}
+
 };
 
 #endif

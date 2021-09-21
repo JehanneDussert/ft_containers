@@ -501,7 +501,7 @@ void	ft_insert(MAP &mp, U param)
 
 	std::cout << "\t-- [" << iter++ << "] --" << std::endl;
 	tmp = mp.insert(param);
-	// std::cout << "insert return: " << printPair(tmp.first);
+	std::cout << "insert return: " << printPair(tmp.first);
 	std::cout << "Created new node: " << tmp.second << std::endl;
 	printSize(mp);
 }
@@ -521,22 +521,21 @@ int		main(void)
 {
 	TESTED_NAMESPACE::map<T1, T2> mp, mp2;
 
-	ft_insert(mp, T3(42, "lol"));
-	ft_insert(mp, T3(42, "mdr"));
+	// ft_insert(mp, T3(42, "lol"));
+	// ft_insert(mp, T3(42, "mdr"));
 
-	ft_insert(mp, T3(50, "mdr"));
-	ft_insert(mp, T3(35, "funny"));
+	// ft_insert(mp, T3(50, "mdr"));
+	// ft_insert(mp, T3(35, "funny"));
 
-	ft_insert(mp, T3(45, "bunny"));
-	ft_insert(mp, T3(21, "fizz"));
-	ft_insert(mp, T3(38, "buzz"));
+	// ft_insert(mp, T3(45, "bunny"));
+	// ft_insert(mp, T3(21, "fizz"));
+	// ft_insert(mp, T3(38, "buzz"));
 
 	// ft_insert(mp, mp.begin(), T3(55, "fuzzy"));
 
-	// std::cout << "HERE\n";
-	// ft_insert(mp2, mp2.begin(), T3(1337, "beauty"));
-	// ft_insert(mp2, mp2.end(), T3(1000, "Hello"));
-	// ft_insert(mp2, mp2.end(), T3(1500, "World"));
+	ft_insert(mp2, mp2.begin(), T3(1337, "beauty"));
+	ft_insert(mp2, mp2.end(), T3(1000, "Hello"));
+	ft_insert(mp2, mp2.end(), T3(1500, "World"));
 
 	return (0);
 }

@@ -76,7 +76,7 @@ typename map<Key, T, Compare, Alloc>::node_ptr	map<Key, T, Compare, Alloc>::_del
 
 template < class Key, class T, class Compare, class Alloc >
 map<Key, T, Compare, Alloc>::map(const key_compare& comp, const allocator_type& alloc) :
-_pairAlloc(alloc), _comp(comp), _size(0), _root(NULL)//, _ghost(NULL)
+_pairAlloc(alloc), _comp(comp), _size(0), _root(NULL), _ghost(NULL)
 {
 	return ;
 };
@@ -88,7 +88,7 @@ _pairAlloc(alloc), _comp(comp), _size(0), _root(NULL)//, _ghost(NULL)
 template < class Key, class T, class Compare, class Alloc >
 template <class InputIterator>
 map<Key, T, Compare, Alloc>::map(InputIterator first, InputIterator last, const key_compare& comp,
-const allocator_type& alloc) : _pairAlloc(alloc), _comp(comp), _size(0), _root(NULL)//, _ghost(NULL)
+const allocator_type& alloc) : _pairAlloc(alloc), _comp(comp), _size(0), _root(NULL), _ghost(NULL)
 {
 	insert(first, last);
 
@@ -100,7 +100,7 @@ const allocator_type& alloc) : _pairAlloc(alloc), _comp(comp), _size(0), _root(N
 */
 
 template < class Key, class T, class Compare, class Alloc >
-map<Key, T, Compare, Alloc>::map(const map& x) : _size(0), _root(NULL)//, _ghost(NULL)
+map<Key, T, Compare, Alloc>::map(const map& x) : _size(0), _root(NULL), _ghost(NULL)
 {
 	*this = x;
 	return;
@@ -112,7 +112,7 @@ map<Key, T, Compare, Alloc>	&map<Key, T, Compare, Alloc>::operator=(const map& x
 	this->_size = x.size();
 	this->_comp = x._comp;
 	// this->_max_size = x.max_size();
-	// this->_ghost = x._ghost;
+	this->_ghost = x._ghost;
 	this->_root = x._root;
 	this->_nodeAlloc = x._nodeAlloc;
 	this->_pairAlloc = x._pairAlloc;
@@ -139,11 +139,15 @@ map<Key, T, Compare, Alloc>::~map(void)
 
 template <class Key, class T, class Compare, class Alloc >
 typename map<Key, T, Compare, Alloc>::iterator map<Key, T, Compare, Alloc>::begin()
-{ return iterator(minValueNode(_root)); }
+{
+	return iterator(minValueNode(_root));
+}
 
 template <class Key, class T, class Compare, class Alloc >
 typename map<Key, T, Compare, Alloc>::const_iterator map<Key, T, Compare, Alloc>::begin() const
-{ return const_iterator(minValueNode(_root)); }
+{
+	return const_iterator(minValueNode(_root));
+}
 
 template <class Key, class T, class Compare, class Alloc >
 typename map<Key, T, Compare, Alloc>::iterator map<Key, T, Compare, Alloc>::end()
@@ -239,8 +243,6 @@ typename map<Key, T, Compare, Alloc>::iterator map<Key, T, Compare, Alloc>::inse
 {
 	(void)position;
 	return insert(val).first;
-
-	// return iterator(position);
 }
 
 template<class Key, class T, class Compare, class Alloc>
@@ -291,29 +293,31 @@ void map<Key, T, Compare, Alloc>::swap(map& x)
 	tmp._comp = key_comp();
 	tmp._size = size();
 	tmp._root = _root;
-	// tmp._ghost = _ghost;
+	tmp._ghost = _ghost;
 
 	_pairAlloc = x.get_allocator();
 	_comp = x.key_comp();
 	_size = x.size();
 	_root = x._root;
-	// _ghost = x._ghost;
+	_ghost = x._ghost;
 
 	x._pairAlloc = tmp.get_allocator();
 	x._comp = tmp.key_comp();
 	x._size = tmp.size();
 	x._root = tmp._root;
-	// x._ghost = tmp._ghost;
+	x._ghost = tmp._ghost;
 }
 
 template <class Key, class T, class Compare, class Alloc >
 void map<Key, T, Compare, Alloc>::clear()
 {
+	// if (_ghost)
+	// 	_nodeAlloc.deallocate(_ghost, 1);
 	if (_root)
 		_pairAlloc.destroy(&_root->tab);
 	_size = 0;
 	_root = NULL;
-	// _ghost = NULL;
+	_ghost = NULL;
 
 	return ;
 }

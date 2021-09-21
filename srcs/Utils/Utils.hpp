@@ -110,7 +110,7 @@ namespace ft
 	template<typename T>
 	node<T>	*minValueNode(node<T>	*node)
 	{
-		while (node->left != NULL)
+		while (node && node->left != NULL)
 			node = node->left;
 		return node;
 	}
@@ -118,7 +118,7 @@ namespace ft
 	template<typename T>
 	node<T>	*maxValueNode(node<T>	*node)
 	{
-		while (node->right != NULL)
+		while (node && node->right != NULL)
 			node = node->right;
 		return node;
 	}

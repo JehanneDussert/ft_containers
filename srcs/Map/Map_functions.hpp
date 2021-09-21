@@ -30,40 +30,37 @@ void	map<Key, T, Compare, Alloc>::_delete(node_ptr node)
 }
 
 template<class Key, class T, class Compare, class Alloc>
-typename map<Key, T, Compare, Alloc>::node_ptr	map<Key, T, Compare, Alloc>::_deleteNode(node_ptr root, value_type val)
+typename map<Key, T, Compare, Alloc>::node_ptr	map<Key, T, Compare, Alloc>::_deleteNode(node_ptr node, value_type val)
 {
-	if (!root || root == _ghost)
-		return root;
-	else if (_comp(val.first, root->tab.first) && !(!_comp(val.first, root->tab.first) && !_comp(root->tab.first, val.first)))
-		root->left = _deleteNode(root->left, val);
-	else if (!_comp(val.first, root->tab.first)&& !(!_comp(val.first, root->tab.first) && !_comp(root->tab.first, val.first))) // if (val.first > root->tab.first) mais prbl car !_comp si val == root...
-		root->right = _deleteNode(root->right, val);
+	if (!node || node == _ghost)
+		return node;
+	else if (key_comp()(val.first, node->tab.first))
+		node->left = _deleteNode(node->left, val);
+	else if (!(key_comp()(val.first, node->tab.first)))
+		node->right = _deleteNode(node->right, val);
 	else
 	{
-		if (!root->left && !root->right)
+		if (!node->left && !node->right)
 			return NULL;
-		else if (!root->left)
+		else if (!node->left)
 		{
-			if (root->right == _ghost)
-			{
-				root->parent->right = _ghost;
-				root->right = root->parent->right;
-			}
-			node_ptr tmp = root->right;
-			_delete(root);
+			if (node->right == _ghost)
+				_setGhost();
+			node_ptr tmp = node->right;
+			_delete(node);
 			return tmp;
 		}
-		else if (!root->right)
+		else if (!node->right)
 		{
-			node_ptr tmp = root->left;
-			_delete(root);
+			node_ptr tmp = node->left;
+			_delete(node);
 			return tmp;
 		}
-		node_ptr tmp = minValueNode(root->right);
-		root = tmp;
-		root->right = _deleteNode(root->right, tmp->tab);
+		node_ptr tmp = minValueNode(node->right);
+		node = tmp;
+		node->right = _deleteNode(node->right, tmp->tab);
 	}
-	return root;
+	return node;
 }
 
 /**********************/
@@ -161,11 +158,11 @@ typename map<Key, T, Compare, Alloc>::const_iterator map<Key, T, Compare, Alloc>
 
 template <class Key, class T, class Compare, class Alloc >
 typename map<Key, T, Compare, Alloc>::reverse_iterator map<Key, T, Compare, Alloc>::rbegin()
-{ return reverse_iterator(--maxValueNode(_root)); }
+{ return reverse_iterator(maxValueNode(_root)->parent); }
 
 template <class Key, class T, class Compare, class Alloc >
 typename map<Key, T, Compare, Alloc>::const_reverse_iterator map<Key, T, Compare, Alloc>::rbegin() const
-{ return const_reverse_iterator(--maxValueNode(_root)); }
+{ return const_reverse_iterator(maxValueNode(_root)->parent); }
 
 template <class Key, class T, class Compare, class Alloc >
 typename map<Key, T, Compare, Alloc>::reverse_iterator map<Key, T, Compare, Alloc>::rend()
@@ -541,7 +538,7 @@ bool operator!=(const map<Key, T, Compare, Alloc>& lhs, const map<Key, T, Compar
 template<class Key, class T, class Compare, class Alloc>
 bool operator<(const map<Key, T, Compare, Alloc>& lhs, const map<Key, T, Compare, Alloc>& rhs)
 {
-	return lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
+	return ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
 }
 
 template<class Key, class T, class Compare, class Alloc>

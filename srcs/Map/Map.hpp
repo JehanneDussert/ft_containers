@@ -28,11 +28,11 @@ class	map
 		typedef typename allocator_type::pointer			pointer;
 		typedef typename allocator_type::const_pointer		const_pointer;
 		// could be iterator_traits<iterator>::difference_type
-		class value_compare;
 		typedef ptrdiff_t									difference_type;
 		typedef size_t										size_type;
 		typedef ft::node<value_type>						node_type;
 		typedef node_type*									node_ptr;
+		// class												value_compare;
 	
 		typedef ft::map_iterator<value_type, node_type >		iterator;
 		typedef ft::map_iterator<const value_type, node_type >	const_iterator;
@@ -42,7 +42,7 @@ class	map
 		class value_compare
 		{
 			friend class map;
-			protected:
+			public:
 				Compare comp;
 				value_compare (Compare c) : comp(c) {}  // constructed with map's comparison object
 			public:

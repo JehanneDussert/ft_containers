@@ -462,80 +462,47 @@ T	dec(T it, int n)
 		--it;
 	return (it);
 }
-
-
-
 #include <list>
 
-#define T1 int
-#define T2 std::string
+#define T1 char
+#define T2 int
 typedef _pair<const T1, T2> T3;
 
-static int iter = 0;
-
-template <typename MAP, typename U>
-void	ft_erase(MAP &mp, U param)
+template <class T>
+void	is_empty(T const &mp)
 {
-	std::cout << "\t-- [" << iter++ << "] --" << std::endl;
-	mp.erase(param);
-	printSize(mp);
-}
-
-template <typename MAP, typename U, typename V>
-void	ft_erase(MAP &mp, U param, V param2)
-{
-	std::cout << "\t-- [" << iter++ << "] --" << std::endl;
-	mp.erase(param, param2);
-	printSize(mp);
-}
-
-#define T1 int
-#define T2 std::string
-typedef TESTED_NAMESPACE::map<T1, T2>::value_type T3;
-typedef TESTED_NAMESPACE::map<T1, T2>::iterator iterator;
-
-template <typename MAP, typename U>
-void	ft_insert(MAP &mp, U param)
-{
-	_pair<iterator, bool> tmp;
-
-	std::cout << "\t-- [" << iter++ << "] --" << std::endl;
-	tmp = mp.insert(param);
-	std::cout << "insert return: " << printPair(tmp.first);
-	std::cout << "Created new node: " << tmp.second << std::endl;
-	printSize(mp);
-}
-
-template <typename MAP, typename U, typename V>
-void	ft_insert(MAP &mp, U param, V param2)
-{
-	iterator tmp;
-
-	std::cout << "\t-- [" << iter++ << "] --" << std::endl;
-	tmp = mp.insert(param, param2);
-	std::cout << "insert return: " << printPair(tmp);
-	printSize(mp);
+	std::cout << "is_empty: " << mp.empty() << std::endl;
 }
 
 int		main(void)
 {
-	TESTED_NAMESPACE::map<T1, T2> mp, mp2;
+	std::list<T3> lst;
+	unsigned int lst_size = 7;
+	for (unsigned int i = 0; i < lst_size; ++i)
+		lst.push_back(T3('a' + i, lst_size - i));
 
-	// ft_insert(mp, T3(42, "lol"));
-	// ft_insert(mp, T3(42, "mdr"));
+	TESTED_NAMESPACE::map<T1, T2> mp(lst.begin(), lst.end()), mp2;
+	TESTED_NAMESPACE::map<T1, T2>::iterator it;
 
-	// ft_insert(mp, T3(50, "mdr"));
-	// ft_insert(mp, T3(35, "funny"));
+	lst.clear();
+	// is_empty(mp);
+	// printSize(mp);
 
-	// ft_insert(mp, T3(45, "bunny"));
-	// ft_insert(mp, T3(21, "fizz"));
-	// ft_insert(mp, T3(38, "buzz"));
+	// is_empty(mp2);
+	mp2 = mp;
+	std::cout << "is empty mp2\n";
+	// is_empty(mp2);
 
-	// ft_insert(mp, mp.begin(), T3(55, "fuzzy"));
+	it = mp.begin();
+	for (unsigned long int i = 3; i < mp.size(); ++i)
+		it++->second = i * 7;
 
-	ft_insert(mp2, mp2.begin(), T3(1337, "beauty"));
-	ft_insert(mp2, mp2.end(), T3(1000, "Hello"));
-	ft_insert(mp2, mp2.end(), T3(1500, "World"));
+	// printSize(mp);
+	std::cout << "here\n";
+	printSize(mp2);
 
+	mp2.clear();
+	// is_empty(mp2);
+	// printSize(mp2);
 	return (0);
 }

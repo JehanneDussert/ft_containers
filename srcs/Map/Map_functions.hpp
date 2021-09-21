@@ -32,7 +32,7 @@ void	map<Key, T, Compare, Alloc>::_delete(node_ptr node)
 template<class Key, class T, class Compare, class Alloc>
 typename map<Key, T, Compare, Alloc>::node_ptr	map<Key, T, Compare, Alloc>::_deleteNode(node_ptr root, value_type val)
 {
-	if (!root)// || root == _ghost)
+	if (!root || root == _ghost)
 		return root;
 	else if (_comp(val.first, root->tab.first) && !(!_comp(val.first, root->tab.first) && !_comp(root->tab.first, val.first)))
 		root->left = _deleteNode(root->left, val);
@@ -44,11 +44,11 @@ typename map<Key, T, Compare, Alloc>::node_ptr	map<Key, T, Compare, Alloc>::_del
 			return NULL;
 		else if (!root->left)
 		{
-			// if (root->right == _ghost)
-			// {
-			// 	root->parent->right = root->_ghost;
-			// 	root->right = root->parent->right;
-			// }
+			if (root->right == _ghost)
+			{
+				root->parent->right = _ghost;
+				root->right = root->parent->right;
+			}
 			node_ptr tmp = root->right;
 			_delete(root);
 			return tmp;
@@ -109,13 +109,11 @@ map<Key, T, Compare, Alloc>::map(const map& x) : _size(0), _root(NULL), _ghost(N
 template < class Key, class T, class Compare, class Alloc >
 map<Key, T, Compare, Alloc>	&map<Key, T, Compare, Alloc>::operator=(const map& x)
 {
-	this->_size = x.size();
+	clear();
 	this->_comp = x._comp;
-	// this->_max_size = x.max_size();
-	this->_ghost = x._ghost;
-	this->_root = x._root;
 	this->_nodeAlloc = x._nodeAlloc;
 	this->_pairAlloc = x._pairAlloc;
+	insert(x.begin(), x.end());
 	
 	return *this;
 };

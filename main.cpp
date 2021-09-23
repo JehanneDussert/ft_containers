@@ -475,6 +475,7 @@ void	ft_erase(MAP &mp, U param)
 {
 	std::cout << "\t-- [" << iter++ << "] --" << std::endl;
 	mp.erase(param);
+	std::cout << "print size\n\n";
 	printSize(mp);
 }
 
@@ -497,11 +498,12 @@ int		main(void)
 
 	ft_erase(mp, ++mp.begin());
 
-	// ft_erase(mp, mp.begin());
-	// ft_erase(mp, --mp.end());
+	ft_erase(mp, mp.begin());
+	std::cout << "PROBLEM\n\n";
+	ft_erase(mp, --mp.end());
 
-	// ft_erase(mp, mp.begin(), ++(++(++mp.begin())));
-	// ft_erase(mp, --(--(--mp.end())), --mp.end());
+	ft_erase(mp, mp.begin(), ++(++(++mp.begin())));
+	ft_erase(mp, --(--(--mp.end())), --mp.end());
 
 	// mp[10] = "Hello";
 	// mp[11] = "Hi there";

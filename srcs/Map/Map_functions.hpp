@@ -34,11 +34,12 @@ void	map<Key, T, Compare, Alloc>::_delete(node_ptr node)
 template<class Key, class T, class Compare, class Alloc>
 typename map<Key, T, Compare, Alloc>::node_ptr	map<Key, T, Compare, Alloc>::_deleteNode(node_ptr node, value_type val)
 {
+	std::cout << "val : " << val.first << std::endl;
 	if (!node || node == _ghost)
 		return node;
 	else if (key_comp()(val.first, node->tab.first))
 		node->left = _deleteNode(node->left, val);
-	else if (!(key_comp()(val.first, node->tab.first)))
+	else if ((key_comp()(node->tab.first, val.first)))
 		node->right = _deleteNode(node->right, val);
 	else
 	{
@@ -46,8 +47,14 @@ typename map<Key, T, Compare, Alloc>::node_ptr	map<Key, T, Compare, Alloc>::_del
 			return NULL;
 		else if (!node->left)
 		{
+			// std::cout << "node in node right is " << node->tab.first << std::endl;
 			if (node->right == _ghost)
-				_setGhost(true);
+			{
+				_setGhost(false);
+				_lastElem = node->parent;
+				std::cout << "last elem is now : " << maxValueNode(_root)->tab.first << std::endl;
+			}
+			// std::cout << "last Elem is " << _lastElem->tab.first << std::endl;
 			node_ptr tmp = node->right;
 			_delete(node);
 			return tmp;
@@ -62,6 +69,7 @@ typename map<Key, T, Compare, Alloc>::node_ptr	map<Key, T, Compare, Alloc>::_del
 		node = tmp;
 		node->right = _deleteNode(node->right, tmp->tab);
 	}
+	// std::cout << "out\n";
 	return node;
 }
 
@@ -150,8 +158,8 @@ typename map<Key, T, Compare, Alloc>::const_iterator map<Key, T, Compare, Alloc>
 template <class Key, class T, class Compare, class Alloc >
 typename map<Key, T, Compare, Alloc>::iterator map<Key, T, Compare, Alloc>::end()
 {
-	// std::cout << "max bef is " << _lastElem->tab.first << std::endl;
-	// std::cout << "max is " << _lastElem->right->tab.first << std::endl;
+	std::cout << "max bef is " << _lastElem->tab.first << std::endl;
+	std::cout << "max is " << _lastElem->right->tab.first << std::endl;
 	return iterator(_lastElem->right);
 }
 
@@ -461,6 +469,8 @@ void    map<Key, T, Compare, Alloc>::_setGhost(bool add)
 		_lastElem = maxValueNode(_root);
 		_lastElem->right = _ghost;
 	}
+	if (_lastElem)
+		std::cout << "now last elem is " << _lastElem->tab.first << std::endl;
 	_ghost->right = NULL;
 	_ghost->left = NULL;
 	_ghost->parent = _lastElem;

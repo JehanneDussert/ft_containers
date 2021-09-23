@@ -8,6 +8,10 @@ namespace ft
     template<typename T, typename node>
     class map_iterator
     {
+		protected:
+			node	*_node;
+			map_iterator(node *src) { _node = src; return ;};
+
         public:
 			typedef	T					value_type;
 			typedef	value_type&			reference;
@@ -18,24 +22,25 @@ namespace ft
 
 			map_iterator(void) : _node(NULL) { return ; };
 			map_iterator(map_iterator const &src) { *this = src; return ; };
-			map_iterator(node *src) { _node = src; return ;};
-			~map_iterator(void) { return ; };
+			virtual ~map_iterator(void) { return ; };
 			map_iterator&	operator=(map_iterator const &rhs) { _node = rhs._node; return *this;};
 			operator map_iterator<const T, node>(void) const { return map_iterator<const T, node>(this->_node); };
 
-			bool			operator==(const map_iterator &x) const { return this->_node == x._node;};
-			bool			operator!=(const map_iterator &x) const { return this->_node != x._node;};
+			template <class U> bool	operator==(const map_iterator<U, node> &x) const { return this->_node == x._node;};
+			template <class U> bool	operator!=(const map_iterator<U, node> &x) const { return this->_node != x._node;};
 
-			map_iterator<value_type, node>	&operator++(void);
-			map_iterator<value_type, node>	operator++(int);
-			map_iterator<value_type, node>	&operator--(void);
-			map_iterator<value_type, node>	operator--(int);
-			reference						operator*(void);
-			pointer							operator->(void) const;
+			map_iterator	&operator++(void);
+			map_iterator	operator++(int);
+			map_iterator	&operator--(void);
+			map_iterator	operator--(int);
+			reference		operator*(void) const;
+			pointer			operator->(void) const;
 
+			template <class, class, class, class>
+			friend class map;
 
-			private:
-				node	*_node;
+			template <class, class>
+			friend class map_iterator;
     };
     
 	template<typename T, typename node>
@@ -93,7 +98,7 @@ namespace ft
 	}
 	
 	template<typename T, typename node>
-	typename map_iterator<T, node>::reference	map_iterator<T, node>::operator*(void) { return this->_node->tab; }
+	typename map_iterator<T, node>::reference	map_iterator<T, node>::operator*(void) const { return this->_node->tab; }
 	
 	template<typename T, typename node>
 	typename map_iterator<T, node>::pointer		map_iterator<T, node>::operator->(void) const { return &this->_node->tab; }

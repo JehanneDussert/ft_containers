@@ -34,6 +34,10 @@ class	map
 		typedef node_type*									node_ptr;
 		// class												value_compare;
 	
+		// typedef ft::mapIte<value_type, node_type>			iterator;
+		// typedef ft::mapIte<const value_type, node_type>		const_iterator;
+		// typedef ft::reverse_iterator<iterator>				reverse_iterator;
+		// typedef ft::reverse_iterator<const_iterator>		const_reverse_iterator;
 		typedef ft::map_iterator<value_type, node_type >		iterator;
 		typedef ft::map_iterator<const value_type, node_type >	const_iterator;
 		typedef ft::reverse_iterator<iterator>					reverse_iterator;

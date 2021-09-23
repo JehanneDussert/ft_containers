@@ -143,6 +143,7 @@ class	map
 		size_type								_size;
 		node_ptr								_root;
 		node_ptr								_ghost;
+		node_ptr								_lastElem;
 		void									_deleteNode(node<value_type> *node);
 };
 }

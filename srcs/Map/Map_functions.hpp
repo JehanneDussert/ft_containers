@@ -73,7 +73,7 @@ typename map<Key, T, Compare, Alloc>::node_ptr	map<Key, T, Compare, Alloc>::_del
 
 template < class Key, class T, class Compare, class Alloc >
 map<Key, T, Compare, Alloc>::map(const key_compare& comp, const allocator_type& alloc) :
-_pairAlloc(alloc), _comp(comp), _size(0), _root(NULL), _ghost(NULL)
+_pairAlloc(alloc), _comp(comp), _size(0), _root(NULL), _ghost(NULL), _lastElem(NULL)
 {
 	return ;
 };
@@ -85,7 +85,7 @@ _pairAlloc(alloc), _comp(comp), _size(0), _root(NULL), _ghost(NULL)
 template < class Key, class T, class Compare, class Alloc >
 template <class InputIterator>
 map<Key, T, Compare, Alloc>::map(InputIterator first, InputIterator last, const key_compare& comp,
-const allocator_type& alloc) : _pairAlloc(alloc), _comp(comp), _size(0), _root(NULL), _ghost(NULL)
+const allocator_type& alloc) : _pairAlloc(alloc), _comp(comp), _size(0), _root(NULL), _ghost(NULL), _lastElem(NULL)
 {
 	insert(first, last);
 
@@ -97,7 +97,7 @@ const allocator_type& alloc) : _pairAlloc(alloc), _comp(comp), _size(0), _root(N
 */
 
 template < class Key, class T, class Compare, class Alloc >
-map<Key, T, Compare, Alloc>::map(const map& x) : _size(0), _root(NULL), _ghost(NULL)
+map<Key, T, Compare, Alloc>::map(const map& x) : _size(0), _root(NULL), _ghost(NULL), _lastElem(NULL)
 {
 	*this = x;
 	return;

@@ -188,23 +188,11 @@ typename map<Key, T, Compare, Alloc>::size_type	map<Key, T, Compare, Alloc>::max
 	return std::numeric_limits<difference_type>::max() / (sizeof(node_type) / 2 ?: 1);
 }
 
-// template <class Key, class T, class Compare, class Alloc >
-// void	map<Key, T, Compare, Alloc>::resize(size_type n, value_type val)
-// {
-// 	;
-// }
-
 template <class Key, class T, class Compare, class Alloc >
 bool	map<Key, T, Compare, Alloc>::empty() const
 {
 	return (!(_size) ? true : false);
 }
-
-// template <class Key, class T, class Compare, class Alloc >
-// void	map<Key, T, Compare, Alloc>::reserve(size_type n)
-// {
-// 	;
-// }
 
 /*
 **	Element access

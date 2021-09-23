@@ -460,7 +460,9 @@ void    map<Key, T, Compare, Alloc>::_setGhost(void)
 {
 	if (!_ghost)
 		_ghost = _nodeAlloc.allocate(1);
-	maxValueNode(_root)->right = _ghost;
+	_lastElem = maxValueNode(_root);
+	_lastElem->right = _ghost;
+	_lastElem->left = NULL;
 	_ghost->right = NULL;
 	_ghost->left = NULL;
 }
@@ -485,7 +487,8 @@ typename map<Key, T, Compare, Alloc>::node_ptr    map<Key, T, Compare, Alloc>::_
 		node->right = _insert(node->right, val);
 		node->right->parent = node;
 	}
-	_setGhost();
+	if (!_ghost || !key_comp()(node->tab.first, _lastElem->tab.first))
+		_setGhost();
 	return node;
 }
 

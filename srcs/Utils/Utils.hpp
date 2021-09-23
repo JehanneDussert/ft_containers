@@ -105,7 +105,8 @@ namespace ft
 		node	*right;
 		node	*left;
 		node	*parent;
-		node(T const &src = T()) : tab(src), right(NULL), left(NULL), parent(NULL) { return ; };
+		node	*ghost;
+		node(T const &src = T()) : tab(src), right(NULL), left(NULL), parent(NULL), ghost(NULL) { return ; };
 		std::allocator<ft::node<T> >	_nodeAlloc;
 	};
 
@@ -120,7 +121,7 @@ namespace ft
 	template<typename T>
 	node<T>	*maxValueNode(node<T>	*node)
 	{
-		while (node && node->right != NULL)
+		while (node && node->right != NULL && node->right != node->ghost)
 			node = node->right;
 		return node;
 	}
@@ -137,7 +138,6 @@ namespace ft
 		template<class U, class V>
 		pair(const pair<U,V>& pr) : first(pr.first), second(pr.second) { return ; };
 		pair(const first_type& a, const second_type& b) : first(a), second(b) { return ; };
-		// ~pair(void) { return ; };
 		pair& operator=(const pair& pr) { first = pr.first; second = pr.second; return *this; };
 	};
 

@@ -1,6 +1,8 @@
 #ifndef MAP_FUNCTIONS_HPP
 # define MAP_FUNCTIONS_HPP
 
+#include <functional>
+#include <cmath>
 # include "Map.hpp"
 
 namespace ft
@@ -45,7 +47,7 @@ typename map<Key, T, Compare, Alloc>::node_ptr	map<Key, T, Compare, Alloc>::_del
 		else if (!node->left)
 		{
 			if (node->right == _ghost)
-				_setGhost();
+				_setGhost(true);
 			node_ptr tmp = node->right;
 			_delete(node);
 			return tmp;
@@ -135,6 +137,7 @@ map<Key, T, Compare, Alloc>::~map(void)
 template <class Key, class T, class Compare, class Alloc >
 typename map<Key, T, Compare, Alloc>::iterator map<Key, T, Compare, Alloc>::begin()
 {
+	// std::cout << "min is " << minValueNode(_root)->tab.first << std::endl;
 	return iterator(minValueNode(_root));
 }
 
@@ -147,13 +150,19 @@ typename map<Key, T, Compare, Alloc>::const_iterator map<Key, T, Compare, Alloc>
 template <class Key, class T, class Compare, class Alloc >
 typename map<Key, T, Compare, Alloc>::iterator map<Key, T, Compare, Alloc>::end()
 {
-	return iterator(maxValueNode(_root));
+	// std::cout << "max bef is " << _lastElem->tab.first << std::endl;
+	// std::cout << "max is " << _lastElem->right->tab.first << std::endl;
+	return iterator(_lastElem->right);
 }
 
 template <class Key, class T, class Compare, class Alloc >
 typename map<Key, T, Compare, Alloc>::const_iterator map<Key, T, Compare, Alloc>::end() const
 {
-	return const_iterator(maxValueNode(_root));
+	if (!_root)
+		return const_iterator(_lastElem);
+	// std::cout << "max bef is " << _root->tab.first << std::endl;
+	// std::cout << "max is " << _lastElem->right->tab.first << std::endl;
+	return const_iterator(_lastElem->right);
 }
 
 template <class Key, class T, class Compare, class Alloc >
@@ -276,35 +285,22 @@ void map<Key, T, Compare, Alloc>::swap(map& x)
 {
 	map<Key, T, Compare, Alloc>	tmp;
 
-	tmp._pairAlloc = get_allocator();
-	tmp._comp = key_comp();
-	tmp._size = size();
-	tmp._root = _root;
-	tmp._ghost = _ghost;
-
-	_pairAlloc = x.get_allocator();
-	_comp = x.key_comp();
-	_size = x.size();
-	_root = x._root;
-	_ghost = x._ghost;
-
-	x._pairAlloc = tmp.get_allocator();
-	x._comp = tmp.key_comp();
-	x._size = tmp.size();
-	x._root = tmp._root;
-	x._ghost = tmp._ghost;
+	tmp = *this;
+	*this = x;
+	x = tmp;
 }
 
 template <class Key, class T, class Compare, class Alloc >
 void map<Key, T, Compare, Alloc>::clear()
 {
-	// if (_ghost)
-	// 	_nodeAlloc.deallocate(_ghost, 1);
+	if (_ghost)
+		_nodeAlloc.deallocate(_ghost, 1);
 	if (_root)
 		_pairAlloc.destroy(&_root->tab);
 	_size = 0;
 	_root = NULL;
 	_ghost = NULL;
+	_lastElem = NULL;
 
 	return ;
 }
@@ -456,25 +452,32 @@ typename map<Key, T, Compare, Alloc>::allocator_type	map<Key, T, Compare, Alloc>
 }
 
 template<class Key, class T, class Compare, class Alloc>
-void    map<Key, T, Compare, Alloc>::_setGhost(void)
+void    map<Key, T, Compare, Alloc>::_setGhost(bool add)
 {
 	if (!_ghost)
 		_ghost = _nodeAlloc.allocate(1);
-	_lastElem = maxValueNode(_root);
-	_lastElem->right = _ghost;
-	_lastElem->left = NULL;
+	if (add)
+	{
+		_lastElem = maxValueNode(_root);
+		_lastElem->right = _ghost;
+	}
 	_ghost->right = NULL;
 	_ghost->left = NULL;
+	_ghost->parent = _lastElem;
+	_root->ghost = _ghost;
 }
 
 template<class Key, class T, class Compare, class Alloc>
 typename map<Key, T, Compare, Alloc>::node_ptr    map<Key, T, Compare, Alloc>::_insert(node_ptr node, value_type val)
 {
+	// std::cout << "value to insert " << val.first << std::endl;
 	if (!_root || !node || node == _ghost)
 	{
 		node = _newNode(val);
 		if (!_root)
 			_root = node;
+		else if (node == _ghost)
+			_lastElem = node;
 		_size++;
 	}
 	else if (key_comp()(val.first, node->tab.first))
@@ -487,8 +490,13 @@ typename map<Key, T, Compare, Alloc>::node_ptr    map<Key, T, Compare, Alloc>::_
 		node->right = _insert(node->right, val);
 		node->right->parent = node;
 	}
-	if (!_ghost || !key_comp()(node->tab.first, _lastElem->tab.first))
-		_setGhost();
+	if (!_ghost || !key_comp()(val.first, _lastElem->tab.first))
+	{	
+		if (_ghost)
+			!key_comp()(node->tab.first, _lastElem->tab.first) ? _setGhost(true) : _setGhost(false);
+		else
+			_setGhost(true);
+	}
 	return node;
 }
 

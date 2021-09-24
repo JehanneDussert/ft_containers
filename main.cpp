@@ -463,37 +463,65 @@ T	dec(T it, int n)
 	return (it);
 }
 #include <list>
-#define T1 char
-#define T2 int
+
+#define T1 int
+#define T2 std::string
 typedef _pair<const T1, T2> T3;
+
+static int iter = 0;
+
+template <typename MAP, typename U>
+void	ft_erase(MAP &mp, U param)
+{
+	std::cout << "\t-- [" << iter++ << "] --" << std::endl;
+	mp.erase(param);
+	std::cout << "print size\n\n";
+	printSize(mp);
+}
+
+template <typename MAP, typename U, typename V>
+void	ft_erase(MAP &mp, U param, V param2)
+{
+	std::cout << "\t-- [" << iter++ << "] --" << std::endl;
+	mp.erase(param, param2);
+	printSize(mp);
+}
 
 int		main(void)
 {
 	std::list<T3> lst;
-	unsigned int lst_size = 5;
+	unsigned int lst_size = 10;
 	for (unsigned int i = 0; i < lst_size; ++i)
-		lst.push_back(T3('a' + i, (i + 1) * 7));
-
+		lst.push_back(T3(i, std::string((lst_size - i), i + 65)));
 	TESTED_NAMESPACE::map<T1, T2> mp(lst.begin(), lst.end());
-	TESTED_NAMESPACE::map<T1, T2>::iterator it_ = mp.begin();
-	TESTED_NAMESPACE::map<T1, T2>::reverse_iterator it(it_), ite;
 	printSize(mp);
 
-	std::cout << (it_ == it.base()) << std::endl;
-	std::cout << (it_ == dec(it, 3).base()) << std::endl;
+	ft_erase(mp, ++mp.begin());
 
-	printPair(it.base());
-	printPair(inc(it.base(), 1));
+	ft_erase(mp, mp.begin());
+	ft_erase(mp, --mp.end());
 
-	std::cout << "TEST OFFSET" << std::endl;
-	--it;
-	printPair(it);
-	printPair(it.base());
+	ft_erase(mp, mp.begin(), ++(++(++mp.begin())));
+	std::cout << "PROBLEM\n\n";
+	TESTED_NAMESPACE::map<T1, T2>::const_iterator ite = --(--(--mp.end()));
+	std::cout << "ret: " << ite->first << std::endl;
+	ite = --mp.end();
+	std::cout << "ret: " << ite->first << std::endl;
+	ft_erase(mp, --(--(--mp.end())), --mp.end());
 
-	it = mp.rbegin(); ite = mp.rend();
-	while (it != ite)
-		std::cout << "[rev] " << printPair(it++, false) << std::endl;
-	printReverse(mp);
+	mp[10] = "Hello";
+	mp[11] = "Hi there";
+	printSize(mp);
+	ft_erase(mp, --(--(--mp.end())), mp.end());
+
+	mp[12] = "ONE";
+	mp[13] = "TWO";
+	mp[14] = "THREE";
+	mp[15] = "FOUR";
+	printSize(mp);
+	std::cout << "problem\n\n";
+	ft_erase(mp, mp.begin(), mp.end());
 
 	return (0);
 }
+

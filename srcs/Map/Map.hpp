@@ -133,8 +133,9 @@ class	map
 		node_ptr	_insert(node_ptr node, value_type val);
 		node_ptr	_newNode(value_type& val);
 		node_ptr	_deleteNode(node_ptr root, value_type val);
+		node_ptr	_reorderTree(value_type val);
 		void		_delete(node_ptr node);
-		void		_setGhost(void);
+		void		_setGhost(bool add);
 
 	private:
 		allocator_type							_pairAlloc;

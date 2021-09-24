@@ -185,7 +185,7 @@ typename map<Key, T, Compare, Alloc>::size_type	map<Key, T, Compare, Alloc>::siz
 template <class Key, class T, class Compare, class Alloc >
 typename map<Key, T, Compare, Alloc>::size_type	map<Key, T, Compare, Alloc>::max_size() const
 {
-	return std::numeric_limits<difference_type>::max() / (sizeof(node_type) / 2 ?: 1);
+	return _nodeAlloc.max_size();
 }
 
 template <class Key, class T, class Compare, class Alloc >

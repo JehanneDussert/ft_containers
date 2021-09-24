@@ -499,23 +499,28 @@ int		main(void)
 	ft_erase(mp, ++mp.begin());
 
 	ft_erase(mp, mp.begin());
-	std::cout << "PROBLEM\n\n";
 	ft_erase(mp, --mp.end());
 
 	ft_erase(mp, mp.begin(), ++(++(++mp.begin())));
+	std::cout << "PROBLEM\n\n";
+	TESTED_NAMESPACE::map<T1, T2>::const_iterator ite = --(--(--mp.end()));
+	std::cout << "ret: " << ite->first << std::endl;
+	ite = --mp.end();
+	std::cout << "ret: " << ite->first << std::endl;
 	ft_erase(mp, --(--(--mp.end())), --mp.end());
 
-	// mp[10] = "Hello";
-	// mp[11] = "Hi there";
-	// printSize(mp);
-	// ft_erase(mp, --(--(--mp.end())), mp.end());
+	mp[10] = "Hello";
+	mp[11] = "Hi there";
+	printSize(mp);
+	ft_erase(mp, --(--(--mp.end())), mp.end());
 
-	// mp[12] = "ONE";
-	// mp[13] = "TWO";
-	// mp[14] = "THREE";
-	// mp[15] = "FOUR";
-	// printSize(mp);
-	// ft_erase(mp, mp.begin(), mp.end());
+	mp[12] = "ONE";
+	mp[13] = "TWO";
+	mp[14] = "THREE";
+	mp[15] = "FOUR";
+	printSize(mp);
+	std::cout << "problem\n\n";
+	ft_erase(mp, mp.begin(), mp.end());
 
 	return (0);
 }

@@ -101,13 +101,19 @@ namespace ft
 	template<class T>
 	struct node
 	{
-		T		tab;
-		node	*right;
-		node	*left;
-		node	*parent;
-		node	*ghost;
-		node(T const &src = T()) : tab(src), right(NULL), left(NULL), parent(NULL), ghost(NULL) { return ; };
-		std::allocator<ft::node<T> >	_nodeAlloc;
+		private:
+			bool _unused;
+			#if __APPLE__ == 0
+				int _unused_linux;
+			#endif
+		public:
+			T		tab;
+			node	*right;
+			node	*left;
+			node	*parent;
+			// node	*ghost;
+			// node(T const &src = T()) : tab(src), right(NULL), left(NULL), parent(NULL) { return ; };
+			// std::allocator<ft::node<T> >	_nodeAlloc;
 	};
 
 	template<typename T>
@@ -121,7 +127,7 @@ namespace ft
 	template<typename T>
 	node<T>	*maxValueNode(node<T>	*node)
 	{
-		while (node && node->right != NULL && node->right != node->ghost)
+		while (node && node->right != NULL)// && node->right != node->ghost)
 			node = node->right;
 		return node;
 	}

@@ -34,7 +34,7 @@ void	map<Key, T, Compare, Alloc>::_delete(node_ptr node)
 template<class Key, class T, class Compare, class Alloc>
 typename map<Key, T, Compare, Alloc>::node_ptr	map<Key, T, Compare, Alloc>::_deleteNode(node_ptr node, value_type val)
 {
-	std::cout << "val : " << val.first << std::endl;
+	// std::cout << "val : " << val.first << std::endl;
 	if (!node || node == _ghost)
 		return node;
 	else if (key_comp()(val.first, node->tab.first))
@@ -52,7 +52,7 @@ typename map<Key, T, Compare, Alloc>::node_ptr	map<Key, T, Compare, Alloc>::_del
 			{
 				_setGhost(false);
 				_lastElem = node->parent;
-				std::cout << "last elem is now : " << maxValueNode(_root)->tab.first << std::endl;
+				// std::cout << "last elem is now : " << maxValueNode(_root)->tab.first << std::endl;
 			}
 			// std::cout << "last Elem is " << _lastElem->tab.first << std::endl;
 			node_ptr tmp = node->right;
@@ -158,8 +158,8 @@ typename map<Key, T, Compare, Alloc>::const_iterator map<Key, T, Compare, Alloc>
 template <class Key, class T, class Compare, class Alloc >
 typename map<Key, T, Compare, Alloc>::iterator map<Key, T, Compare, Alloc>::end()
 {
-	std::cout << "max bef is " << _lastElem->tab.first << std::endl;
-	std::cout << "max is " << _lastElem->right->tab.first << std::endl;
+	// std::cout << "max bef is " << _lastElem->tab.first << std::endl;
+	// std::cout << "max is " << _lastElem->right->tab.first << std::endl;
 	return iterator(_lastElem->right);
 }
 
@@ -202,7 +202,8 @@ typename map<Key, T, Compare, Alloc>::size_type	map<Key, T, Compare, Alloc>::siz
 template <class Key, class T, class Compare, class Alloc >
 typename map<Key, T, Compare, Alloc>::size_type	map<Key, T, Compare, Alloc>::max_size() const
 {
-	return std::numeric_limits<difference_type>::max() / (sizeof(node_type) / 2 ?: 1);
+	return _nodeAlloc.max_size();
+	// return std::numeric_limits<difference_type>::max() / (sizeof(node_type) / 2 ?: 1);
 }
 
 template <class Key, class T, class Compare, class Alloc >
@@ -469,12 +470,12 @@ void    map<Key, T, Compare, Alloc>::_setGhost(bool add)
 		_lastElem = maxValueNode(_root);
 		_lastElem->right = _ghost;
 	}
-	if (_lastElem)
-		std::cout << "now last elem is " << _lastElem->tab.first << std::endl;
+	// if (_lastElem)
+	// 	std::cout << "now last elem is " << _lastElem->tab.first << std::endl;
 	_ghost->right = NULL;
 	_ghost->left = NULL;
 	_ghost->parent = _lastElem;
-	_root->ghost = _ghost;
+	// _root->ghost = _ghost;
 }
 
 template<class Key, class T, class Compare, class Alloc>

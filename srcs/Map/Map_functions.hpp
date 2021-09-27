@@ -21,62 +21,161 @@ typename map<Key, T, Compare, Alloc>::node_ptr	map<Key, T, Compare, Alloc>::_new
 	return tmp;
 }
 
-template < class Key, class T, class Compare, class Alloc >
-void	map<Key, T, Compare, Alloc>::_delete(node_ptr node)
-{
-	// std::cout << "val node : " << node->tab.first << std::endl;
-	_pairAlloc.destroy(&node->tab);
-}
+// template<class Key, class T, class Compare, class Alloc>
+// typename map<Key, T, Compare, Alloc>::node_ptr	map<Key, T, Compare, Alloc>::_deleteNode(node_ptr node, value_type val)
+// {
+// 	std::cout << "val : " << val.first << std::endl;
+// 	if (!node || node == _ghost)
+// 		return node;
+// 	else if (key_comp()(val.first, node->tab.first))
+// 		node->left = _deleteNode(node->left, val);
+// 	else if ((key_comp()(node->tab.first, val.first)))
+// 		node->right = _deleteNode(node->right, val);
+// 	else
+// 	{
+// 		std::cout << "HERE node is : " << node->tab.first << std::endl;
+// 		if (!node->left && !node->right)
+// 		{	std::cout << "null\n"; return NULL; }
+// 		else if (!node->left)
+// 		{
+// 			// std::cout << "value to delete is " << val.first << std::endl;
+// 			std::cout << "node in node right is " << node->tab.first << std::endl;
+// 			if (node->right == _ghost)
+// 			{
+// 				_setGhost(false);
+// 				_lastElem = node->parent;
+// 				if (!size())
+// 					_lastElem = _ghost;
+// 			}
+// 			node_ptr tmp = node->right;
+// 			tmp->parent = node->parent;
+// 			// if (node == _root)
+// 			// 	_root = tmp;
+// 			_pairAlloc.destroy(&node->tab);
+// 			return tmp;
+// 		}
+// 		else if (!node->right)
+// 		{
+// 			std::cout << "node in node left is " << node->tab.first << std::endl;
+// 			node_ptr tmp = node->left;
+// 			tmp->parent = node->parent;
+// 			_pairAlloc.destroy(&node->tab);
+// 			return tmp;
+// 		}
+// 		std::cout << "value to delete is " << val.first << std::endl;
+// 		node_ptr tmp = maxValueNode(node->left);
+// 		_pairAlloc.destroy(&node->tab);
+// 		_pairAlloc.construct(&node->tab, tmp->tab);
+// 		return _deleteNode(node->left, tmp->tab);
+// 	}
+// 	std::cout << "here value to delete is " << val.first << std::endl;
+// 	if (node->parent)
+// 		std::cout << "here parent is " << node->parent->tab.first << std::endl;
+// 	_root = minValueNode(_root);
+// 	return node;
+// }
 
 template<class Key, class T, class Compare, class Alloc>
 typename map<Key, T, Compare, Alloc>::node_ptr	map<Key, T, Compare, Alloc>::_deleteNode(node_ptr node, value_type val)
 {
-	// std::cout << "val : " << val.first << std::endl;
-	// if (!size())
-	// 	_lastElem = NULL;
+	std::cout << "To delete: " << val.first << std::endl;
 	if (!node || node == _ghost)
 		return node;
 	else if (key_comp()(val.first, node->tab.first))
 		node->left = _deleteNode(node->left, val);
 	else if ((key_comp()(node->tab.first, val.first)))
 		node->right = _deleteNode(node->right, val);
-	else
+	else if (node == _root)
 	{
-		if (!node->left && !node->right)
-			return NULL;
-		else if (!node->left)
-		{
-			// std::cout << "value to delete is " << val.first << std::endl;
-			// std::cout << "node in node right is " << node->tab.first << std::endl;
-			if (node->right == _ghost)
-			{
-				_setGhost(false);
-				_lastElem = node->parent;
-				// std::cout << "enter " << val.first << std::endl;
-				if (!size())
-					_lastElem = _ghost;
-			}
-			node_ptr tmp = node->right;
-			tmp->parent = node->parent;
-			// if (node == _root)
-			// 	_root = tmp;
-			_delete(node);
-			return tmp;
-		}
-		else if (!node->right)
-		{
-			// std::cout << "node in node left is " << node->tab.first << std::endl;
-			node_ptr tmp = node->left;
-			tmp->parent = node->parent;
-			_delete(node);
-			return tmp;
-		}
+		std::cout << "root\n";
 		node_ptr tmp = maxValueNode(node->left);
+		tmp->parent = NULL;
+		node->left ? tmp->left = node->left : tmp->left = NULL;
+		if (node->right == _ghost)
+		{
+			_setGhost(false);
+			if (!size())
+				_lastElem = _ghost;
+		}
 		_pairAlloc.destroy(&node->tab);
 		_pairAlloc.construct(&node->tab, tmp->tab);
-		return _deleteNode(node->left, tmp->tab);
+		return node;
 	}
-	_root = minValueNode(_root);
+	else if (!node->right && !node->left)
+	{
+		std::cout << "no right, no left\n";
+		_pairAlloc.destroy(&node->tab);
+		node = NULL;
+		return node;
+	}
+	else if (node->left && (node->right == _ghost || !node->right))
+	{
+		std::cout << "enter\n";
+		node_ptr tmp = maxValueNode(node->left);
+		tmp->parent = node->parent;
+		if (node->left != maxValueNode(node->left))
+			tmp->left = node->left;
+		else
+			tmp->left = NULL;
+		_pairAlloc.destroy(&node->tab);
+		_pairAlloc.construct(&node->tab, tmp->tab);
+		return node;
+		// exit(0);
+		// return tmp;
+	}
+	else if (node->right && !node->left)
+	{
+		std::cout << "node right, no left\n";
+		if (node->right == _ghost)
+		{
+			_setGhost(false);
+			_lastElem = node->parent;
+			if (!size())
+				_lastElem = _ghost;
+		}
+		std::cout << "here\n";
+		node_ptr tmp = node->right;
+		tmp->parent = node->parent;
+		_pairAlloc.destroy(&node->tab);
+		_pairAlloc.construct(&node->tab, tmp->tab);
+		return node;
+		// exit(0);
+		// return tmp;
+	}
+	else if (node->right && node->left)
+	{
+		std::cout << "node right and left\n";
+		if (node->right == _ghost)
+		{
+			_setGhost(false);
+			_lastElem = node->parent;
+			if (!size())
+				_lastElem = _ghost;
+		}
+		node_ptr tmp = maxValueNode(node->left);
+		tmp->right = node->right;
+		tmp->left = node->left;
+		_pairAlloc.destroy(&node->tab);
+		_pairAlloc.construct(&node->tab, tmp->tab);
+		std::cout << "node: " << node->tab.first << std::endl;
+		if (node->parent)
+			std::cout << "node parent: " << node->parent->tab.first << std::endl;
+		if (node->left)
+			std::cout << "node left: " << node->left->tab.first << std::endl;
+		if (node->right)
+			std::cout << "node right: " << node->right->tab.first << std::endl;
+		exit(0);
+		return node;
+	}
+	std::cout << "node: " << node->tab.first << std::endl;
+	if (node->parent)
+		std::cout << "node parent: " << node->parent->tab.first << std::endl;
+	if (node->left)
+		std::cout << "node left: " << node->left->tab.first << std::endl;
+	if (node->right)
+		std::cout << "node right: " << node->right->tab.first << std::endl;
+
+	// _root = minValueNode(_root);
 	return node;
 }
 

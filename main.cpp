@@ -534,7 +534,7 @@ int		main(void)
 	 * */
 
 	ft_erase(mp, 25); // right != NULL; left != NULL
-	// ft_erase(mp, 55); // right != NULL; left != NULL
+	ft_erase(mp, 55); // right != NULL; left != NULL
 
 	/* After deleting 25 and 55, I would get:
 	 *                                      42
@@ -549,8 +549,8 @@ int		main(void)
 	 *
 	 * */
 
-	// ft_erase(mp, 24); // right != NULL; left != NULL
-	// ft_erase(mp, 54); // right != NULL; left != NULL
+	ft_erase(mp, 24); // right != NULL; left != NULL
+	ft_erase(mp, 54); // right != NULL; left != NULL
 
 	/* After deleting 24 and 54, I would get:
 	 *                                      42

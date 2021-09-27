@@ -71,11 +71,10 @@ typename map<Key, T, Compare, Alloc>::node_ptr	map<Key, T, Compare, Alloc>::_del
 			_delete(node);
 			return tmp;
 		}
-		node_ptr tmp = minValueNode(node->right);
-		tmp->parent = node->parent;
-		// std::cout << "tmp parent : " << tmp->parent->tab.first << std::endl;
-		node = tmp;
-		node->right = _deleteNode(node->right, tmp->tab);
+		node_ptr tmp = maxValueNode(node->left);
+		_pairAlloc.destroy(&node->tab);
+		_pairAlloc.construct(&node->tab, tmp->tab);
+		return _deleteNode(node->left, tmp->tab);
 	}
 	_root = minValueNode(_root);
 	return node;

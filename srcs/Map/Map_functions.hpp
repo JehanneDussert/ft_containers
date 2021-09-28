@@ -440,7 +440,7 @@ ft::pair<typename ft::map<Key, T, Compare, Alloc>::iterator, typename ft::map<Ke
 map<Key, T, Compare, Alloc>::equal_range(const key_type& k)
 {
 	ft::pair<iterator, iterator>	ret; 
-	ret.first = lower_bound(k), ret.second = lower_bound(k);
+	ret.first = lower_bound(k), ret.second = upper_bound(k);
 	
 	return ret;
 }
@@ -450,7 +450,7 @@ ft::pair<typename ft::map<Key, T, Compare, Alloc>::const_iterator, typename ft::
 map<Key, T, Compare, Alloc>::equal_range(const key_type& k) const
 {
 	ft::pair<const_iterator, const_iterator>	ret;
-	ret.first = lower_bound(k), ret.second = lower_bound(k);
+	ret.first = lower_bound(k), ret.second = upper_bound(k);
 
 	return ret;
 }

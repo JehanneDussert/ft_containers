@@ -249,7 +249,6 @@ void map<Key, T, Compare, Alloc>::erase(iterator position)
 	if (!_root)
 		return ;
 	--_size;
-	// erase(position++, position);
 	_root = _deleteNode(_root, value_type(position->first, position->second));
 	return ;
 }
@@ -261,7 +260,6 @@ typename map<Key, T, Compare, Alloc>::size_type map<Key, T, Compare, Alloc>::era
 	if (!count(k) || !_root)
 		return 0;
 	--_size;
-	// _deleteNode(pos._node);
 	_root = _deleteNode(_root, value_type(k, find(k)->second));
 	return 1;
 }
@@ -271,9 +269,7 @@ void map<Key, T, Compare, Alloc>::erase(iterator first, iterator last)
 {
 	while (first != last)
 	{
-		// std::cout << "this is first: " << first->first << std::endl;
 		--_size;
-		// _deleteNode((first++)._node);
 		_root = _deleteNode(_root, value_type(first->first, first->second));
 		++first;
 	}
@@ -284,16 +280,36 @@ void map<Key, T, Compare, Alloc>::swap(map& x)
 {
 	map<Key, T, Compare, Alloc>	tmp;
 
-	tmp = *this;
-	*this = x;
-	x = tmp;
+	tmp._comp = this->_comp;
+	tmp._nodeAlloc = this->_nodeAlloc;
+	tmp._pairAlloc = this->_pairAlloc;
+	tmp._root = this->_root;
+	tmp._ghost = this->_ghost;
+	tmp._lastElem = this->_lastElem;
+	tmp._size = this->_size;
+
+	this->_comp = x._comp;
+	this->_nodeAlloc = x._nodeAlloc;
+	this->_pairAlloc = x._pairAlloc;
+	this->_root = x._root;
+	this->_ghost = x._ghost;
+	this->_lastElem = x._lastElem;
+	this->_size = x._size;
+
+	x._comp = tmp._comp;
+	x._nodeAlloc = tmp._nodeAlloc;
+	x._pairAlloc = tmp._pairAlloc;
+	x._root = tmp._root;
+	x._ghost = tmp._ghost;
+	x._lastElem = tmp._lastElem;
+	x._size = tmp._size;
 }
 
 template <class Key, class T, class Compare, class Alloc >
 void map<Key, T, Compare, Alloc>::clear()
 {
-	if (_ghost)
-		_nodeAlloc.deallocate(_ghost, 1);
+	// if (_ghost)
+	// 	_nodeAlloc.deallocate(_ghost, 1);
 	if (_root)
 		_pairAlloc.destroy(&_root->tab);
 	_size = 0;

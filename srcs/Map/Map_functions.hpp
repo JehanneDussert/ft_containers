@@ -553,6 +553,7 @@ template<class Key, class T, class Compare, class Alloc>
 bool operator<(const map<Key, T, Compare, Alloc>& lhs, const map<Key, T, Compare, Alloc>& rhs)
 {
 	return ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
+	return ft::lexicographical_compare(lhs.begin(), --lhs.end(), rhs.begin(), --rhs.end());
 }
 
 template<class Key, class T, class Compare, class Alloc>

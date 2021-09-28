@@ -466,61 +466,48 @@ T	dec(T it, int n)
 
 #include <list>
 
-#define T1 int
-#define T2 std::string
+#define T1 char
+#define T2 int
+typedef _pair<const T1, T2> T3;
 
-TESTED_NAMESPACE::map<T1, T2> mp;
-TESTED_NAMESPACE::map<T1, T2>::iterator it = mp.end();
-
-void	ft_find(T1 const &k)
+template <class MAP>
+void	cmp(const MAP &lhs, const MAP &rhs)
 {
-	TESTED_NAMESPACE::map<T1, T2>::iterator ret = mp.find(k);
+	static int i = 0;
 
-	if (ret != it)
-	{
-		// std::cout << "par lo " << k << ' ' << ret->first << ' ' << it->first << "\n";
-		printPair(ret);
-	}
-	else
-		std::cout << "map::find(" << k << ") returned end()" << std::endl;
-}
-
-void	ft_count(T1 const &k)
-{
-	std::cout << "map::count(" << k << ")\treturned [" << mp.count(k) << "]" << std::endl;
+	std::cout << "############### [" << i++ << "] ###############"  << std::endl;
+	std::cout << "eq: " << (lhs == rhs) << " | ne: " << (lhs != rhs) << std::endl;
+	std::cout << "lt: " << (lhs <  rhs) << " | le: " << (lhs <= rhs) << std::endl;
+	std::cout << "gt: " << (lhs >  rhs) << " | ge: " << (lhs >= rhs) << std::endl;
 }
 
 int		main(void)
 {
-	mp[42] = "fgzgxfn";
-	mp[25] = "funny";
-	mp[80] = "hey";
-	mp[12] = "no";
-	mp[27] = "bee";
-	mp[90] = "8";
-	printSize(mp);
+	TESTED_NAMESPACE::map<T1, T2> mp1;
+	TESTED_NAMESPACE::map<T1, T2> mp2;
 
-	std::cout << "\t-- FIND --" << std::endl;
-	ft_find(12);
-	// ft_find(3);
-	// ft_find(35);
-	// ft_find(90);
-	ft_find(100);
+	mp1['a'] = 2; mp1['b'] = 3; mp1['c'] = 4; mp1['d'] = 5;
+	mp2['a'] = 2; mp2['b'] = 3; mp2['c'] = 4; mp2['d'] = 5;
 
-	// std::cout << "\t-- COUNT --" << std::endl;
-	// ft_count(-3);
-	// ft_count(12);
-	// ft_count(3);
-	// ft_count(35);
-	// ft_count(90);
-	// ft_count(100);
+	// cmp(mp1, mp1); // 0
+	// cmp(mp1, mp2); // 1
 
-	// mp.find(27)->second = "newly inserted mapped_value";
+	mp2['e'] = 6; mp2['f'] = 7; mp2['h'] = 8; mp2['h'] = 9;
 
-	// printSize(mp);
+	// cmp(mp1, mp2); // 2
+	// cmp(mp2, mp1); // 3
 
-	// TESTED_NAMESPACE::map<T1, T2> const c_map(mp.begin(), mp.end());
-	// std::cout << "const map.find(" << 42 << ")->second: [" << c_map.find(42)->second << "]" << std::endl;
-	// std::cout << "const map.count(" << 80 << "): [" << c_map.count(80) << "]" << std::endl;
+	(++(++mp1.begin()))->second = 42;
+	std::cout << "value is : " << (++(++mp1.begin()))->second << std::endl;
+
+	std::cout << "lhs : " << mp1[mp1.begin()->first] << ' ' << mp2[mp2.begin()->first] << std::endl;
+	cmp(mp1, mp2); // 4
+	cmp(mp2, mp1); // 5
+
+	swap(mp1, mp2);
+
+	cmp(mp1, mp2); // 6
+	cmp(mp2, mp1); // 7
+
 	return (0);
 }

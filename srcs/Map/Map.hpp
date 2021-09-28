@@ -133,6 +133,7 @@ class	map
 		node_ptr	_insert(node_ptr node, value_type val);
 		node_ptr	_newNode(value_type& val);
 		node_ptr	_deleteNode(node_ptr root, value_type val);
+		// void		_deleteNode(node_ptr rmNode);
 		node_ptr	_reorderTree(value_type val);
 		void		_delete(node_ptr node);
 		void		_setGhost(bool add);
@@ -145,7 +146,7 @@ class	map
 		node_ptr								_root;
 		node_ptr								_ghost;
 		node_ptr								_lastElem;
-		void									_deleteNode(node<value_type> *node);
+		// void									_deleteNode(node<value_type> *node);
 };
 }
 

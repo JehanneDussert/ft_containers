@@ -21,15 +21,11 @@ typename map<Key, T, Compare, Alloc>::node_ptr	map<Key, T, Compare, Alloc>::_new
 	return tmp;
 }
 
-template < class Key, class T, class Compare, class Alloc >
-void	map<Key, T, Compare, Alloc>::_delete(node_ptr node)
-{
-	_pairAlloc.destroy(&node->tab);
-}
-
 template<class Key, class T, class Compare, class Alloc>
 typename map<Key, T, Compare, Alloc>::node_ptr	map<Key, T, Compare, Alloc>::_deleteNode(node_ptr node, value_type val)
 {
+	if (!_size)
+		_lastElem = _ghost;
 	if (!node || node == _ghost)
 		return node;
 	else if (key_comp()(val.first, node->tab.first))
@@ -39,34 +35,29 @@ typename map<Key, T, Compare, Alloc>::node_ptr	map<Key, T, Compare, Alloc>::_del
 	else
 	{
 		if (!node->left && !node->right)
+		{
+			_pairAlloc.destroy(&node->tab);
 			return NULL;
+		}
 		else if (!node->left)
 		{
-			if (node->right == _ghost)
-			{
-				_setGhost(false);
-				_lastElem = node->parent;
-				if (!size())
-					_lastElem = _ghost;
-			}
 			node_ptr tmp = node->right;
 			tmp->parent = node->parent;
-			_delete(node);
+			_pairAlloc.destroy(&node->tab);
 			return tmp;
 		}
 		else if (!node->right)
 		{
 			node_ptr tmp = node->left;
 			tmp->parent = node->parent;
-			_delete(node);
+			_pairAlloc.destroy(&node->tab);
 			return tmp;
 		}
 		node_ptr tmp = minValueNode(node->right);
-		tmp->parent = node->parent;
-		node = tmp;
+		_pairAlloc.destroy(&node->tab);
+		_pairAlloc.construct(&node->tab, tmp->tab);
 		node->right = _deleteNode(node->right, tmp->tab);
 	}
-	_root = minValueNode(_root);
 	return node;
 }
 
@@ -169,11 +160,11 @@ typename map<Key, T, Compare, Alloc>::const_iterator map<Key, T, Compare, Alloc>
 
 template <class Key, class T, class Compare, class Alloc >
 typename map<Key, T, Compare, Alloc>::reverse_iterator map<Key, T, Compare, Alloc>::rbegin()
-{ return reverse_iterator(_lastElem); }
+{ return reverse_iterator(_ghost); }
 
 template <class Key, class T, class Compare, class Alloc >
 typename map<Key, T, Compare, Alloc>::const_reverse_iterator map<Key, T, Compare, Alloc>::rbegin() const
-{ return const_reverse_iterator(_lastElem); }
+{ return const_reverse_iterator(_ghost); }
 
 template <class Key, class T, class Compare, class Alloc >
 typename map<Key, T, Compare, Alloc>::reverse_iterator map<Key, T, Compare, Alloc>::rend()
@@ -264,6 +255,7 @@ void map<Key, T, Compare, Alloc>::erase(iterator position)
 template<class Key, class T, class Compare, class Alloc>
 typename map<Key, T, Compare, Alloc>::size_type map<Key, T, Compare, Alloc>::erase(const key_type& k)
 {
+	iterator pos = find(k);
 	if (!count(k) || !_root)
 		return 0;
 	--_size;
@@ -287,16 +279,36 @@ void map<Key, T, Compare, Alloc>::swap(map& x)
 {
 	map<Key, T, Compare, Alloc>	tmp;
 
-	tmp = *this;
-	*this = x;
-	x = tmp;
+	tmp._comp = this->_comp;
+	tmp._nodeAlloc = this->_nodeAlloc;
+	tmp._pairAlloc = this->_pairAlloc;
+	tmp._root = this->_root;
+	tmp._ghost = this->_ghost;
+	tmp._lastElem = this->_lastElem;
+	tmp._size = this->_size;
+
+	this->_comp = x._comp;
+	this->_nodeAlloc = x._nodeAlloc;
+	this->_pairAlloc = x._pairAlloc;
+	this->_root = x._root;
+	this->_ghost = x._ghost;
+	this->_lastElem = x._lastElem;
+	this->_size = x._size;
+
+	x._comp = tmp._comp;
+	x._nodeAlloc = tmp._nodeAlloc;
+	x._pairAlloc = tmp._pairAlloc;
+	x._root = tmp._root;
+	x._ghost = tmp._ghost;
+	x._lastElem = tmp._lastElem;
+	x._size = tmp._size;
 }
 
 template <class Key, class T, class Compare, class Alloc >
 void map<Key, T, Compare, Alloc>::clear()
 {
-	if (_ghost)
-		_nodeAlloc.deallocate(_ghost, 1);
+	// if (_ghost)
+	// 	_nodeAlloc.deallocate(_ghost, 1);
 	if (_root)
 		_pairAlloc.destroy(&_root->tab);
 	_size = 0;

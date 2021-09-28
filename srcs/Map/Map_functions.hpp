@@ -338,15 +338,14 @@ typename map<Key, T, Compare, Alloc>::iterator map<Key, T, Compare, Alloc>::find
 {
 	iterator	it = begin(); iterator	ite = end();
 
-	if (!count(k))
-		return ite;
 	while (it != ite)
 	{
-		if (it->first == k)
-			break;
+		if (!key_comp()(k, it->first) && !key_comp()(it->first, k))
+			break ;
+		if (it._node == _lastElem)
+			return ++ite;
 		++it;
 	}
-	
 	return it;
 }
 
@@ -355,12 +354,12 @@ typename map<Key, T, Compare, Alloc>::const_iterator map<Key, T, Compare, Alloc>
 {
 	const_iterator	it = begin(); const_iterator	ite = end();
 
-	if (!count(k))
-		return ite;
 	while (it != ite)
 	{
-		if (it->first == k)
-			break;
+		if (!key_comp()(k, it->first) && !key_comp()(it->first, k))
+			break ;
+		if (it._node == _lastElem)
+			return ++ite;
 		++it;
 	}
 	return it;

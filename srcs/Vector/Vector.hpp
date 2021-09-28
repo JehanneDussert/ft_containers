@@ -183,11 +183,6 @@ class	vector
 	template <class T, class Alloc>
 	void swap(vector<T,Alloc>& x, vector<T,Alloc>& y);
 
-	/*
-	**	TO DO
-	*/
-	// template < class T, class Alloc = allocator<T> > class vector; // generic template
-	// template <class Alloc> class vector<bool,Alloc>;               // bool specialization
 }
 
 #endif

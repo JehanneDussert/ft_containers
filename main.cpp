@@ -464,85 +464,37 @@ T	dec(T it, int n)
 }
 #include <list>
 
-#define T1 int
-#define T2 std::string
+#define T1 char
+#define T2 int
 typedef _pair<const T1, T2> T3;
-
-static int iter = 0;
-
-template <typename MAP, typename U>
-void	ft_erase(MAP &mp, U param)
-{
-	std::cout << "\t-- [" << iter++ << "] --" << std::endl;
-	mp.erase(param);
-	printSize(mp);
-}
-
-template <typename MAP, typename U, typename V>
-void	ft_erase(MAP &mp, U param, V param2)
-{
-	std::cout << "\t-- [" << iter++ << "] --" << std::endl;
-	mp.erase(param, param2);
-	printSize(mp);
-}
 
 int		main(void)
 {
-	// ft::map<int, int>			ft_map;
-	// ft::pair <int,int>			first;
-	// first = ft::make_pair(50, 66);
-	// ft::pair <int,int>			right;
-	// right = ft::make_pair(100, 66);
-	// ft::pair <int,int>			left;
-	// left = ft::make_pair(1, 66);
-	// ft_map.insert(first);
-	// ft_map.insert(right);
-	// ft_map.insert(left);
-	// for (ft::map<int, int>::const_iterator it = ft_map.begin(); it != ft_map.end(); ++it)
-	// {
-    // 	std::cout << "1 Key: " << it->first;
-    // 	std::cout << "\t\tVal: " << it->second << std::endl;
-	// }
-	// ft_map.erase(1);
-	// for (ft::map<int, int>::const_iterator it = ft_map.begin(); it != ft_map.end(); ++it)
-	// {
-    // 	std::cout << "2 Key: " << it->first;
-    // 	std::cout << "\t\tVal: " << it->second << std::endl;
-	// }
-	// ft_map.erase(50);
-	// for (ft::map<int, int>::const_iterator it = ft_map.begin(); it != ft_map.end(); ++it)
-	// {
-    // 	std::cout << "3 Key: " << it->first;
-    // 	std::cout << "\t\tVal: " << it->second << std::endl;
-	// }
-
-
 	std::list<T3> lst;
-	unsigned int lst_size = 10;
+	unsigned int lst_size = 5;
 	for (unsigned int i = 0; i < lst_size; ++i)
-		lst.push_back(T3(i, std::string((lst_size - i), i + 65)));
+		lst.push_back(T3('a' + i, (i + 1) * 7));
+
 	TESTED_NAMESPACE::map<T1, T2> mp(lst.begin(), lst.end());
-	printSize(mp);
+	TESTED_NAMESPACE::map<T1, T2>::iterator it_ = mp.begin();
+	TESTED_NAMESPACE::map<T1, T2>::reverse_iterator it(it_), ite;
+	// printSize(mp);
 
-	ft_erase(mp, ++mp.begin());
+	std::cout << (it_ == it.base()) << std::endl;
+	std::cout << (it_ == dec(it, 3).base()) << std::endl;
 
-	ft_erase(mp, mp.begin());
-	ft_erase(mp, --mp.end());
+	// printPair(it.base());
+	// printPair(inc(it.base(), 1));
 
-	ft_erase(mp, mp.begin(), ++(++(++mp.begin())));
-	ft_erase(mp, --(--(--mp.end())), --mp.end());
+	std::cout << "TEST OFFSET" << std::endl;
+	--it;
+	// printPair(it);
+	// printPair(it.base());
 
-	mp[10] = "Hello";
-	mp[11] = "Hi there";
-	printSize(mp);
-	ft_erase(mp, --(--(--mp.end())), mp.end());
-
-	mp[12] = "ONE";
-	mp[13] = "TWO";
-	mp[14] = "THREE";
-	mp[15] = "FOUR";
-	printSize(mp);
-	ft_erase(mp, mp.begin(), mp.end());
+	it = mp.rbegin(); ite = mp.rend();
+	while (it != ite)
+		std::cout << "[rev] " << printPair(it++, false) << std::endl;
+	// printReverse(mp);
 
 	return (0);
 }

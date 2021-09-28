@@ -146,8 +146,6 @@ typename map<Key, T, Compare, Alloc>::const_iterator map<Key, T, Compare, Alloc>
 template <class Key, class T, class Compare, class Alloc >
 typename map<Key, T, Compare, Alloc>::iterator map<Key, T, Compare, Alloc>::end()
 {
-	// std::cout << "max bef is " << _lastElem->tab.first << std::endl;
-	// std::cout << "max is " << _lastElem->right->tab.first << std::endl;
 	if (!_root || !size())
 		return iterator(_lastElem);
 	return iterator(_lastElem->right);
@@ -156,8 +154,6 @@ typename map<Key, T, Compare, Alloc>::iterator map<Key, T, Compare, Alloc>::end(
 template <class Key, class T, class Compare, class Alloc >
 typename map<Key, T, Compare, Alloc>::const_iterator map<Key, T, Compare, Alloc>::end() const
 {
-	// std::cout << "max bef is " << _root->tab.first << std::endl;
-	// std::cout << "max is " << _lastElem->right->tab.first << std::endl;
 	if (!_root || !size())
 		return const_iterator(_lastElem);
 	return const_iterator(_lastElem->right);
@@ -165,11 +161,11 @@ typename map<Key, T, Compare, Alloc>::const_iterator map<Key, T, Compare, Alloc>
 
 template <class Key, class T, class Compare, class Alloc >
 typename map<Key, T, Compare, Alloc>::reverse_iterator map<Key, T, Compare, Alloc>::rbegin()
-{ return reverse_iterator(_lastElem); }
+{ return reverse_iterator(_ghost); }
 
 template <class Key, class T, class Compare, class Alloc >
 typename map<Key, T, Compare, Alloc>::const_reverse_iterator map<Key, T, Compare, Alloc>::rbegin() const
-{ return const_reverse_iterator(_lastElem); }
+{ return const_reverse_iterator(_ghost); }
 
 template <class Key, class T, class Compare, class Alloc >
 typename map<Key, T, Compare, Alloc>::reverse_iterator map<Key, T, Compare, Alloc>::rend()

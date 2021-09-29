@@ -26,7 +26,7 @@ namespace ft
 			friend bool 			operator==(const stack<T, Container> &lhs, const stack<T, Container> &rhs) { return (lhs._ctnr == rhs._ctnr); };
 			friend bool 			operator<(const stack<T, Container> &lhs, const stack<T, Container> &rhs) { return (lhs._ctnr < rhs._ctnr); };
 
-		private:
+		protected:
 			container_type	_ctnr;
 	};
 

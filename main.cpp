@@ -257,6 +257,26 @@ void	stack()
 	std::cout << "stack1 != stack2:\t" << (stack != copy_stack) << std::endl;
 	std::cout << "stack1 < stack2:\t" << (stack < copy_stack) << std::endl;
 	std::cout << "stack1 > stack2:\t" << (stack > copy_stack) << std::endl;
+
+	std::cout << "\nswap\n";
+	std::cout << "#################################\n";
+	std::cout << "* Before swap:\n";
+	std::cout << "SIZE\t| Srcs: " << stack.size() << '\t' << "Copy: " << copy_stack.size() << std::endl;
+	std::cout << "EMPTY\t| Srcs: " << stack.empty() << '\t' << "Copy: " << copy_stack.empty() << std::endl;
+	std::cout << "TOP\t| Srcs: " << stack.top() << '\t' << "Copy: " << copy_stack.top() << std::endl;
+	std::cout << "SIZE\t| Srcs: " << copy_stack.size() << '\t' << "Copy: " << copy_stack.size() << std::endl;
+	std::cout << "EMPTY\t| Srcs: " << copy_stack.empty() << '\t' << "Copy: " << copy_stack.empty() << std::endl;
+	std::cout << "TOP\t| Srcs: " << copy_stack.top() << '\t' << "Copy: " << copy_stack.top() << std::endl;
+
+	swap(stack, copy_stack);
+
+	std::cout << "* After swap:\n";
+	std::cout << "SIZE\t| Srcs: " << stack.size() << '\t' << "Copy: " << copy_stack.size() << std::endl;
+	std::cout << "EMPTY\t| Srcs: " << stack.empty() << '\t' << "Copy: " << copy_stack.empty() << std::endl;
+	std::cout << "TOP\t| Srcs: " << stack.top() << '\t' << "Copy: " << copy_stack.top() << std::endl;
+	std::cout << "SIZE\t| Srcs: " << copy_stack.size() << '\t' << "Copy: " << copy_stack.size() << std::endl;
+	std::cout << "EMPTY\t| Srcs: " << copy_stack.empty() << '\t' << "Copy: " << copy_stack.empty() << std::endl;
+	std::cout << "TOP\t| Srcs: " << copy_stack.top() << '\t' << "Copy: " << copy_stack.top() << std::endl;
 }
 
 void	map()

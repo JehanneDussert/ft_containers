@@ -52,12 +52,12 @@ void	print_content(TESTED_NAMESPACE::map<int, int> &m)
 
 	std::cout << "Content :\n";
 	for (; it != ite; ++it)
-		std::cout << "\t\t" << "Key: " << m[it->first] << "\tVal: " << m[it->second] << '\n';
+		std::cout << "\t\t" << "Key: " << it->first << "\tVal: " << it->second << '\n';
 	std::cout << "\n";
 
 	std::cout << "Reverse content :\n";
 	for (; rev != reve; ++rev)
-		std::cout << "\t\t" << "Key: " << m[rev->first] << "\tVal: " << m[rev->second] << '\n';
+		std::cout << "\t\t" << "Key: " << rev->first << "\tVal: " << rev->second << '\n';
 	std::cout << "\n";
 }
 
@@ -263,53 +263,134 @@ void	map()
 {
 	std::cout << "\n\nMAP\n\n";
 	std::cout << "********************\n\n";
-	std::cout << "#################################\n";
 
-	std::cout << "constructor & empty & size\n";
+	std::cout << "constructor & insert\n";
 	std::cout << "#################################\n";
 
 	TESTED_NAMESPACE::map<int, int>	m;
-	TESTED_NAMESPACE::vector<int>	m1;
-	TESTED_NAMESPACE::map<int, int>	const m_const(5, 2);
+	TESTED_NAMESPACE::map<int, int>	m1;
+	TESTED_NAMESPACE::map<int, int>	const m2;
 
-	// TESTED_NAMESPACE::pair <int,int>			foo;
+	TESTED_NAMESPACE::pair <int,int>			foo;
   	TESTED_NAMESPACE::pair <int,int>			bar;
 	TESTED_NAMESPACE::pair <int,int>			foo1;
   	TESTED_NAMESPACE::pair <int,int>			bar1;
-	// foo = TESTED_NAMESPACE::make_pair (10, 20);
-  	// bar = TESTED_NAMESPACE::make_pair (30, 78);
-	// foo1 = TESTED_NAMESPACE::make_pair (2,198);
-  	// bar1 = TESTED_NAMESPACE::make_pair (4, 78);
+	TESTED_NAMESPACE::pair <int,int>			foo2;
+  	TESTED_NAMESPACE::pair <int,int>			bar2;
+	TESTED_NAMESPACE::pair <int,int>			n1;
+  	TESTED_NAMESPACE::pair <int,int>			n2;
+	TESTED_NAMESPACE::pair <int,int>			n3;
+  	TESTED_NAMESPACE::pair <int,int>			n4;
+	TESTED_NAMESPACE::pair <int,int>			n5;
+  	TESTED_NAMESPACE::pair <int,int>			n6;
 
-	// m1.insert(foo);
-	// m1.insert(bar);
-	// m1.insert(foo1);
-	// m1.insert(bar1);
-	TESTED_NAMESPACE::map<int, int>			ft_map;
-	TESTED_NAMESPACE::pair <int,int>			foo;
-	foo = TESTED_NAMESPACE::make_pair(5, 10);
-	ft_map.insert(foo);
+	foo = TESTED_NAMESPACE::make_pair(10, 20);
+  	bar = TESTED_NAMESPACE::make_pair(30, 78);
+	foo1 = TESTED_NAMESPACE::make_pair(2, 198);
+  	bar1 = TESTED_NAMESPACE::make_pair(12, 78);
+	foo2 = TESTED_NAMESPACE::make_pair(10, 19);
+  	bar2 = TESTED_NAMESPACE::make_pair(85, 5);
+  	n1 = TESTED_NAMESPACE::make_pair(38, 2);
+  	n2 = TESTED_NAMESPACE::make_pair(0, 56);
+  	n3 = TESTED_NAMESPACE::make_pair(1, 2);
+  	n4 = TESTED_NAMESPACE::make_pair(99, 7845);
+  	n5 = TESTED_NAMESPACE::make_pair(89732, 2);
+  	n6 = TESTED_NAMESPACE::make_pair(-1982, 2);
 
-	// TESTED_NAMESPACE::map<int, int>	m_range(++m1.begin(), --m1.end());
-	// TESTED_NAMESPACE::map<int, int>	m_copy(m_range);
+	m1.insert(foo);
+	m1.insert(bar);
+	m1.insert(foo1);
+	m1.insert(bar1);
+	m1.insert(foo2);
+	m1.insert(bar2);
+	m1.insert(n1);
+	m1.insert(n2);
+	m1.insert(n3);
+	m1.insert(n4);
+	m1.insert(n5);
+	m1.insert(n6);
 
-	// std::cout << "\nempty map\n";
-	// std::cout << "#################################\n";
-	// print_content(m); print_size(m);
+	TESTED_NAMESPACE::map<int, int>	m_range(++m1.begin(), --m1.end());
+	TESTED_NAMESPACE::map<int, int>	m_copy(m_range);
 
-	// std::cout << "\nrange map\n";
-	// std::cout << "#################################\n";
-	// print_content(m_range); print_size(m_range);
+	std::cout << "\nempty map\n";
+	std::cout << "#################################\n";
+	print_content(m); print_size(m);
 
-	// std::cout << "\ncopy map\n";
-	// std::cout << "#################################\n";
-	// print_content(m_copy); print_size(m_copy);
+	std::cout << "\ninsert(val)\n";
+	std::cout << "#################################\n";
+	print_content(m1); print_size(m1);
 
-	// std::cout << "\nconst map\n";
-	// std::cout << "#################################\n";
-	// std::cout << "FRONT\t\t" << m_const.front() << std::endl;
-	// std::cout << "BACK\t\t" << m_const.back() << std::endl;
-	// std::cout << "AT\t\t" << m_const.at(2) << std::endl;
+	std::cout << "\nrange map\n";
+	std::cout << "#################################\n";
+	print_content(m_range); print_size(m_range);
+
+	std::cout << "\ncopy map\n";
+	std::cout << "#################################\n";
+	print_content(m_copy); print_size(m_copy);
+
+  	TESTED_NAMESPACE::pair <int,int>			elem;
+	elem = TESTED_NAMESPACE::make_pair(-8, 76823);
+	m_copy.insert(++(++(m_copy.begin())), elem);
+
+	std::cout << "\ninsert map (pos, val)\n";
+	std::cout << "#################################\n";
+	print_content(m_copy); print_size(m_copy);
+
+	std::cout << "\ninsert map (begin, end)\n";
+	std::cout << "#################################\n";
+	m.insert(m_copy.begin(), --(--(m_copy.end())));
+	print_content(m); print_size(m);
+
+	std::cout << "\nerase(pos)\n";
+	std::cout << "#################################\n";
+	std::cout << "* Before erase:\n";
+	print_content(m_copy); print_size(m_copy);
+
+	m_copy.erase(++m_copy.begin());
+
+	std::cout << "* After erase:\n";
+	print_content(m_copy); print_size(m_copy);
+
+	std::cout << "\nerase(key)\n";
+	std::cout << "#################################\n";
+	std::cout << "* Before erase:\n";
+	print_content(m_copy); print_size(m_copy);
+
+	m_copy.erase(12);
+	
+	std::cout << "* After erase:\n";
+	print_content(m_copy); print_size(m_copy);
+
+	std::cout << "\nerase(begin, end)\n";
+	std::cout << "#################################\n";
+	std::cout << "* Before erase:\n";
+	print_content(m_copy); print_size(m_copy);
+
+	m_copy.erase(++m_copy.begin(), --m_copy.end());
+	
+	std::cout << "* After erase:\n";
+	print_content(m_copy); print_size(m_copy);
+
+	std::cout << "\nswap\n";
+	std::cout << "#################################\n";
+	std::cout << "* Before swap:\n";
+	print_content(m_copy); print_size(m_copy);
+	print_content(m); print_size(m);
+
+	m_copy.swap(m);
+
+	std::cout << "* After swap:\n";
+	print_content(m_copy); print_size(m_copy);
+	print_content(m); print_size(m);
+
+	std::cout << "\nFind\n";
+	std::cout << "#################################\n";
+	std::cout << "res: " << m_copy.find(38)->first << std::endl;
+
+	std::cout << "\nCount\n";
+	std::cout << "#################################\n";
+	std::cout << "res: " << m_copy.count(38) << std::endl;
 }
 
 int main(void)

@@ -27,17 +27,11 @@ class	map
 		typedef typename allocator_type::const_reference	const_reference;
 		typedef typename allocator_type::pointer			pointer;
 		typedef typename allocator_type::const_pointer		const_pointer;
-		// could be iterator_traits<iterator>::difference_type
 		typedef ptrdiff_t									difference_type;
 		typedef size_t										size_type;
 		typedef ft::node<value_type>						node_type;
 		typedef node_type*									node_ptr;
-		// class												value_compare;
 	
-		// typedef ft::mapIte<value_type, node_type>			iterator;
-		// typedef ft::mapIte<const value_type, node_type>		const_iterator;
-		// typedef ft::reverse_iterator<iterator>				reverse_iterator;
-		// typedef ft::reverse_iterator<const_iterator>		const_reverse_iterator;
 		typedef ft::map_iterator<value_type, node_type >		iterator;
 		typedef ft::map_iterator<const value_type, node_type >	const_iterator;
 		typedef ft::reverse_iterator<iterator>					reverse_iterator;
@@ -48,7 +42,7 @@ class	map
 			friend class map;
 			public:
 				Compare comp;
-				value_compare (Compare c) : comp(c) {}  // constructed with map's comparison object
+				value_compare (Compare c) : comp(c) {}
 			public:
 				typedef bool	result_type;
 				typedef			value_type first_argument_type;

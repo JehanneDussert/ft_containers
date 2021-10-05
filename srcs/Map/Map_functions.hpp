@@ -133,7 +133,6 @@ map<Key, T, Compare, Alloc>::~map(void)
 template <class Key, class T, class Compare, class Alloc >
 typename map<Key, T, Compare, Alloc>::iterator map<Key, T, Compare, Alloc>::begin()
 {
-	// std::cout << "min is " << minValueNode(_root)->tab.first << std::endl;
 	return iterator(minValueNode(_root));
 }
 
@@ -485,7 +484,6 @@ void    map<Key, T, Compare, Alloc>::_setGhost(bool add)
 template<class Key, class T, class Compare, class Alloc>
 typename map<Key, T, Compare, Alloc>::node_ptr    map<Key, T, Compare, Alloc>::_insert(node_ptr node, value_type val)
 {
-	// std::cout << "value to insert " << val.first << std::endl;
 	if (!_root || !node || node == _ghost)
 	{
 		node = _newNode(val);
@@ -515,18 +513,6 @@ typename map<Key, T, Compare, Alloc>::node_ptr    map<Key, T, Compare, Alloc>::_
 	return node;
 }
 
-template<class Key, class T, class Compare, class Alloc>
-void map<Key, T, Compare, Alloc>::inorder(node_ptr root)
-{
-	if (root != NULL)
-	{
-		inorder(root->left);
-		std::cout << root->tab.first << ' ';
-		std::cout << root->tab.second << ' ';
-		inorder(root->right);
-	}
-}
-
 /**************************************/
 /*** NON MEMBER FUNCTIONS OVERLOADS ***/
 /**************************************/
@@ -552,26 +538,25 @@ bool operator!=(const map<Key, T, Compare, Alloc>& lhs, const map<Key, T, Compar
 template<class Key, class T, class Compare, class Alloc>
 bool operator<(const map<Key, T, Compare, Alloc>& lhs, const map<Key, T, Compare, Alloc>& rhs)
 {
-	return ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
 	return ft::lexicographical_compare(lhs.begin(), --lhs.end(), rhs.begin(), --rhs.end());
 }
 
 template<class Key, class T, class Compare, class Alloc>
 bool operator<=(const map<Key, T, Compare, Alloc>& lhs, const map<Key, T, Compare, Alloc>& rhs)
 {
-	return (rhs < lhs ? false : true);
+	return !(rhs < lhs);
 }
 
 template<class Key, class T, class Compare, class Alloc>
 bool operator>(const map<Key, T, Compare, Alloc>& lhs, const map<Key, T, Compare, Alloc>& rhs)
 {
-	return (rhs < lhs ? true : false);
+	return (rhs < lhs);
 }
 
 template<class Key, class T, class Compare, class Alloc>
 bool operator>=(const map<Key, T, Compare, Alloc>& lhs, const map<Key, T, Compare, Alloc>& rhs)
 {
-	return (lhs < rhs ? false : true);
+	return !(lhs < rhs);
 }
 
 template<class Key, class T, class Compare, class Alloc>

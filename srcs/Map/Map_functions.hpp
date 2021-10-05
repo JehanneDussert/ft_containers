@@ -268,9 +268,9 @@ void map<Key, T, Compare, Alloc>::erase(iterator first, iterator last)
 {
 	while (first != last)
 	{
-		--_size;
 		_root = _deleteNode(_root, value_type(first->first, first->second));
-		++first;
+		first++;
+		--_size;
 	}
 }
 

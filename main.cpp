@@ -7,6 +7,8 @@
 #include "srcs/Map/Map_functions.hpp"
 #include "srcs/Stack/Stack_functions.hpp"
 #include <list>
+#include <stack>
+#include <map>
 
 #ifndef TESTED_NAMESPACE
 # define TESTED_NAMESPACE ft

@@ -384,7 +384,7 @@ void vector<T, Alloc>::reserve(size_type n)
 
 	if (n > _capacity)
 	{
-		_size = 0 ;
+		_size = 0;
 		_capacity = n;
 		tmp._tab = _alloc.allocate(n);
 		for (; first != last; ++first)

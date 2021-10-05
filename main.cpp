@@ -411,6 +411,11 @@ void	map()
 	std::cout << "\nCount\n";
 	std::cout << "#################################\n";
 	std::cout << "res: " << m_copy.count(38) << std::endl;
+
+	std::cout << "\nClear\n";
+	std::cout << "#################################\n";
+	m_copy.clear();
+	print_content(m_copy); print_size(m_copy);
 }
 
 int main(void)

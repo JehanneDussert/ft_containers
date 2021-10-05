@@ -6,7 +6,7 @@ OBJECTS = $(SRCS:.cpp=.o)
 
 CXX = clang++
 
-CXXFLAGS += -Wall -Wextra -Werror -std=c++98 -fsanitize=address -g3
+CXXFLAGS += -Wall -Wextra -Werror -std=c++98
 
 all : $(NAME)
 
@@ -19,6 +19,6 @@ clean :
 	@/bin/rm -f $(OBJECTS)
 
 fclean : clean
-	@/bin/rm -f $(NAME)
+	@/bin/rm -f $(NAME) std_containers ft std a.out
 
 re : fclean all

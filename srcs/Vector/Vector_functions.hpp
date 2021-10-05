@@ -401,10 +401,11 @@ void vector<T, Alloc>::resize(size_type n, value_type val)
 			_alloc.destroy(&_tab[_size]);
 	else
 	{
+		size_type const &len = (__APPLE__ ? this->_capacity : this->_size);
 		if (n <= _capacity)
 			;
-		else if (n <= _capacity * 2)
-			reserve(_capacity * 2);
+		else if (n <= len * 2)
+			reserve(len * 2);
 		else
 			reserve(n);
 		for (; _size < n; _size++)
@@ -434,7 +435,12 @@ typename vector<T, Alloc>::reference vector<T, Alloc>::at(size_type n)
 	if (n < this->_size)
 		return ((*this)[n]);
 	std::ostringstream ostr;
-	ostr << "Out of Range error: vector::_M_range_check";
+	ostr << "vector";
+	if (!__APPLE__)
+	{
+		ostr << "::_M_range_check: __n (which is " << n
+			<< ") >= this->size() (which is " << _size << ")";
+	}
 	throw std::out_of_range(ostr.str());
 }
 
@@ -444,7 +450,12 @@ typename vector<T, Alloc>::const_reference vector<T, Alloc>::at(size_type n) con
 	if (n < this->_size)
 		return ((*this)[n]);
 	std::ostringstream ostr;
-	ostr << "Out of Range error: vector::_M_range_check";
+	ostr << "vector";
+	if (!__APPLE__)
+	{
+		ostr << "::_M_range_check: __n (which is " << n
+			<< ") >= this->size() (which is " << _size << ")";
+	}
 	throw std::out_of_range(ostr.str());
 }
 

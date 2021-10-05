@@ -3,7 +3,6 @@
 
 # include "../Utils/Utils.hpp"
 # include "MapIterator.hpp"
-// # include "../Utils/ReverseIterator.hpp"
 
 # include <iostream>
 # include <map>
@@ -27,17 +26,11 @@ class	map
 		typedef typename allocator_type::const_reference	const_reference;
 		typedef typename allocator_type::pointer			pointer;
 		typedef typename allocator_type::const_pointer		const_pointer;
-		// could be iterator_traits<iterator>::difference_type
 		typedef ptrdiff_t									difference_type;
 		typedef size_t										size_type;
 		typedef ft::node<value_type>						node_type;
 		typedef node_type*									node_ptr;
-		// class												value_compare;
 	
-		// typedef ft::mapIte<value_type, node_type>			iterator;
-		// typedef ft::mapIte<const value_type, node_type>		const_iterator;
-		// typedef ft::reverse_iterator<iterator>				reverse_iterator;
-		// typedef ft::reverse_iterator<const_iterator>		const_reverse_iterator;
 		typedef ft::map_iterator<value_type, node_type >		iterator;
 		typedef ft::map_iterator<const value_type, node_type >	const_iterator;
 		typedef ft::reverse_iterator<iterator>					reverse_iterator;
@@ -48,7 +41,7 @@ class	map
 			friend class map;
 			public:
 				Compare comp;
-				value_compare (Compare c) : comp(c) {}  // constructed with map's comparison object
+				value_compare (Compare c) : comp(c) {}
 			public:
 				typedef bool	result_type;
 				typedef			value_type first_argument_type;
@@ -128,16 +121,6 @@ class	map
 		*/
 		allocator_type get_allocator() const;
 
-		// Plus
-		void		inorder(node_ptr root);
-		node_ptr	_insert(node_ptr node, value_type val);
-		node_ptr	_newNode(value_type& val);
-		node_ptr	_deleteNode(node_ptr root, value_type val);
-		// void		_deleteNode(node_ptr rmNode);
-		node_ptr	_reorderTree(value_type val);
-		void		_delete(node_ptr node);
-		void		_setGhost(bool add);
-
 	private:
 		allocator_type							_pairAlloc;
 		std::allocator<ft::node<value_type> >	_nodeAlloc;
@@ -146,7 +129,10 @@ class	map
 		node_ptr								_root;
 		node_ptr								_ghost;
 		node_ptr								_lastElem;
-		// void									_deleteNode(node<value_type> *node);
+		node_ptr								_insert(node_ptr node, value_type val);
+		node_ptr								_newNode(value_type& val);
+		node_ptr								_deleteNode(node_ptr root, value_type val);
+		void									_setGhost(bool add);
 };
 }
 

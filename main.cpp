@@ -18,6 +18,9 @@ void	print_content(TESTED_NAMESPACE::vector<int> &v)
 {
 	TESTED_NAMESPACE::vector<int>::iterator	it = v.begin();
 	TESTED_NAMESPACE::vector<int>::iterator	ite = v.end();
+
+	TESTED_NAMESPACE::vector<int>::const_iterator	cit = v.begin();
+	TESTED_NAMESPACE::vector<int>::const_iterator	cite = v.end();
 	
 	TESTED_NAMESPACE::vector<int>::reverse_iterator	rev = v.rbegin();
 	TESTED_NAMESPACE::vector<int>::reverse_iterator	reve = v.rend();
@@ -25,6 +28,11 @@ void	print_content(TESTED_NAMESPACE::vector<int> &v)
 	std::cout << "Content :\n";
 	for (; it != ite; ++it)
 		std::cout << "\t\t" << *it << '\n';
+	std::cout << "\n";
+
+	std::cout << "Const it content :\n";
+	for (; cit != cite; ++cit)
+		std::cout << "\t\t" << *cit << '\n';
 	std::cout << "\n";
 
 	std::cout << "Reverse content :\n";
@@ -389,7 +397,7 @@ void	map()
 	std::cout << "* Before erase:\n";
 	print_content(m_copy); print_size(m_copy);
 
-	m_copy.erase(++m_copy.begin(), --m_copy.end());
+	m_copy.erase(m_copy.begin(), --m_copy.end());
 	
 	std::cout << "* After erase:\n";
 	print_content(m_copy); print_size(m_copy);

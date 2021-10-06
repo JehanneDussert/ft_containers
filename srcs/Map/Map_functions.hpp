@@ -121,7 +121,10 @@ template < class Key, class T, class Compare, class Alloc >
 map<Key, T, Compare, Alloc>::~map(void)
 {
 	clear();
-	_nodeAlloc.deallocate(_root, _size);
+	if (_root)
+		_nodeAlloc.deallocate(_root, _size);
+	if (_ghost)
+		_nodeAlloc.deallocate(_ghost, 1);
 
 	return ;
 };
@@ -268,9 +271,9 @@ void map<Key, T, Compare, Alloc>::erase(iterator first, iterator last)
 {
 	while (first != last)
 	{
+		_size--;
 		_root = _deleteNode(_root, value_type(first->first, first->second));
 		first++;
-		--_size;
 	}
 }
 
@@ -307,9 +310,7 @@ void map<Key, T, Compare, Alloc>::swap(map& x)
 template <class Key, class T, class Compare, class Alloc >
 void map<Key, T, Compare, Alloc>::clear()
 {
-	// if (_ghost)
-	// 	_nodeAlloc.deallocate(_ghost, 1);
-	if (_root)
+	for (size_type i = 0; i < _size; i++)
 		_pairAlloc.destroy(&_root->tab);
 	_size = 0;
 	_root = NULL;

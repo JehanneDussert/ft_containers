@@ -7,6 +7,10 @@
 # include "ReverseIterator.hpp"
 # include "RandomIterator.hpp"
 
+# ifndef __APPLE__
+#  define __APPLE__ 0
+# endif
+
 namespace ft
 {
 

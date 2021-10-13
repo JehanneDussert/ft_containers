@@ -1,6 +1,10 @@
 #ifndef RANDOMITERATOR_HPP
 # define RANDOMITERATOR_HPP
 
+# include <limits>
+# include <cstddef>
+# include <stddef.h>
+
 namespace ft {
 	template <typename type>
     class Random
